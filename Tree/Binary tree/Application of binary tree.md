@@ -39,13 +39,11 @@ Node *buildTree(int pl, int pr, int ml, int mr) {
 }
 
 
-int main() {
-	 
+int main() { 
     printf("请输入二叉树的前序遍历：");
-	
     scanf("%s", pre);
+
     printf("请输入二叉树的中序遍历：");
-	
     scanf("%s", mid);
 	
     int n = strlen(pre), m = strlen(mid);
