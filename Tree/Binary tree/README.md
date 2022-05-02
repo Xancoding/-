@@ -150,3 +150,20 @@ void levelorder_traversal(treenode* root) {
 ```
 
 
+## 测试数据
+```cpp
+生成二叉树    abc xy qk sa # # dk # #  xz jk # # qs # # dz as aq # # ag # # db bd # # #
+
+先序遍历	abc xy qk sa dk xz jk qs dz as aq ag db bd
+
+中序遍历	sa qk dk xy jk xz qs abc aq as ag dz bd db
+
+后序遍历	sa dk qk jk qs xz xy aq ag as bd db dz abc
+
+层序遍历	
+abc
+xy dz
+qk xz as db
+sa dk jk qs aq ag bd
+```
+
