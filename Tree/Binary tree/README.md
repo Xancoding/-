@@ -142,4 +142,9 @@ void levelorder_traversal(treenode* root) {
     puts("");
   }
 ```
+## 树的表示
+### 广义表
+### 凹入表
+```
+
 
