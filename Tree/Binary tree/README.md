@@ -148,11 +148,46 @@ void levelorder_traversal(treenode* root) {
 ```cpp
 
 ```
+## 遍历算法的应用
+### 求二叉树深度
+```cpp
+int get_depth(treenode *root) {
+	if (root == NULL) return 0;
+	else {
+		int L = get_depth(root->left);
+		int R = get_depth(root->right);
+		if (L > R) return (L + 1);
+		else return (R + 1);
+		
+	}	
+}
 
+```
+### 求叶子节点个数
+```cpp
+void leaf_count(treenode *root, int &count) {
+    if (root == NULL) return ;
+    else {
+        leaf_count(root->left, count);
+        if (root->left == NULL && root->right == NULL) count++;
+        leaf_count(root->right, count);
+    }
+}
+```
+### 求结点个数
+```cpp
+void node_count(treenode *root, int &num) {
+    if (root == NULL) return ;
+
+    node_count(root->left, num);
+    num++;
+    node_count(root->right, num);
+}
+```
 
 ## 测试数据
 ```cpp
-生成二叉树    abc xy qk sa # # dk # #  xz jk # # qs # # dz as aq # # ag # # db bd # # #
+生成二叉树  abc xy qk sa # # dk # #  xz jk # # qs # # dz as aq # # ag # # db bd # # #
 
 先序遍历	abc xy qk sa dk xz jk qs dz as aq ag db bd
 
@@ -165,5 +200,12 @@ abc
 xy dz
 qk xz as db
 sa dk jk qs aq ag bd
+```
+
+## 输出
+```cpp
+深度为：4
+叶子结点个数为：7
+结点个数为：14
 ```
 
