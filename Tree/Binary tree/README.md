@@ -144,9 +144,23 @@ void levelorder_traversal(treenode* root) {
 ```
 ## 树的表示
 ### 广义表
+```cpp
+```
 ### 凹入表
 ```cpp
+/* 凹入表显示 */
+void disp_tree(treenode *root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
+    if (root == NULL) return ;
 
+    for(int i = 1; i < level + 20; i++)
+        putchar('-');
+
+    putchar('+');
+    printf("%s(%c)\n",root->data,c);
+    level = level - 2;
+    disp_tree(root->left,level,'L');
+    disp_tree(root->right,level,'R');
+}
 ```
 ## 遍历算法的应用
 ### 求二叉树深度
@@ -207,5 +221,21 @@ sa dk jk qs aq ag bd
 深度为：4
 叶子结点个数为：7
 结点个数为：14
+凹入表显示：
+-----------------------+abc(D)
+---------------------+xy(L)
+-------------------+qk(L)
+-----------------+sa(L)
+-----------------+dk(R)
+-------------------+xz(R)
+-----------------+jk(L)
+-----------------+qs(R)
+---------------------+dz(R)
+-------------------+as(L)
+-----------------+aq(L)
+-----------------+ag(R)
+-------------------+db(R)
+-----------------+bd(L)
+
 ```
 
