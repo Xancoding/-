@@ -37,8 +37,9 @@ treenode *tree_create(){
 }
 ```
 - 用``#``表示空节点，按照先序遍历的次序，生成二叉树
-
-## 递归法遍历二叉树
+## 二叉树的遍历
+### 深度优先遍历
+#### 递归法
 ```cpp
 /* 前序遍历 */
 void preorder_traversal(treenode *root) {
@@ -64,7 +65,7 @@ void postorder_traversal(treenode *root) {
   printf("%s\t", root->data);
 }
 ```
-## 迭代法遍历二叉树
+#### 迭代法
 ```cpp
 /* 前序遍历 */
 void preorder_traversal(treenode *root) {
@@ -122,5 +123,23 @@ void postorder_traversal(treenode *root) {
   }
 }
 
+```
+### 广度优先遍历
+```cpp
+void levelorder_traversal(treenode* root) {
+  queue<treenode*>que;
+  que.push(root);
+  if (root == NULL) return ;
+  while (!que.empty()) {
+    int size = que.size();  
+    for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
+      treenode *cur = que.front();
+      que.pop();
+      printf("%s\t", cur->data);
+      if (cur->left != NULL) que.push(cur -> left);
+      if (cur->right != NULL) que.push(cur -> right);
+    }
+    puts("");
+  }
 ```
 
