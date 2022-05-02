@@ -44,7 +44,7 @@ treenode *tree_create(){
 /* 前序遍历 */
 void preorder_traversal(treenode *root) {
   if (root == NULL) return ;
-  printf("%s\t", root->data);
+  printf("%s ", root->data);
   preorder_traversal(root->left);
   preorder_traversal(root->right);
 }
@@ -53,7 +53,7 @@ void preorder_traversal(treenode *root) {
 void inorder_traversal(treenode *root) {
   if (root == NULL) return ;
   inorder_traversal(root->left);
-  printf("%s\t", root->data);
+  printf("%s ", root->data);
   inorder_traversal(root->right);
 }
 
@@ -62,7 +62,7 @@ void postorder_traversal(treenode *root) {
   if (root == NULL) return ;
   postorder_traversal(root->left);
   postorder_traversal(root->right);
-  printf("%s\t", root->data);
+  printf("%s ", root->data);
 }
 ```
 #### 迭代法
@@ -75,7 +75,7 @@ void preorder_traversal(treenode *root) {
   while(!st.empty()) {
   treenode *cur = st.top();
   st.pop();
-  printf("%s\t", cur->data);
+  printf("%s ", cur->data);
   if (cur->right != NULL) st.push(cur->right);
   if (cur->left != NULL) st.push(cur->left);
   }
@@ -93,7 +93,7 @@ void inorder_traversal(treenode *root) {
     }
     cur = st.top();
     st.pop();
-    printf("%s\t", cur->data);
+    printf("%s ", cur->data);
     cur = cur->right;
   } 
 }
@@ -113,7 +113,7 @@ void postorder_traversal(treenode *root) {
     st.pop();
     //该节点没有右子树或者它的右子树已经被访问过
     if (cur->right == NULL || cur->right == prev) {
-      printf("%s\t", cur->data);
+      printf("%s ", cur->data);
       prev = cur;
       cur = NULL;
     } else {  //若节点的右子树不为空，则该节点再次入栈
@@ -135,7 +135,7 @@ void levelorder_traversal(treenode* root) {
     for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
       treenode *cur = que.front();
       que.pop();
-      printf("%s\t", cur->data);
+      printf("%s ", cur->data);
       if (cur->left != NULL) que.push(cur -> left);
       if (cur->right != NULL) que.push(cur -> right);
     }
@@ -145,6 +145,8 @@ void levelorder_traversal(treenode* root) {
 ## 树的表示
 ### 广义表
 ### 凹入表
+```cpp
+
 ```
 
 
