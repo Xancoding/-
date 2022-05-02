@@ -111,11 +111,11 @@ int main() {
 ```
 ### 测试数据
 ```cpp
-构造二叉树    A B D # # E  # # C # F # # 
+构造二叉树 A B D # # E  # # C # F # # 
 
-前序遍历	A B D E C F
+前序遍历   A B D E C F
 
-中序遍历	D B E A C F
+中序遍历   D B E A C F
 
-后序遍历	D E B F C A
+后序遍历   D E B F C A
 ```
