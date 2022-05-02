@@ -41,27 +41,86 @@ treenode *tree_create(){
 ## 递归法遍历二叉树
 ```cpp
 /* 前序遍历 */
-void preorder_traversal(treenode *node) {
-  if (node == NULL) return ;
-  printf("%s\t", node->data);
-  preorder_traversal(node->left);
-  preorder_traversal(node->right);
+void preorder_traversal(treenode *root) {
+  if (root == NULL) return ;
+  printf("%s\t", root->data);
+  preorder_traversal(root->left);
+  preorder_traversal(root->right);
 }
 
 /* 中序遍历 */
-void inorder_traversal(treenode *node) {
-  if (node == NULL) return ;
-  inorder_traversal(node->left);
-  printf("%s\t", node->data);
-  inorder_traversal(node->right);
+void inorder_traversal(treenode *root) {
+  if (root == NULL) return ;
+  inorder_traversal(root->left);
+  printf("%s\t", root->data);
+  inorder_traversal(root->right);
 }
 
 /* 后序遍历 */
-void postorder_traversal(treenode *node) {
-  if (node == NULL) return ;
-  postorder_traversal(node->left);
-  postorder_traversal(node->right);
-  printf("%s\t", node->data);
+void postorder_traversal(treenode *root) {
+  if (root == NULL) return ;
+  postorder_traversal(root->left);
+  postorder_traversal(root->right);
+  printf("%s\t", root->data);
 }
+```
+## 迭代法遍历二叉树
+```cpp
+/* 前序遍历 */
+void preorder_traversal(treenode *root) {
+  if (root == NULL) return ;
+  stack<treenode*>st;
+  st.push(root);
+  while(!st.empty()) {
+  treenode *cur = st.top();
+  st.pop();
+  printf("%s\t", cur->data);
+  if (cur->right != NULL) st.push(cur->right);
+  if (cur->left != NULL) st.push(cur->left);
+  }
+}
+
+/* 中序遍历 */
+void inorder_traversal(treenode *root) {
+  if (root == NULL) return ;
+  stack<treenode*>st;
+  treenode *cur = root;
+  while(cur != NULL || !st.empty()) {
+    while (cur != NULL) {   // 指针来访问节点，访问到最底层
+      st.push(cur);
+      cur = cur->left;
+    }
+    cur = st.top();
+    st.pop();
+    printf("%s\t", cur->data);
+    cur = cur->right;
+  } 
+}
+
+/* 后序遍历 */
+void postorder_traversal(treenode *root) {
+  if (root == NULL) return ;
+  stack<treenode*>st;
+  treenode *prev = NULL;  //记录上一次输出的节点
+  treenode *cur = root;
+  while (cur != NULL || !st.empty()) {
+    while (cur != NULL) {
+      st.push(cur);
+      cur = cur->left;
+    }
+    cur = st.top();
+    st.pop();
+    //该节点没有右子树或者它的右子树已经被访问过
+    if (cur->right == NULL || cur->right == prev) {
+      printf("%s\t", cur->data);
+      prev = cur;
+      cur = NULL;
+    } else {  //若节点的右子树不为空，则该节点再次入栈
+      st.push(cur);
+      cur = cur->right;
+      }
+  }
+}
+
 ```
 
