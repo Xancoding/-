@@ -23,8 +23,7 @@
 ## 二叉树的创建
 ```cpp
 /* 创建一棵二叉树 */
-treenode *tree_create()
-{  
+treenode *tree_create(){
   char data[MAX];
   scanf("%s", data);
   if (strcmp(data, "#") == 0) return NULL;
@@ -38,4 +37,31 @@ treenode *tree_create()
 }
 ```
 - 用``#``表示空节点，按照先序遍历的次序，生成二叉树
+
+## 递归法遍历二叉树
+```cpp
+/* 前序遍历 */
+void preorder_traversal(treenode *node) {
+  if (node == NULL) return ;
+  printf("%s\t", node->data);
+  preorder_traversal(node->left);
+  preorder_traversal(node->right);
+}
+
+/* 中序遍历 */
+void inorder_traversal(treenode *node) {
+  if (node == NULL) return ;
+  inorder_traversal(node->left);
+  printf("%s\t", node->data);
+  inorder_traversal(node->right);
+}
+
+/* 后序遍历 */
+void postorder_traversal(treenode *node) {
+  if (node == NULL) return ;
+  postorder_traversal(node->left);
+  postorder_traversal(node->right);
+  printf("%s\t", node->data);
+}
+```
 
