@@ -15,7 +15,7 @@
 ## 二叉树的节点
 ```cpp
  typedef struct treenode {
-   string data;
+   char data[MAX];
    struct treenode *left;
    struct treenode *right;
  }treenode;
@@ -25,17 +25,17 @@
 /* 创建一棵二叉树 */
 treenode *tree_create()
 {  
-  string data;
+  char data[MAX];
   scanf("%s", data);
-  if (data == "#") root = NULL;
+  if (strcmp(data, "#") == 0) return NULL;
   else {
-    root = new treenode;
-    root->data = data;
-    tree_create(root->left);
-    tree_create(root->right);
+    treenode *root = new treenode;
+    strcpy(root->data, data);
+    root->left = tree_create();
+    root->right = tree_create();
+    return root;
   }
-  return root;
 }
 ```
-按先序遍历的顺序读入每个结点值，递归创建生成二叉树
+- 用``#``表示空节点，按照先序遍历的次序，生成二叉树
 
