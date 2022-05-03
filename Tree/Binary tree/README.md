@@ -29,7 +29,7 @@ void tree_create(treenode *&root){
     if (strcmp(data, "#") == 0) root = NULL;
     else {
         root = new treenode;
-        strcpy(root->data, data);  //若要以中序或后序创建二叉树，只需调整本行位置
+        strcpy(root->data, data);
         tree_create(root->left);
         tree_create(root->right);
     }
@@ -200,7 +200,7 @@ void node_count(treenode *root, int &num) {
 
 ## 测试数据
 ```cpp
-生成二叉树  abc xy qk sa # # dk # #  xz jk # # qs # # dz as aq # # ag # # db bd # # #
+生成二叉树(先序)  abc xy qk sa # # dk # #  xz jk # # qs # # dz as aq # # ag # # db bd # # #
 
 先序遍历	abc xy qk sa dk xz jk qs dz as aq ag db bd
 
