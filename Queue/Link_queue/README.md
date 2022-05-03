@@ -1,3 +1,13 @@
+## 数据类型定义
+```cpp
+typedef int elemtype;
+
+typedef struct queue{
+    elemtype data;
+    struct queue *next;
+}qnode, *qlink;
+```
+
 ## 初始化
 ```cpp
 void init(queuelink q) {
