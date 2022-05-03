@@ -74,6 +74,25 @@ void tree_create(treenode *&root){
     } // for
 }
 ```
+## 结点的查找
+```cpp
+/* 查找数据 */ 
+treenode *node_find(treenode *root, char *name)
+{
+
+    treenode *p;
+    if(root == NULL) return NULL;
+    else{
+        printf("%s ", root->data);
+        if(strcmp(root->data, name)==0)
+            return root;
+        else if(p = node_find(root->left, name))
+            return p;
+        else
+            return node_find(root->right, name);
+    }
+}
+```
 ## 二叉树的遍历
 ### 深度优先遍历
 #### 递归法
