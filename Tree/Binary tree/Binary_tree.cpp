@@ -15,7 +15,7 @@ typedef struct treenode {
 }treenode;
 
 int menu();  /* 菜单 */
-treenode *tree_create();  /* 创建一棵二叉树  */
+void tree_create(treenode* &root);  /* 创建一棵二叉树  */
 void preorder_traversal(treenode *root);  /* 前序遍历 */
 void inorder_traversal(treenode *root);  /* 中序遍历 */
 void postorder_traversal(treenode *root);  /* 后序遍历 */
@@ -37,7 +37,7 @@ int main() {
         switch(n) {
             case 1:
                 printf("请输入二叉树的节点：");
-                root = tree_create();
+                tree_create(root);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 2:
@@ -106,16 +106,15 @@ int menu() {
 }
 
 /* 创建一棵二叉树  */
-treenode *tree_create(){
+void tree_create(treenode *&root){
     char data[MAX];
     scanf("%s", data);
-    if (strcmp(data, "#") == 0) return NULL;
+    if (strcmp(data, "#") == 0) root = NULL;
     else {
-        treenode *root = new treenode;
+        root = new treenode;
         strcpy(root->data, data);
-        root->left = tree_create();
-        root->right = tree_create();
-        return root;
+        tree_create(root->left);
+        tree_create(root->right);
     }
 }
 
