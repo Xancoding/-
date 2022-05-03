@@ -21,6 +21,7 @@
  }treenode;
 ``` 
 ## 二叉树的创建
+### 递归创建
 ```cpp
 /* 创建一棵二叉树  */
 void tree_create(treenode *&root){
@@ -36,6 +37,43 @@ void tree_create(treenode *&root){
 }
 ```
 - 用``#``表示空节点，按照先序遍历的次序，生成二叉树
+### 用边创建
+```cpp
+/* 创建一棵二叉树  */
+void tree_create(treenode *&root){
+    char fa[30], ch[30];  //fa为父结点 ch为子结点 
+    treenode *p, *s;  //p为父结点 s为子结点 
+    int flag;
+    queue<treenode*>que;
+    root = NULL;
+    printf("请输入父结点、子结点、左(0)右(1)标志（用空格隔开，根结点的双亲为#）\n");
+    scanf("%s%s%d",fa, ch,&flag);
+    while (strcmp(ch,"end")) {
+        s = new treenode;    // 创建结点
+        strcpy(s->data,ch);
+        s->left = s->right = NULL;
+
+        que.push(s);// 指针入队列
+        if (strcmp(fa,"#") == 0)  root = s;  // 所建为根结点
+        else {// 非根结点的情况
+            p = que.front();// 取队列头元素(指针值)
+            while (strcmp(p->data,fa)) { // 查询双亲结点
+            	que.pop();
+				p = que.front();
+            }//while
+
+            if (flag==0){
+                p->left = s;
+            }// 链接左孩子
+            else {
+                p->right = s;
+            }// 链接右孩子
+        }// 非根结点的情况
+        printf("请输入父结点、子结点、左右标志（用空格隔开，结束时输入end end 0）\n");
+        scanf("%s%s%d",fa,ch,&flag);
+    } // for
+}
+```
 ## 二叉树的遍历
 ### 深度优先遍历
 #### 递归法
@@ -202,6 +240,12 @@ void node_count(treenode *root, int &num) {
 ```cpp
 生成二叉树(先序)  abc xy qk sa # # dk # #  xz jk # # qs # # dz as aq # # ag # # db bd # # #
 
+生成二叉树(用边生成)  
+# ncepu 0
+ncepu ee 0
+ncepu cs 1
+end end 0
+
 先序遍历	abc xy qk sa dk xz jk qs dz as aq ag db bd
 
 中序遍历	sa qk dk xy jk xz qs abc aq as ag dz bd db
@@ -217,24 +261,12 @@ sa dk jk qs aq ag bd
 
 ## 输出
 ```cpp
-深度为：4
-叶子结点个数为：7
-结点个数为：14
+深度为：2
+叶子结点个数为：2
+结点个数为：3
 凹入表显示：
------------------------+abc(D)
----------------------+xy(L)
--------------------+qk(L)
------------------+sa(L)
------------------+dk(R)
--------------------+xz(R)
------------------+jk(L)
------------------+qs(R)
----------------------+dz(R)
--------------------+as(L)
------------------+aq(L)
------------------+ag(R)
--------------------+db(R)
------------------+bd(L)
-
+---------------------+ncepu(D)
+-------------------+ee(L)
+-------------------+cs(R)
 ```
 
