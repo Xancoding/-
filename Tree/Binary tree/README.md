@@ -22,18 +22,17 @@
 ``` 
 ## 二叉树的创建
 ```cpp
-/* 创建一棵二叉树 */
-treenode *tree_create(){
-  char data[MAX];
-  scanf("%s", data);
-  if (strcmp(data, "#") == 0) return NULL;
-  else {
-    treenode *root = new treenode;
-    strcpy(root->data, data);
-    root->left = tree_create();
-    root->right = tree_create();
-    return root;
-  }
+/* 创建一棵二叉树  */
+void tree_create(treenode *&root){
+    char data[MAX];
+    scanf("%s", data);
+    if (strcmp(data, "#") == 0) root = NULL;
+    else {
+        root = new treenode;
+        strcpy(root->data, data);
+        tree_create(root->left);
+        tree_create(root->right);
+    }
 }
 ```
 - 用``#``表示空节点，按照先序遍历的次序，生成二叉树
