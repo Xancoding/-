@@ -29,7 +29,7 @@ void tree_create(treenode *&root){
     if (strcmp(data, "#") == 0) root = NULL;
     else {
         root = new treenode;
-        strcpy(root->data, data);
+        strcpy(root->data, data);  //若要以中序或后序创建二叉树，只需调整本行位置
         tree_create(root->left);
         tree_create(root->right);
     }
