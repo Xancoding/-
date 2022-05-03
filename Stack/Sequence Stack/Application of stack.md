@@ -74,3 +74,34 @@ int getVal(char *str) {
     return num[h1];
 }
 ```
+## 括号匹配
+```cpp
+#include<stdio.h>
+#include<string.h>
+
+ const int N = 10;
+
+ int main() {
+     char str[N];
+     char st[N];
+     char null[] = "null";
+     while (1) {
+         int top = -1;
+         printf("请输入括号(输入null退出)：");
+         scanf("%s", str);
+        if (strcmp(str, null) == 0) return 0;
+         for (int i = 0; str[i]; i++) {
+             if (str[i] == '(' || str[i] == '[' || str[i] == '{') {
+                 st[++top] = str[i];
+             }else if (str[i] == ')' && st[top] == '(' || str[i] == ']' && st[top] == '[' || str[i] == '}' && st[top] == '{') {
+                 top--;
+             } else {  //匹配失败
+                 top = 0;
+                 break;
+             }
+         }
+         if (top == -1)printf("匹配成功！\n");
+         else printf("匹配失败！\n");
+     }
+ }
+```
