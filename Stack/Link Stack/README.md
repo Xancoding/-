@@ -1,3 +1,14 @@
+## 数据类型定义
+```cpp
+typedef int elemtype;
+
+typedef struct stack{
+    elemtype data;
+    struct stack *next;
+} snode, *slink;
+
+```
+
 ## 初始化
 ```cpp
 void init(slink &h) {
