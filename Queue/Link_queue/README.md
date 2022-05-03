@@ -6,6 +6,11 @@ typedef struct queue{
     elemtype data;
     struct queue *next;
 }qnode, *qlink;
+
+typedef struct {
+    qlink front;
+    qlink back;
+}queuenode, *queuelink;
 ```
 
 ## 初始化
