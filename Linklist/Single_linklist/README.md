@@ -1,3 +1,12 @@
+## 数据类型定义
+```cpp
+typedef int elemtype;
+
+typedef struct node{
+	elemtype data; 
+	struct node *next;
+}node, *nodelink;
+```
 ## 初始化
 ```cpp
 void init(nodelink &h){
