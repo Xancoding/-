@@ -22,7 +22,6 @@ int main() {
     int n;
     elemtype e;
     slink h;
-
     while (1) {
         n = menu();
         switch(n) {
@@ -106,8 +105,6 @@ void pop(slink &h) {
     slink tmp = h;
     h = h->next;
     printf("出栈的元素为：%d\n", tmp->data);
-
-
 }
 
 void traversal(slink h) {
@@ -129,7 +126,6 @@ void top(slink h) {
         printf("栈为空！\n");
         return ;
     }
-
     printf("栈顶元素为：%d\n", h->data);
-
 }
+
