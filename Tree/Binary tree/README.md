@@ -238,7 +238,7 @@ void node_count(treenode *root, int &num) {
 
 ## 测试数据
 ```cpp
-生成二叉树(先序)  abc xy qk sa # # dk # #  xz jk # # qs # # dz as aq # # ag # # db bd # # #
+生成二叉树(先序)  ncepu ee # # cs # #
 
 生成二叉树(用边生成)  
 # ncepu 0
@@ -246,17 +246,15 @@ ncepu ee 0
 ncepu cs 1
 end end 0
 
-先序遍历	abc xy qk sa dk xz jk qs dz as aq ag db bd
+先序遍历	ncepu ee cs
 
-中序遍历	sa qk dk xy jk xz qs abc aq as ag dz bd db
+中序遍历	ee ncepu cs
 
-后序遍历	sa dk qk jk qs xz xy aq ag as bd db dz abc
+后序遍历	ee cs ncepu
 
 层序遍历	
-abc
-xy dz
-qk xz as db
-sa dk jk qs aq ag bd
+ncepu
+ee cs
 ```
 
 ## 输出
