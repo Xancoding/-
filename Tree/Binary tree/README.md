@@ -264,9 +264,6 @@ void levelorder_traversal(treenode* root) {
   }
 ```
 ## 树的表示
-### 广义表
-```cpp
-```
 ### 凹入表
 ```cpp
 /* 凹入表显示 */
