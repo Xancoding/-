@@ -74,6 +74,17 @@ void tree_create(treenode *&root){
     } // for
 }
 ```
+## 二叉树的销毁
+```cpp
+/* 销毁二叉树 */
+void Destroy(treenode *p) {
+    if(p) {
+        Destroy(p->left);
+        Destroy(p->right);
+        delete p;
+    }
+}
+```
 ## 结点的查找
 ```cpp
 /* 查找数据 */ 
@@ -90,6 +101,23 @@ treenode *node_find(treenode *root, char *name)
             return p;
         else
             return node_find(root->right, name);
+    }
+}
+```
+## 结点的删除
+```cpp
+/* 删除数据 */
+void node_delete(treenode* & Root, char *name) {
+
+    if(Root){
+        if(strcmp(Root->data,name)==0){
+            Destroy(Root);
+            Root = NULL;
+        }
+        else{
+            node_delete(Root->left, name);
+            node_delete(Root->right, name);
+        }
     }
 }
 ```
