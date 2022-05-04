@@ -88,9 +88,7 @@ void Destroy(treenode *p) {
 ## 结点的查找
 ```cpp
 /* 查找数据 */ 
-treenode *node_find(treenode *root, char *name)
-{
-
+treenode *node_find(treenode *root, char *name) {
     treenode *p;
     if(root == NULL) return NULL;
     else{
