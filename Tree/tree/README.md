@@ -140,6 +140,8 @@ treelink node_find(treenode *root, char *name) {
 }
 ```
 ## 插入
+- 如果找到的双亲结点的第一个孩子结点地址为空，则双亲结点没有孩子，新插入的孩子结点作为第一个孩子结点
+- 反之，在第一个孩子结点的兄弟链上找到最后一个孩子结点，将新结点插入为最后一个孩子
 ```cpp
 /* 插入 */
 void node_insert(treelink pTree, char  *szParent, char  *szNew)
