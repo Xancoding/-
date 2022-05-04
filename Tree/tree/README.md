@@ -98,7 +98,6 @@ void tree_create(treelink &root){
 ## 求树深度
 ```cpp
 /* 求树深度 */
-/* 求二叉树深度 */
 int get_depth(treelink root) {
     if (root == NULL) return 0;
     else {
