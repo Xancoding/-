@@ -64,3 +64,67 @@ PCTreeNode PCTree[MAX_TREE_SIZE];
 - n个这样的表头结点用一维数组表示
 
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Tree/tree/picture/6.png "")
+
+# 树的基本操作
+- 采用孩子兄弟链表存储
+## 树的结点
+```cpp
+typedef struct treenode {
+    char data[MAX];
+    struct treenode *child;  //第一个孩子 
+    struct treenode *sibling;  //下一个兄弟 
+}treenode, *treelink;
+```
+## 创建树
+- 与父结点建立链接关系时，首次出现的孩子结点作为第一个孩子，其他孩子结点依次链接为前一个孩子的右孩子
+### 递归创建（先序）
+```cpp
+/* 创建一棵树  */
+void tree_create(treelink &root){
+    char data[MAX];
+    scanf("%s", data);
+    if (strcmp(data, "#") == 0) root = NULL;
+    else {
+        root = new treenode;
+        strcpy(root->data, data);
+        tree_create(root->child);
+        tree_create(root->sibling);
+    }
+}
+```
+### 输入边创建
+```cpp
+```
+## 求树深度
+```cpp
+/* 求树深度 */
+/* 求二叉树深度 */
+int get_depth(treelink root) {
+    if (root == NULL) return 0;
+    else {
+        int d1 = get_depth(root->child);
+        int d2 = get_depth(root->sibling);
+        return d1 + 1 > d2 ? d1 + 1 : d2;
+    }
+}
+```
+## 凹入表显示
+```cpp
+/* 凹入表显示 */
+void disp_tree(treelink root, int level) { //level为root结点的高度
+    if (root == NULL) return ;
+
+    for(int i = 1; i < level + 20; i++)
+        putchar('-');
+
+    putchar('+');
+    printf("%s\n",root->data);
+    disp_tree(root->child,level - 2);
+    disp_tree(root->sibling, level);
+}
+```
+
+# 测试数据
+```cpp
+
+```
