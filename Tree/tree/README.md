@@ -94,15 +94,50 @@ void tree_create(treelink &root){
 ```
 ### 输入边创建
 ```cpp
+/* 创建一棵二叉树  */
+void tree_create(treelink &root){
+    char fa[30], ch[30];  //fa为父结点 ch为子结点
+    treelink p, s, r;  //p为父结点 s为子结点
+    queue<treelink>que;
+    root = NULL;
+    printf("请输入父结点、子结点（用空格隔开，根结点的双亲为#）\n");
+    scanf("%s%s",fa, ch);
+    while (strcmp(ch,"end")) {
+        s = new treenode;    // 创建结点
+        strcpy(s->data,ch);
+        s->child = s->sibling = NULL;
+
+        que.push(s);// 指针入队列
+        if (strcmp(fa,"#") == 0)  root = s;  // 所建为根结点
+        else {// 非根结点的情况
+            p = que.front();// 取队列头元素(指针值)
+            while (strcmp(p->data,fa)) { // 查询双亲结点
+                que.pop();
+                p = que.front();
+            }//while
+
+            if (!(p->child)){
+                p->child = s;
+                r = s;
+            }// 链接第一个孩子结点
+            else {
+                r->sibling = s;  r = s;
+            }// 链接其它孩子结点
+        }// 非根结点的情况
+        printf("请输入父结点、子结点（用空格隔开，结束时输入end end 0）\n");
+        scanf("%s%s",fa,ch);
+    } // for
+}
 ```
 ## 销毁树
 ```cpp
 /* 销毁二叉树 */
-void Destroy(treenode *p) {
+void Destroy(treelink p) {
     if(p) {
         Destroy(p->child);
         Destroy(p->sibling);
         delete p;
+        p = NULL;
     }
 }
 ```
@@ -135,18 +170,32 @@ void disp_tree(treelink root, int level) { //level为root结点的高度
 ```
 ## 查找
 ```cpp
-/* 查找数据 */
-treelink node_find(treenode *root, char *name) {
+treelink node_find1(treelink root, char *name) {
 
     treenode *p;
     if(root == NULL) return NULL;
     else{
         if(strcmp(root->data, name)==0)
             return root;
-        else if(p = node_find(root->child, name))
+        else if(p = node_find1(root->child, name))
             return p;
         else
-            return node_find(root->sibling, name);
+            return node_find1(root->sibling, name);
+    }
+}
+```
+```cpp
+void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, treelink &p2) {
+    if(pTree == NULL) return;
+    if(strcmp(pTree->data, szName) == 0){  //找到则返回父节点指针和当前节点指针
+        p2 = pTree;  //当前节点
+        p1 = pLast;  //父节点
+    }
+    else{
+        //pLast = pTree;//暂存上一级节点指针
+        node_find2(pTree->child, szName, pTree, p1, p2);
+        //pLast = pTree;
+        node_find2(pTree->sibling, szName, pTree, p1, p2);
     }
 }
 ```
@@ -191,7 +240,28 @@ void node_insert(treelink pTree, char  *szParent, char  *szNew)
 - 如果该结点是双亲的第一个孩子，需将它的右兄弟链接为双亲的第一个孩子
 - 如果该结点不是第一个孩子，需将它的右孩子链接成它前一个兄弟的右兄弟
 ```cpp
+/* 删除 */
+void node_delete(treelink &pTree, char *szName){
+    treelink pFind = NULL, pParent = NULL, p = NULL;
 
+    node_find2(pTree, szName, p, pParent, pFind);
+
+    if(pFind){
+        if(pParent == NULL){//删除根节点
+            Destroy(pTree);
+            pTree = NULL;
+        }else{
+            if(pParent->child == pFind)//删除孩子节点
+                pParent->child = pFind->sibling;
+            else//删除兄弟节点
+                pParent->sibling = pFind->sibling;
+
+            pFind->sibling = NULL;//摘除当前节点
+            Destroy(pFind);//删除当前节点
+        }
+    }else
+        printf("指定删除节点不存在!\n");
+}
 ```
 
 
