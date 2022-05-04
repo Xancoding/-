@@ -141,7 +141,37 @@ treelink node_find(treenode *root, char *name) {
 ```
 ## 插入
 ```cpp
+/* 插入 */
+void node_insert(treelink pTree, char  *szParent, char  *szNew)
+{
+    treelink pFind = NULL;
+    treelink pChild = NULL;
+    pFind = node_find(pTree, szParent);
 
+    if(pFind){
+        pChild = pFind->child;
+        while(pChild!=NULL){
+            if(strcmp(pChild->data,szNew)==0){
+                printf("子节点已存在！\n");
+                return;
+            }else
+                pChild = pChild->sibling;
+        }
+
+        treelink pNew = new treenode;
+        strcpy(pNew->data, szNew);
+        if(pFind->child){
+            pNew->sibling = pFind->child;
+            pNew->child = NULL;
+        }else{
+            pNew->child = NULL;
+            pNew->sibling = NULL;
+        }
+        pFind->child = pNew;
+    }else
+        printf("父节点不存在!\n");
+
+}
 ```
 ## 删除
 ```cpp
