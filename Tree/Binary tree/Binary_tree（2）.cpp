@@ -92,7 +92,7 @@ int menu() {
         printf("\t4.后序遍历\n");
         printf("\t5.层序遍历\n");
         printf("\t6.凹入表表示\n");
-        printf("\t7.广义表表示\n");  //未完成
+        printf("\t7.广义表表示(未完成)\n");  //未完成
         printf("\t8.求二叉树的深度\n");
         printf("\t9.求二叉树的叶子结点数\n");
         printf("\t10.求二叉树的结点数\n");
