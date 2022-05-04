@@ -55,7 +55,6 @@ typedef struct {
 }PCTreeNode;                             
 PCTreeNode PCTree[MAX_TREE_SIZE];
 ```
-![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Tree/tree/picture/4.png "")
 ### 双亲孩子链表法
 - **双亲孩子链表法**就是把某个结点的所有孩子排列起来，并用单链表作为它的存储表示
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Tree/tree/picture/5.png "")
@@ -63,4 +62,5 @@ PCTreeNode PCTree[MAX_TREE_SIZE];
 - n个结点的树，用n个这样的单链表组成，每个单链表设立一个表头结点
 - 它有3个域：**数据域data**表示树的一个结点的数据信息，**指针域（下标）parent**为该结点的双亲在数组中的下标，**指针域link**指向该结点的孩子单链表的第一个结点
 - n个这样的表头结点用一维数组表示
+
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Tree/tree/picture/6.png "")
