@@ -121,6 +121,45 @@ void node_delete(treenode* & Root, char *name) {
     }
 }
 ```
+## 结点的插入
+```cpp
+/* 插入数据 */
+void node_insert(treenode *Root, char *pname, char *cname) {
+    treenode *parent, *pnew;
+    parent = node_find(Root, pname);
+    if(parent==NULL){
+        printf("父结点不存在\n");
+        return;
+    }else{
+        if(parent->left && parent->right){
+            printf("子结点已满\n");
+            return;
+        }
+
+        if(parent->left){
+            if(strcmp(parent->left->data,cname)==0){
+                printf("同名子结点已存在\n");
+                return;
+            }
+        }
+        if(parent->right){
+            if(strcmp(parent->right->data, cname)==0){
+                printf("同名子结点已存在\n");
+                return;
+            }
+        }
+
+        pnew = new treenode;  pnew->left = pnew->right =NULL;
+        strcpy(pnew->data, cname);
+        /* 优先插入左结点 */
+        if(parent->left == NULL)
+            parent->left = pnew;
+        else
+            parent->right = pnew;
+
+    }
+}
+```
 ## 二叉树的遍历
 ### 深度优先遍历
 #### 递归法
