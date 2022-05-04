@@ -122,8 +122,48 @@ void disp_tree(treelink root, int level) { //level为root结点的高度
     disp_tree(root->sibling, level);
 }
 ```
+## 查找
+```cpp
+/* 查找数据 */
+treelink node_find(treenode *root, char *name) {
+
+    treenode *p;
+    if(root == NULL) return NULL;
+    else{
+        if(strcmp(root->data, name)==0)
+            return root;
+        else if(p = node_find(root->child, name))
+            return p;
+        else
+            return node_find(root->sibling, name);
+    }
+}
+```
+## 插入
+```cpp
+
+```
+## 删除
+```cpp
+
+```
+
 
 # 测试数据
 ```cpp
-
+ncepu 学院 控计 软件 # 计算 # 信安 # 物联 # # 电气 # 能源 # # 管理部门 # # #
+```
+# 输出
+```cpp
+凹入表显示
+-----------------------+ncepu
+---------------------+学院
+-------------------+控计
+-----------------+软件
+-----------------+计算
+-----------------+信安
+-----------------+物联
+-------------------+电气
+-------------------+能源
+---------------------+管理部门
 ```
