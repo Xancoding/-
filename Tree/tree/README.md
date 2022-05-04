@@ -17,7 +17,7 @@ PTreeNode PTree[MAX_TREE_SIZE];
 ```
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Tree/tree/picture/1.png "")
 ### 双亲链表法
-- **双亲链表法**就是用一组任意的存储单元存储树中各结点，结点中包括结点本身的信息和指向该结点的双亲的指针
+- **双亲链表法**就是用一组任意的存储单元存储树中各结点，结点中包括**结点本身的信息**和**指向该结点的双亲的指针**
 ## 孩子表示法
 - 树的**孩子表示法**就是用指针表示出每个结点的孩子在存储空间的位置信息
 - 方便查找孩子，不便查找双亲
@@ -32,3 +32,13 @@ typedef struct {
 CTreeNode CTree[MAX_TREE_SIZE];
 ```
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Tree/tree/picture/2.png "")
+### 孩子链表法
+- **孩子链表法**就是用一组任意的存储单元存储树中各结点，结点中包括**结点本身的信息**和**指向该结点的所有孩子的指针**
+- 结点中指针域的个数等于树的度数
+```cpp
+typedef struct CTNode {
+  TElemType data;                     
+  struct CTNode *child[MAX_SON_SIZE]; 
+}CTNode,*CTree;                       
+```
+![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Tree/tree/picture/3.png "")
