@@ -95,6 +95,17 @@ void tree_create(treelink &root){
 ### 输入边创建
 ```cpp
 ```
+## 销毁树
+```cpp
+/* 销毁二叉树 */
+void Destroy(treenode *p) {
+    if(p) {
+        Destroy(p->child);
+        Destroy(p->sibling);
+        delete p;
+    }
+}
+```
 ## 求树深度
 ```cpp
 /* 求树深度 */
