@@ -169,9 +169,9 @@ void disp_tree(treelink root, int level) { //level为root结点的高度
 }
 ```
 ## 查找
+- 仅查找当前结点
 ```cpp
 treelink node_find1(treelink root, char *name) {
-
     treenode *p;
     if(root == NULL) return NULL;
     else{
@@ -184,6 +184,7 @@ treelink node_find1(treelink root, char *name) {
     }
 }
 ```
+- 查找当前结点及其父结点
 ```cpp
 void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, treelink &p2) {
     if(pTree == NULL) return;
