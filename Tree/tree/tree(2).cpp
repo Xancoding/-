@@ -24,6 +24,8 @@ void preorder_traversal(treenode *root);  /* 先根遍历 */
 void postorder_traversal(treenode *root); /* 后根遍历 */
 void levelorder_traversal(treenode* root);  /*层次遍历 */
 void Path(treelink pTree, stack<char*>&st, char  *szName);  /* 路径 */
+treelink node_find1(treelink root, char *name);  /* 查找 */
+void get_follow(treelink T, char *s);  /* 子结点输出 */
 
 int main() {
     int n;
@@ -71,6 +73,13 @@ int main() {
                 Path(root, st, str);
                 printf("按任意键继续!\n");
                 getch(); break;
+            case 8:
+                printf("请输入节点名: ");
+                scanf("%s", str);
+                get_follow(root, str);
+                puts("");
+                printf("按任意键继续!\n");
+                getch(); break;
         }
     }
 }
@@ -88,10 +97,11 @@ int menu() {
         printf("\t5.凹入表表示\n");
         printf("\t6.求所有叶子结点路径\n");
         printf("\t7.路径\n");
+        printf("\t8.子结点\n");
         printf("************************\n");
         printf("请输入数字：");
         scanf("%d", &n);
-        if (n > 7 || n < 0) {
+        if (n > 8 || n < 0) {
             printf("输入错误，请重新输入！\n");
         } else return n;
     }
@@ -215,5 +225,32 @@ void Path(treelink pTree, stack<char*>&st, char  *szName) {
         Path(pTree->child,st,szName);
         st.pop();
         Path(pTree->sibling,st,szName);
+    }
+}
+
+/* 查找 */
+treelink node_find1(treelink root, char *name) {
+
+    treenode *p;
+    if(root == NULL) return NULL;
+    else{
+        if(strcmp(root->data, name)==0)
+            return root;
+        else if(p = node_find1(root->child, name))
+            return p;
+        else
+            return node_find1(root->sibling, name);
+    }
+}
+
+/* 子结点输出 */
+void get_follow(treelink T, char *s) {
+    T = node_find1(T, s);
+
+    if (T == NULL) return ;
+    T = T->child;
+    while (T != NULL) {
+        printf("%s ", T->data);
+        T = T->sibling;
     }
 }
