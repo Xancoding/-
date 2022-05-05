@@ -263,38 +263,6 @@ void node_delete(treelink &pTree, char *szName){
         printf("指定删除节点不存在!\n");
 }
 ```
-## 求路径
-### 路径
-```cpp
-/* 路径 */
-void Path(treelink pTree, stack<char*>&st, char  *szName) {
-    char sz[32];
-    if(pTree){
-        st.push(pTree->data);
-        if(strcmp(pTree->data,szName)==0) print_stack(st);
-        Path(pTree->child,st,szName);
-        st.pop();
-        Path(pTree->sibling,st,szName);
-    }
-}
-```
-### 叶子结点路径
-- 对只有左子树的二叉树作先序遍历，用栈保存首次遇到的结点
-- 如果栈顶是叶子结点，遍历输出栈得到一条叶子路径，栈顶结点出栈。如果出栈结点有右兄弟，继续对以右兄弟为根的子树先序遍历，找其叶子结点路径
-- 如果栈顶不是叶子结点，继续进行以栈顶结点为根的子树进行先序遍历。如果以栈顶结点为根的所有子树的先序遍历均已完成，栈顶结点出栈
-- 当栈为空时，所有叶子结点路径均已完成，算法结束
-```cpp
-/* 求所有叶子结点路径 */
-void all_tree_path(treelink T, stack<char*>st) {
-    while (T) {
-        st.push(T->data);
-        if (!T->child) print_stack(st);  //T是叶子结点
-        else all_tree_path(T->child, st);  //找以T为根的子树上的叶子结点路径
-        st.pop();  //栈顶结点是叶子结点或以栈顶结点为根的子树上的叶子路径已完成
-        T = T->sibling;     //继续找T的其余子树
-    }
-}
-```
 ## 树的遍历
 ### 先根遍历
 ```cpp
@@ -340,7 +308,52 @@ void levelorder_traversal(treenode* root) {
 }
 ```
 
-
+## 子结点
+```cpp
+/* 子结点输出 */
+void get_follow(treelink T, char *s) { //输出指定结点的子结点
+    T = node_find1(T, s);
+    
+    if (T == NULL) return ;
+    T = T->child;
+    while (T != NULL) {
+        printf("%s ", T->data);
+        T = T->sibling;
+    }
+}
+```
+## 求路径
+### 路径
+```cpp
+/* 路径 */
+void Path(treelink pTree, stack<char*>&st, char  *szName) {
+    char sz[32];
+    if(pTree){
+        st.push(pTree->data);
+        if(strcmp(pTree->data,szName)==0) print_stack(st);
+        Path(pTree->child,st,szName);
+        st.pop();
+        Path(pTree->sibling,st,szName);
+    }
+}
+```
+### 叶子结点路径
+- 对只有左子树的二叉树作先序遍历，用栈保存首次遇到的结点
+- 如果栈顶是叶子结点，遍历输出栈得到一条叶子路径，栈顶结点出栈。如果出栈结点有右兄弟，继续对以右兄弟为根的子树先序遍历，找其叶子结点路径
+- 如果栈顶不是叶子结点，继续进行以栈顶结点为根的子树进行先序遍历。如果以栈顶结点为根的所有子树的先序遍历均已完成，栈顶结点出栈
+- 当栈为空时，所有叶子结点路径均已完成，算法结束
+```cpp
+/* 求所有叶子结点路径 */
+void all_tree_path(treelink T, stack<char*>st) {
+    while (T) {
+        st.push(T->data);
+        if (!T->child) print_stack(st);  //T是叶子结点
+        else all_tree_path(T->child, st);  //找以T为根的子树上的叶子结点路径
+        st.pop();  //栈顶结点是叶子结点或以栈顶结点为根的子树上的叶子路径已完成
+        T = T->sibling;     //继续找T的其余子树
+    }
+}
+```
 # 测试数据
 ```cpp
 ncepu 学院 控计 软件 # 计算 # 信安 # 物联 # # 电气 # 能源 # # 管理部门 # # #
