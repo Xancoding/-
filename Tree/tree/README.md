@@ -264,7 +264,21 @@ void node_delete(treelink &pTree, char *szName){
 }
 ```
 ## 求路径
-### 求所有叶子结点路径
+### 路径
+```cpp
+/* 路径 */
+void Path(treelink pTree, stack<char*>&st, char  *szName) {
+    char sz[32];
+    if(pTree){
+        st.push(pTree->data);
+        if(strcmp(pTree->data,szName)==0) print_stack(st);
+        Path(pTree->child,st,szName);
+        st.pop();
+        Path(pTree->sibling,st,szName);
+    }
+}
+```
+### 叶子结点路径
 - 对只有左子树的二叉树作先序遍历，用栈保存首次遇到的结点
 - 如果栈顶是叶子结点，遍历输出栈得到一条叶子路径，栈顶结点出栈。如果出栈结点有右兄弟，继续对以右兄弟为根的子树先序遍历，找其叶子结点路径
 - 如果栈顶不是叶子结点，继续进行以栈顶结点为根的子树进行先序遍历。如果以栈顶结点为根的所有子树的先序遍历均已完成，栈顶结点出栈
