@@ -284,6 +284,46 @@ void all_tree_path(treelink T, stack<char*>st) {
 ## 树的遍历
 ### 先根遍历
 ```cpp
+/* 先根遍历 */
+void preorder_traversal(treenode *root) {
+    if (root == NULL) return ;
+    printf("%s ", root->data);
+    preorder_traversal(root->child);
+    preorder_traversal(root->sibling);
+}
+```
+### 后根遍历
+```cpp
+/* 后根遍历 */
+void postorder_traversal(treenode *root) {
+    if (root == NULL) return ;
+    preorder_traversal(root->child);
+    preorder_traversal(root->sibling);
+    printf("%s ", root->data);
+}
+```
+### 层次遍历
+```cpp
+/*层次遍历 */
+void levelorder_traversal(treenode* root) {
+    queue<treenode *> que;
+    que.push(root);
+    if (root == NULL) return;
+    while (!que.empty()) {
+        int size = que.size();
+        for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
+            treenode *cur = que.front();
+            que.pop();
+            printf("%s ", cur->data);
+            cur = cur->child;
+            while (cur != NULL) {
+                que.push(cur);
+                cur = cur->sibling;
+            }
+        }
+        puts("");
+    }
+}
 ```
 
 
