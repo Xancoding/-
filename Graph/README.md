@@ -54,6 +54,24 @@ void crt_graph(graphlink G) {
 ```
 - 邻接表
 ```cpp
+void crt_graph(graphlink G) {
+    printf("输入顶点数和边数（空格隔开）\n");
+    scanf("%d%d", &G->vex, &G->arc);
+    printf("输入顶点信息\n");
+    for (int i = 1; i <= G->vex; i++) {
+        scanf("%s", G->adjlist[i].vertex);
+        G->adjlist[i].head = NULL;
+    }
+    printf("输入边\n");
+    for (int k = 0; k < G->arc; k++) {
+        int i, j;
+        scanf("%d%d", &i, &j);
+        arcnode *p = new arcnode;
+        p->adjvex = j;
+        p->next = G->adjlist[i].head;  //头插
+        G->adjlist[i].head = p;
+    }
+}
 ```
 ## 显示
 - 邻接矩阵
