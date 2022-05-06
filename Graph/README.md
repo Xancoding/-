@@ -84,3 +84,22 @@ void dfs(graphlink G, int v, int visited[]) {  //v为出发点编号
             dfs(G, w, visited);
 }
 ```
+### BFS
+- 邻接矩阵
+```cpp
+void bfs(graphlink G, int v, int visited[], queue<int>que) {  //que存储已访问过的顶点编号
+    printf("%s ", G->vexs[v]);
+    visited[v] = 1;
+    que.push(v);
+
+    while (!que.empty()) {
+        int u = que.front();  que.pop();
+        for (int w = 1; w <= G->vex; w++)   //找出u所有邻接点
+            if (G->arcs[u][w] != 0 && visited[w] == 0) {
+                printf("%s ", G->vexs[w]);
+                visited[w] = 1;
+                que.push(w);
+            }
+    }
+}
+```
