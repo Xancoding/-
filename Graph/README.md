@@ -49,6 +49,9 @@ void crt_graph(graphlink G) {
         int i, j;
         scanf("%d%d", &i, &j);
         G->arcs[i][j] = 1;
+        
+        /* 无向图 */
+        //G->arcs[j][i] = 1;  
     }
 }
 ```
@@ -70,6 +73,12 @@ void crt_graph(graphlink G) {
         p->adjvex = j;
         p->next = G->adjlist[i].head;  //头插
         G->adjlist[i].head = p;
+
+        /* 无向图 */
+        // arcnode *q = new arcnode;
+        // q->adjvex = i;
+        // q->next = G->adjlist[j].head;  //头插
+        // G->adjlist[j].head = q;
     }
 }
 ```
