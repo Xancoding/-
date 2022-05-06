@@ -61,13 +61,10 @@ int menu() {
         printf("\t1.创建图\n");
         printf("\t2.显示图\n");
         printf("\t3.Hamilton\n");
-        printf("\t4.\n");
-        printf("\t5.\n");
-        printf("\t6.\n");
         printf("************************\n");
         printf("请输入数字：");
         scanf("%d", &n);
-        if (n > 6 || n < 0) {
+        if (n > 3 || n < 0) {
             printf("输入错误，请重新输入！\n");
         } else return n;
     }
@@ -105,7 +102,7 @@ void dfs(graphlink G, int v,int path[], int visited[], int &n) {  //v为出发�
     visited[v] = 1;
     path[n++] = v;
 
-    if (n == G->vex) {print_path(G, path, n);  puts("");} /* 符合条件，输出该简单路径 */
+    if (n == G->vex) {print_path(G, path, n);  puts("");}  /* 符合条件，输出该简单路径  */
     for (int w = 1; w <= G->vex; w++)
         if (G->arcs[v][w] != 0 && visited[w] == 0)
             dfs(G, w, path, visited, n);
