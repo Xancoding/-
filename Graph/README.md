@@ -1,5 +1,3 @@
-- 存储从0开始
-- 编号从1开始
 ## 存储
 - 邻接矩阵
 ```cpp
@@ -42,16 +40,15 @@ void crt_graph(graphlink G) {
     printf("输入顶点数和边数（空格隔开）\n");
     scanf("%d %d", &G->vex, &G->arc);  //顶点数和边数
     printf("输入顶点信息\n");
-    for (int i = 0; i < G->vex; i++) scanf("%s", G->vexs[i]);  //顶点信息
-    for (int i = 0; i < G->vex; i++)
-        for (int j = 0; j < G->vex; j++)
+    for (int i = 1; i <= G->vex; i++) scanf("%s", G->vexs[i]);  //顶点信息
+    for (int i = 1; i <= G->vex; i++)
+        for (int j = 1; j <= G->vex; j++)
             G->arcs[i][j] = 0;  //邻接矩阵初始化
     printf("输入边\n");
-    for (int k = 0; k < G->arc; k++) {  //读入边
+    for (int k = 1; k <= G->arc; k++) {  //读入边
         int i, j;
         scanf("%d%d", &i, &j);
-        G->arcs[i - 1][j - 1] = 1;
-        G->arcs[i - 1][j - 1] = 1;
+        G->arcs[i][j] = 1;
     }
 }
 ```
@@ -63,10 +60,10 @@ void crt_graph(graphlink G) {
 ```cpp
 void disp_graph(graphlink G) {
     printf("顶点如下\n");
-    for (int i = 0; i < G->vex; i++) printf("%s ", G->vexs[i]);
+    for (int i = 1; i <= G->vex; i++) printf("%s ", G->vexs[i]);
     printf("\n邻接矩阵如下\n");
-    for (int i = 0; i < G->vex; i++) {
-        for (int j = 0; j < G->vex; j++)
+    for (int i = 1; i <= G->vex; i++) {
+        for (int j = 1; j <= G->vex; j++)
             printf("%4d", G->arcs[i][j]);
         puts("");
     }
@@ -77,6 +74,13 @@ void disp_graph(graphlink G) {
 ```
 ## 遍历
 ### DFS
+- 邻接矩阵
 ```cpp
-
+void dfs(graphlink G, int v, int visited[]) {  //v为出发点编号
+    printf("%s ", G->vexs[v]);
+    visited[v] = 1;
+    for (int w = 1; w <= G->vex; w++)
+        if (G->arcs[v][w] != 0 && visited[w] == 0)
+            dfs(G, w, visited);
+}
 ```
