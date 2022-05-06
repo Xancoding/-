@@ -98,6 +98,18 @@ void disp_graph(graphlink G) {
 ```
 - 邻接表
 ```cpp
+void disp_graph(graphlink G) {
+    printf("邻接表如下\n");
+    for (int i = 1; i <= G->vex; i++) {
+        printf("%s ", G->adjlist[i].vertex);  //显示表头结点
+        if(G->adjlist[i].head == NULL) printf("^ \n");  //边链表为空
+        else {
+            arcnode *p = G->adjlist[i].head;  //p指向第一个边结点
+            while (p) {printf("%d-->", p->adjvex);  p = p->next;}
+            printf("^ \n");
+        }
+    }
+}
 ```
 ## 遍历(基于连通图)
 ### DFS
