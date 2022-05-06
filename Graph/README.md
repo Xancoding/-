@@ -132,6 +132,7 @@ void bfs(graphlink G, int v, int visited[], queue<int>que) {  //que存储已访�
 ```
 ## 测试数据
 ```cpp
+![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Graph/picture/1.jpg "")
 输入顶点数和边数 9 11
 输入顶点信息  1 2 3 4 5 6 7 8 9
 输入边  3 2 3 1 2 4 1 4 1 2 4 9 3 6 6 5 5 8 5 7 7 8
