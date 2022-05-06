@@ -111,6 +111,19 @@ void dfs(graphlink G, int v, int visited[]) {  //v为出发点编号
             dfs(G, w, visited);
 }
 ```
+- 邻接表
+```cpp
+void dfs(graphlink G, int v, int visited[]) {
+    printf("%s", G->adjlist[v].vertex);
+    visited[v] = 1;
+    arcnode *p = G->adjlist[v].head;
+    while(p) {
+        int w = p->adjvex;
+        if (visited[w] == 0) dfs(G, w, visited);
+        p = p->next;
+    }
+}
+```
 ### BFS
 - 邻接矩阵
 ```cpp
@@ -127,6 +140,24 @@ void bfs(graphlink G, int v, int visited[], queue<int>que) {  //que存储已访�
                 visited[w] = 1;
                 que.push(w);
             }
+    }
+}
+```
+- 邻接表
+```cpp
+void bfs(graphlink G, int v, int visited[], queue<int>que) {
+    printf("%s ", G->adjlist[v].vertex);
+    visited[v] = 1;
+    que.push(v);
+
+    while (!que.empty()) {
+        int u = que.front();  que.pop();
+        arcnode *p = G->adjlist[u].head;
+        while (p) {
+            int w = p->adjvex;
+            if (visited[w] == 0) {printf("%s ", G->adjlist[w].vertex);  visited[w] = 1;  que.push(w);}
+            p = p->next;
+        }
     }
 }
 ```
