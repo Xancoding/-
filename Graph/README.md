@@ -99,7 +99,7 @@ void disp_graph(graphlink G) {
 - 邻接表
 ```cpp
 ```
-## 遍历
+## 遍历(基于连通图)
 ### DFS
 - 邻接矩阵
 ```cpp
