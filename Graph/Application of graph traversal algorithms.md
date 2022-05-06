@@ -105,7 +105,7 @@ void dfs(graphlink G, int v,int path[], int visited[], int &n) {  //v为出发�
     visited[v] = 1;
     path[n++] = v;
 
-    if (n == G->vex) {print_path(G, path, n);  puts("");}
+    if (n == G->vex) {print_path(G, path, n);  puts("");} /* 符合条件，输出该简单路径 */
     for (int w = 1; w <= G->vex; w++)
         if (G->arcs[v][w] != 0 && visited[w] == 0)
             dfs(G, w, path, visited, n);
