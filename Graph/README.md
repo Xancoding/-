@@ -1,12 +1,11 @@
+- 存储从0开始
+- 编号从1开始
 ## 存储
 - 邻接矩阵
 ```cpp
-#define MAX 20  //最大顶点数
-#define NUM 20  //最大字符串长度
-
 typedef struct {
     char vexs[MAX][NUM];;  //顶点信息
-    int arcs [MAX][MAX];  //顶点关系(边或弧上的权值)
+    int arcs[MAX][MAX];  //顶点关系(边或弧上的权值)
     int vex;  //顶点数
     int arc;  //弧数
 }graph, *graphlink;
@@ -75,4 +74,9 @@ void disp_graph(graphlink G) {
 ```
 - 邻接表
 ```cpp
+```
+## 遍历
+### DFS
+```cpp
+
 ```
