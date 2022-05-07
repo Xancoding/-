@@ -392,8 +392,8 @@ void disp_graph(graphlink G) {
 }
 
 void dfs(graphlink G, int v,int w, int path[], int visited[], int &found, int &n) {  //n表示当前path中包含顶点数
-    visited[v] = 1;
-    path[n++] = v;
+    visited[v] = 1;  //访问顶点v
+    path[n++] = v;  //将顶点v放入路径
     for (int j = 1; j <= G->vex && !found; j++) {
         if (G->arcs[v][j] == 1) {
             if (j == w) {
@@ -403,7 +403,7 @@ void dfs(graphlink G, int v,int w, int path[], int visited[], int &found, int &n
             } else if (visited[j] == 0) dfs(G, j, w, path, visited, found, n);
         }
     }
-    if (!found) n--;
+    if (!found) n--;  //从路径上删除顶点v
 }
 
 void print_path(graphlink G, int path[], int n) {
