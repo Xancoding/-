@@ -138,6 +138,10 @@ void print_MST(graphlink G, lowcost lc[]) {
     }
 }
 ```
+## 时间复杂度
+```cpp
+O(n^2+m), n 表示点数，m 表示边数
+```
 ## 测试数据
 ```cpp
 输入顶点数和边数 5 7
