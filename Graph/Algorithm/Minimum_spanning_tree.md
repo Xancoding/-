@@ -37,10 +37,7 @@ void print_MST(graphlink G, lowcost lc[]);  //打印最小生成树
 
 int main() {
     int n;
-    int v;  //出发点编号
     lowcost lc[MAX]; //最小代价数组
-    int path[MAX];
-    queue<int>que;
     graphlink G = new graph;
 
     while (1) {
@@ -108,6 +105,7 @@ void disp_graph(graphlink G) {
 }
 
 void prim(graphlink G, int v, lowcost lc[]) {
+    int total = 0;  //边权总和
     int st[MAX] = {0};  //存储每个点是否已经在生成树中
     st[v] = 1;
     for (int i = 1; i <= G->vex; i++) {  //初始化
@@ -123,6 +121,7 @@ void prim(graphlink G, int v, lowcost lc[]) {
                 min = lc[k].weight;
                 pos = k;
             }
+        total += min;
         st[pos] = 1;  //已在最小生成树中的点
         //更新其他点到当前最小生成树的距离
         for (int k = 1; k <= G->vex; k++)
@@ -131,7 +130,7 @@ void prim(graphlink G, int v, lowcost lc[]) {
                 lc[k].adjnode = pos;
             }
     }
-
+    printf("边权总和为：%d\n", total);
     print_MST(G, lc);
 }
 
@@ -151,6 +150,8 @@ void print_MST(graphlink G, lowcost lc[]) {
 ```
 ## 输出
 ```cpp
+边权总和为：70
+
 最小生成树
 a(ROOT)
 d->b
