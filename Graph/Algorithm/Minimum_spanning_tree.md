@@ -32,7 +32,7 @@ typedef struct {  //最小代价数组
 int menu();  //菜单
 void crt_graph(graphlink G);  //创建
 void disp_graph(graphlink G);  //显示
-void MST(graphlink G, int v, lowcost lc[]);  //最小生成树
+void prim(graphlink G, int v, lowcost lc[]);  //最小生成树
 void print_MST(graphlink G, lowcost lc[]);  //打印最小生成树
 
 int main() {
@@ -55,7 +55,7 @@ int main() {
                 printf("按任意键继续!\n");
                 getch(); break;
             case 3:
-                MST(G, 1, lc);  //从编号为1的点出发
+                prim(G, 1, lc);  //从编号为1的点出发
                 printf("按任意键继续!\n");
                 getch(); break;
         }
@@ -107,7 +107,7 @@ void disp_graph(graphlink G) {
     }
 }
 
-void MST(graphlink G, int v, lowcost lc[]) {
+void prim(graphlink G, int v, lowcost lc[]) {
     int st[MAX] = {0};  //存储每个点是否已经在生成树中
     st[v] = 1;
     for (int i = 1; i <= G->vex; i++) {  //初始化
