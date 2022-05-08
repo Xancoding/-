@@ -1,4 +1,5 @@
 # Prim
+- 适用于稠密图
 ## 代码实现
 ```cpp
 #include<stdio.h>
@@ -140,7 +141,7 @@ void print_MST(graphlink G, lowcost lc[]) {
 ```
 ## 时间复杂度
 ```cpp
-O(n^2 + m), n 表示点数，m 表示边数
+O(n^2 + e), n 表示点数，e 表示边数
 ```
 ## 测试数据
 ```cpp
@@ -158,12 +159,13 @@ c->d
 a->e
 ```
 # Kruskal
+- 适用于稀疏图
 ## 代码实现
 ```cpp
 ```
 ## 时间复杂度
 ```cpp
-O(mlogm),m 表示边数
+O(eloge),e 表示边数
 ```
 ## 测试数据
 ```cpp
