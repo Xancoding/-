@@ -67,3 +67,19 @@ void shell_sort()
     }
 }
 ```
+## 快速排序
+```cpp
+void quick_sort(int l, int r)
+{
+    if (l >= r) return ;
+    
+    int x = a[l + r>> 1], i = l - 1, j = r + 1;
+    while (i < j)
+    {
+        while (a[++ i] < x);
+        while (a[-- j] > x);
+        if (i < j) swap(a[i], a[j]);
+    }
+    sort(l, j), sort(j + 1, r);
+}
+```
