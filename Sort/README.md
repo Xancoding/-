@@ -135,6 +135,7 @@ int main()
 }
 ```
 ## 基数排序
+- 基数排序是桶排序的特例，优势是可以处理浮点数和负数，劣势是还要配合别的排序函数
 ```cpp
 int maxbit()
 {
@@ -171,5 +172,48 @@ void radixsort()
         radix *= 10;
     }
     
+}
+```
+## 计数排序
+```cpp
+void counting_sort()
+{
+    int sorted[N];
+    int maxv = a[0];
+    for (int i = 1; i < n; i ++ )
+        if (maxv < a[i])
+            maxv = a[i];
+    int count[maxv + 1];
+    for (int i = 0; i < n; i ++ ) count[a[i]] ++ ;
+    for (int i = 1; i <= maxv; i ++ ) count[i] += count[i - 1];
+    for (int i = n-1; i >= 0; i -- )
+    {
+        sorted[count[a[i]] - 1] = a[i];
+        count[a[i]] -- ;
+    }
+    for (int i = 0; i < n; i ++ ) a[i] = sorted[i];
+}
+```
+## 桶排序
+```cpp
+vector<int> bucketSort(vector<int>& nums) {
+    int n = nums.size();
+    int maxv = *max_element(nums.begin(), nums.end());
+    int minv = *min_element(nums.begin(), nums.end());
+    int bs = 1000;
+    int m = (maxv - minv) / bs + 1;
+    vector<vector<int> > bucket(m);
+    for (int i = 0; i < n; ++i) {
+        bucket[(nums[i] - minv) / bs].push_back(nums[i]);
+    }
+    int idx = 0;
+    for (int i = 0; i < m; ++i) {
+        int sz = bucket[i].size();
+        bucket[i] = quickSort(bucket[i]);
+        for (int j = 0; j < sz; ++j) {
+            nums[idx++] = bucket[i][j];
+        }
+    }
+    return nums;
 }
 ```
