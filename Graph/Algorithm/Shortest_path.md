@@ -36,8 +36,6 @@ O(n^3), n 表示点数
 #define MAX 20  //最大顶点数
 #define NUM 20  //最大字符串长度
 #define INF 0x3f3f3f3f //无穷大
-#include<iostream>
-using namespace std;
 
 typedef struct {  //图的邻接矩阵
     char vexs[MAX][NUM];;  //顶点信息
