@@ -110,7 +110,7 @@ void merge_sort(int l, int r)
 ```
 ## 堆排序
 - [堆排序](https://www.cnblogs.com/wanglei5205/p/8733524.html "")
-- 此排序使用了模拟堆，为了使最后一个非叶子节点的编号为n/2，数组编号从1开始
+- 此排序使用了模拟堆，为了使最后一个非叶子节点的编号为n / 2，数组编号从1开始
 ```cpp
 void down(int u)
 {
