@@ -104,14 +104,14 @@ void merge_sort(int l, int r)
 }
 ```
 ## 堆排序
-- 须知此排序为使用了模拟堆，为了使最后一个非叶子节点的编号为n/2，数组编号从1开始
-[堆排序](https://www.cnblogs.com/wanglei5205/p/8733524.html "")
+- [堆排序](https://www.cnblogs.com/wanglei5205/p/8733524.html "")
+- 此排序使用了模拟堆，为了使最后一个非叶子节点的编号为n/2，数组编号从1开始
 ```
 void down(int u)
 {
     int t = u;
-    if (u<<1 <= n && h[u<<1] < h[t]) t = u<<1;
-    if ((u<<1|1) <= n && h[u<<1|1] < h[t]) t = u<<1|1;
+    if (u << 1 <= n && h[u << 1] < h[t]) t = u << 1;
+    if ((u << 1 | 1) <= n && h[u << 1| 1] < h[t]) t = u << 1 | 1;
     if (u != t)
     {
         swap(h[u], h[t]);
@@ -122,7 +122,7 @@ void down(int u)
 int main()
 {
     for (int i = 1; i <= n; i ++ ) cin >> h[i];
-    for (int i = n/2; i; i -- ) down(i);
+    for (int i = n / 2; i; i -- ) down(i);
     while (true)
     {
         if (!n) break;
