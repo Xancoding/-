@@ -106,7 +106,7 @@ void merge_sort(int l, int r)
 ## 堆排序
 - [堆排序](https://www.cnblogs.com/wanglei5205/p/8733524.html "")
 - 此排序使用了模拟堆，为了使最后一个非叶子节点的编号为n/2，数组编号从1开始
-```
+```cpp
 void down(int u)
 {
     int t = u;
@@ -132,5 +132,44 @@ int main()
         down(1);
     }
     return 0;
+}
+```
+## 基数排序
+```cpp
+int maxbit()
+{
+    int maxv = a[0];
+    for (int i = 1; i < n; i ++ )
+        if (maxv < a[i])
+            maxv = a[i];
+    int cnt = 1;
+    while (maxv >= 10) maxv /= 10, cnt ++ ;
+    
+    return cnt;
+}
+void radixsort()
+{
+    int t = maxbit();
+    int radix = 1;
+    
+    for (int i = 1; i <= t; i ++ )
+    {
+        for (int j = 0; j < 10; j ++ ) count[j] = 0;
+        for (int j = 0; j < n; j ++ )
+        {
+            int k = (a[j] / radix) % 10;
+            count[k] ++ ;
+        }
+        for (int j = 1; j < 10; j ++ ) count[j] += count[j - 1];
+        for (int j = n-1; j >= 0; j -- )
+        {
+            int k = (a[j] / radix) % 10;
+            temp[count[k] - 1] = a[j];
+            count[k] -- ;
+        }
+        for (int j = 0; j < n; j ++ ) a[j] = temp[j];
+        radix *= 10;
+    }
+    
 }
 ```
