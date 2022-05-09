@@ -201,8 +201,8 @@ void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, tr
 }
 ```
 ## 插入
-- 如果找到的双亲结点没有孩子，将新插入的孩子结点作为第一个孩子结点
-- 如果双亲结点已经有孩子，将第一个孩子作为新结点的兄弟，并将新结点作为第一个孩子结点
+- 如果找到的双亲结点没有孩子，那么将新插入的结点作为第一个孩子结点
+- 如果双亲结点已经有孩子，那么将第一个孩子结点作为新结点的兄弟，并将新结点作为第一个孩子结点
 ```cpp
 /* 插入 */
 void node_insert(treelink pTree, char  *szParent, char  *szNew)
