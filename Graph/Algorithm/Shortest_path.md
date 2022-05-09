@@ -8,6 +8,155 @@ O(n^2), n 表示点数
 ```
 ## 代码实现
 ```cpp
+#include<stdio.h>
+#include<malloc.h>
+#include<string.h>
+#include<conio.h>
+#include<stack>
+#include<queue>
+#define MAX 20  //最大顶点数
+#define NUM 20  //最大字符串长度
+#define INF 0x3f3f3f3f //无穷大
+
+typedef struct {  //图的邻接矩阵
+    char vexs[MAX][NUM];;  //顶点信息
+    int arcs[MAX][MAX];  //顶点关系(边或弧上的权值)
+    int vex;  //顶点数
+    int arc;  //弧数
+}graph, *graphlink;
+
+typedef struct {  //路径数组
+    int distance;  //路径长度
+    int path;  //弧尾编号
+}shortdist;
+
+int menu();  //菜单
+void crt_graph(graphlink G);  //创建
+void disp_graph(graphlink G);  //显示
+void dijkstra(graphlink G, int v, shortdist dist[]);  //图中某一源点到其余各点的最短路径
+void print_path(graphlink G, shortdist dist[], int v);  //打印最短路
+
+int main() {
+    int n;
+    int v;  //源点下标
+    shortdist dist[MAX];  //路径数组
+    graphlink G = new graph;
+
+    while (1) {
+        n = menu();
+        switch(n) {
+            case 1:
+                crt_graph(G);
+                printf("按任意键继续!\n");
+                getch(); break;
+            case 2:
+                disp_graph(G);
+                printf("按任意键继续!\n");
+                getch(); break;
+            case 3:
+                printf("输入源点下标：");
+                scanf("%d", &v);
+                dijkstra(G, v, dist);
+                printf("按任意键继续!\n");
+                getch(); break;
+        }
+    }
+}
+
+int menu() {
+    int n;
+    while (1) {
+        system("cls");
+        printf("*****欢迎使用本系统*****\n");
+        printf("\t1.创建图\n");
+        printf("\t2.显示图\n");
+        printf("\t3.最小生成树\n");
+        printf("************************\n");
+        printf("请输入数字：");
+        scanf("%d", &n);
+        if (n > 3 || n < 0) {
+            printf("输入错误，请重新输入！\n");
+        } else return n;
+    }
+}
+
+void crt_graph(graphlink G) {
+    printf("输入顶点数和边数（空格隔开）\n");
+    scanf("%d %d", &G->vex, &G->arc);  //顶点数和边数
+    printf("输入顶点信息\n");
+    for (int i = 1; i <= G->vex; i++) scanf("%s", G->vexs[i]);  //顶点信息
+    for (int i = 1; i <= G->vex; i++)
+        for (int j = 1; j <= G->vex; j++) {
+            G->arcs[i][j] = INF;  //邻接矩阵初始化
+            if (i == j) G->arcs[i][j] = 0;
+        }
+    printf("输入边和权值（空格隔开）\n");
+    for (int k = 1; k <= G->arc; k++) {  //读入边
+        int i, j, w;
+        scanf("%d%d%d", &i, &j, &w);
+        G->arcs[i][j] = w;
+    }
+}
+
+void disp_graph(graphlink G) {
+    printf("顶点如下\n");
+    for (int i = 1; i <= G->vex; i++) printf("%s ", G->vexs[i]);
+    printf("\n邻接矩阵如下\n");
+    for (int i = 1; i <= G->vex; i++) {
+        for (int j = 1; j <= G->vex; j++)
+            printf("%-16d", G->arcs[i][j]);
+        puts("");
+    }
+}
+
+void dijkstra(graphlink G, int v, shortdist dist[]) {
+    int flag[MAX] = {0};
+    flag[v] = 1;
+
+    for (int i = 1; i <= G->vex; i++) {  //dist数组初始化
+        dist[i].distance = G->arcs[v][i];
+        if (G->arcs[v][i] != INF) dist[i].path = v;
+        else dist[i].path = -1;
+    }
+
+    while (1) {  //按距离递增顺序找出从v出发到其余各顶点的最短路径
+        int pos = v;
+        int min = INF;  //距离最小值
+        for (int i = 1; i <= G->vex; i++)
+            if(flag[i] == 0 && dist[i].distance < min) {
+                min = dist[i].distance;
+                pos = i;
+            }
+
+        if (min == INF) break;  //算法结束
+        flag[pos] = 1;  //对已完成的顶点做标记
+        for (int i = 1; i <= G->vex; i++)   //更新dist
+            if (flag[i] == 0 && dist[pos].distance + G->arcs[pos][i] < dist[i].distance) {
+                dist[i].distance = dist[pos].distance + G->arcs[pos][i];
+                dist[i].path = pos;
+            }
+    }
+
+    print_path(G ,dist, v);
+}
+
+void print_path(graphlink G, shortdist dist[], int v) {
+
+    for (int i = 1; i <= G->vex; i++) {
+        if (dist[i].path == -1) printf("不存在！\n");
+        else {
+            printf("最短距离为：%d\t路径为：", dist[i].distance);
+            int k = i;
+            while (k != v) {
+                printf("%s<-", G->vexs[k]);
+                k = dist[k].path;
+            }
+            printf("%s", G->vexs[v]);
+            puts("");
+        }
+    }
+
+}
 ```
 ## 测试数据
 ```cpp
