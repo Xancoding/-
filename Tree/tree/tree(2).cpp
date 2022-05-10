@@ -20,9 +20,9 @@ int get_depth(treelink root);  /* 求树深度 */
 void disp_tree(treelink root, int level);  /* 凹入表显示 */
 void all_tree_path(treelink T, stack<char*>st); /* 求所有叶子结点路径 */
 void print_stack(stack<char*>st);  /* 遍历输出栈中数据 */
-void preorder_traversal(treenode *root);  /* 先根遍历 */
-void postorder_traversal(treenode *root); /* 后根遍历 */
-void levelorder_traversal(treenode* root);  /*层次遍历 */
+void preorder_traversal(treelink root);  /* 先根遍历 */
+void postorder_traversal(treelink root); /* 后根遍历 */
+void levelorder_traversal(treelink root);  /*层次遍历 */
 void Path(treelink pTree, stack<char*>&st, char  *szName);  /* 路径 */
 treelink node_find1(treelink root, char *name);  /* 查找 */
 void get_follow(treelink T, char *s);  /* 子结点输出 */
@@ -120,16 +120,6 @@ void tree_create(treelink &root) {
     }
 }
 
-/* 销毁二叉树 */
-void Destroy(treelink p) {
-    if(p) {
-        Destroy(p->child);
-        Destroy(p->sibling);
-        delete p;
-        p = NULL;
-    }
-}
-
 /* 求二叉树深度 */
 int get_depth(treelink root) {
     if (root == NULL) return 0;
@@ -180,7 +170,7 @@ void print_stack(stack<char*>st) {
 }
 
 /* 先根遍历 */
-void preorder_traversal(treenode *root) {
+void preorder_traversal(treelink root) {
     if (root == NULL) return ;
     printf("%s ", root->data);
     preorder_traversal(root->child);
@@ -188,7 +178,7 @@ void preorder_traversal(treenode *root) {
 }
 
 /* 后根遍历 */
-void postorder_traversal(treenode *root) {
+void postorder_traversal(treelink root) {
     if (root == NULL) return ;
     preorder_traversal(root->child);
     preorder_traversal(root->sibling);
@@ -196,14 +186,14 @@ void postorder_traversal(treenode *root) {
 }
 
 /*层次遍历 */
-void levelorder_traversal(treenode* root) {
-    queue<treenode *> que;
+void levelorder_traversal(treelink root) {
+    queue<treelink> que;
     que.push(root);
     if (root == NULL) return;
     while (!que.empty()) {
         int size = que.size();
         for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
-            treenode *cur = que.front();
+            treelink cur = que.front();
             que.pop();
             printf("%s ", cur->data);
             cur = cur->child;
@@ -231,7 +221,7 @@ void Path(treelink pTree, stack<char*>&st, char  *szName) {
 /* 查找 */
 treelink node_find1(treelink root, char *name) {
 
-    treenode *p;
+    treelink p;
     if(root == NULL) return NULL;
     else{
         if(strcmp(root->data, name)==0)
