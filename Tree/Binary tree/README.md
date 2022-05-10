@@ -18,13 +18,13 @@
    char data[MAX];
    struct treenode *left;
    struct treenode *right;
- }treenode;
+ }treenode, *treelink;
 ``` 
 ## 二叉树的创建
 ### 递归创建
 ```cpp
 /* 创建一棵二叉树  */
-void tree_create(treenode *&root){
+void tree_create(treelink &root){
     char data[MAX];
     scanf("%s", data);
     if (strcmp(data, "#") == 0) root = NULL;
@@ -40,11 +40,11 @@ void tree_create(treenode *&root){
 ### 用边创建
 ```cpp
 /* 创建一棵二叉树  */
-void tree_create(treenode *&root){
+void tree_create(treelink &root){
     char fa[30], ch[30];  //fa为父结点 ch为子结点 
-    treenode *p, *s;  //p为父结点 s为子结点 
+    treelink p, s;  //p为父结点 s为子结点 
     int flag;
-    queue<treenode*>que;
+    queue<treelink>que;
     root = NULL;
     printf("请输入父结点、子结点、左(0)右(1)标志（用空格隔开，根结点的双亲为#）\n");
     scanf("%s%s%d",fa, ch,&flag);
@@ -77,19 +77,21 @@ void tree_create(treenode *&root){
 ## 二叉树的销毁
 ```cpp
 /* 销毁二叉树 */
-void Destroy(treenode *p) {
+void Destroy(treelink &p) {
     if(p) {
         Destroy(p->left);
         Destroy(p->right);
         delete p;
+        p = NULL;
     }
 }
 ```
 ## 结点的查找
 ```cpp
-/* 查找数据 */ 
-treenode *node_find(treenode *root, char *name) {
-    treenode *p;
+/* 查找数据 */
+treelink node_find(treelink root, char *name)
+{
+    treelink p;
     if(root == NULL) return NULL;
     else{
         printf("%s ", root->data);
@@ -105,7 +107,7 @@ treenode *node_find(treenode *root, char *name) {
 ## 结点的删除
 ```cpp
 /* 删除数据 */
-void node_delete(treenode* & Root, char *name) {
+void node_delete(treelink &Root, char *name) {
 
     if(Root){
         if(strcmp(Root->data,name)==0){
@@ -122,8 +124,8 @@ void node_delete(treenode* & Root, char *name) {
 ## 结点的插入
 ```cpp
 /* 插入数据 */
-void node_insert(treenode *Root, char *pname, char *cname) {
-    treenode *parent, *pnew;
+void node_insert(treelink Root, char *pname, char *cname) {
+    treelink parent, pnew;
     parent = node_find(Root, pname);
     if(parent==NULL){
         printf("父结点不存在\n");
