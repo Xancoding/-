@@ -12,25 +12,25 @@ typedef struct treenode {
     char data[MAX];
     struct treenode *left;
     struct treenode *right;
-}treenode;
+}treenode, *treelink;
 
 int menu();  /* 菜单 */
-void tree_create(treenode* &root);  /* 创建一棵二叉树  */
-void preorder_traversal(treenode *root);  /* 前序遍历 */
-void inorder_traversal(treenode *root);  /* 中序遍历 */
-void postorder_traversal(treenode *root);  /* 后序遍历 */
-void levelorder_traversal(treenode* root);  /* 层序遍历 */
-int get_depth(treenode *root);  /* 求二叉树深度 */
-void leaf_count(treenode *root, int &count);  /* 求叶节点个数 */
-void node_count(treenode *root, int &num);  /*求结点个数 */
-void disp_tree(treenode *root, int level, char c);  /* 凹入表显示 */
+void tree_create(treelink &root);  /* 创建一棵二叉树  */
+void preorder_traversal(treelink root);  /* 前序遍历 */
+void inorder_traversal(treelink root);  /* 中序遍历 */
+void postorder_traversal(treelink root);  /* 后序遍历 */
+void levelorder_traversal(treelink root);  /* 层序遍历 */
+int get_depth(treelink root);  /* 求二叉树深度 */
+void leaf_count(treelink root, int &count);  /* 求叶节点个数 */
+void node_count(treelink root, int &num);  /*求结点个数 */
+void disp_tree(treelink root, int level, char c);  /* 凹入表显示 */
 
 int main() {
     int n;
     int dep = 0;  //二叉树深度
     int leafcnt = 0;  //叶节点个数
     int nodecnt = 0;  //结点个数
-    treenode *root;
+    treelink root;
 
     while (1) {
         n = menu();
@@ -106,7 +106,7 @@ int menu() {
 }
 
 /* 创建一棵二叉树  */
-void tree_create(treenode *&root){
+void tree_create(treelink &root){
     char data[MAX];
     scanf("%s", data);
     if (strcmp(data, "#") == 0) root = NULL;
@@ -119,7 +119,7 @@ void tree_create(treenode *&root){
 }
 
 /* 前序遍历 */
-void preorder_traversal(treenode *root) {
+void preorder_traversal(treelink root) {
     if (root == NULL) return ;
     printf("%s ", root->data);
     preorder_traversal(root->left);
@@ -127,7 +127,7 @@ void preorder_traversal(treenode *root) {
 }
 
 /* 中序遍历 */
-void inorder_traversal(treenode *root) {
+void inorder_traversal(treelink root) {
     if (root == NULL) return ;
     inorder_traversal(root->left);
     printf("%s ", root->data);
@@ -135,7 +135,7 @@ void inorder_traversal(treenode *root) {
 }
 
 /* 后序遍历 */
-void postorder_traversal(treenode *root) {
+void postorder_traversal(treelink root) {
     if (root == NULL) return ;
     postorder_traversal(root->left);
     postorder_traversal(root->right);
@@ -143,8 +143,8 @@ void postorder_traversal(treenode *root) {
 }
 
 /* 层序遍历 */
-void levelorder_traversal(treenode* root) {
-    queue<treenode*>que;
+void levelorder_traversal(treelink root) {
+    queue<treelink>que;
     que.push(root);
     if (root == NULL) return ;
     while (!que.empty()) {
@@ -161,7 +161,7 @@ void levelorder_traversal(treenode* root) {
 }
 
 /* 求二叉树深度 */
-int get_depth(treenode *root) {
+int get_depth(treelink root) {
     if (root == NULL) return 0;
     else {
         int L = get_depth(root->left);
@@ -172,7 +172,7 @@ int get_depth(treenode *root) {
 }
 
 /* 求叶节点个数 */
-void leaf_count(treenode *root, int &count) {
+void leaf_count(treelink root, int &count) {
     if (root == NULL) return ;
     else {
         leaf_count(root->left, count);
@@ -182,7 +182,7 @@ void leaf_count(treenode *root, int &count) {
 }
 
 /*求结点个数 */
-void node_count(treenode *root, int &num) {
+void node_count(treelink root, int &num) {
     if (root == NULL) return ;
 
     node_count(root->left, num);
@@ -191,7 +191,7 @@ void node_count(treenode *root, int &num) {
 }
 
 /* 凹入表显示 */
-void disp_tree(treenode *root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
+void disp_tree(treelink root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
     if (root == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
