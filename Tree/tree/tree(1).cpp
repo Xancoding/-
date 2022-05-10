@@ -18,9 +18,9 @@ int menu();  /* 菜单 */
 void tree_create(treelink &root);  /* 创建一棵二叉树  */
 int get_depth(treelink root);  /* 求树深度 */
 void disp_tree(treelink root, int level);  /* 凹入表显示 */
-treelink node_find1(treenode *root, char *name);  /* 查找 */
+treelink node_find1(treelink root, char *name);  /* 查找 */
 void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, treelink &p2);  /* 查找 */
-void Destroy(treelink p);   /* 销毁树 */
+void Destroy(treelink &p);   /* 销毁树 */
 void node_delete(treelink &Root, char *name);  /* 删除数据 */
 void node_insert(treelink Root, char *pname, char *cname);  /* 插入数据 */
 
@@ -112,7 +112,7 @@ void tree_create(treelink &root) {
 }
 
 /* 销毁二叉树 */
-void Destroy(treelink p) {
+void Destroy(treelink &p) {
     if(p) {
         Destroy(p->child);
         Destroy(p->sibling);
@@ -145,7 +145,7 @@ void disp_tree(treelink root, int level) { //level为root结点的高度
 }
 
 /* 查找 */
-treelink node_find1(treenode *root, char *name) {
+treelink node_find1(treelink root, char *name) {
 
     treenode *p;
     if(root == NULL) return NULL;
