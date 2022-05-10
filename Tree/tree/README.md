@@ -202,7 +202,7 @@ void node_delete(treelink &pTree, char *szName){
 - 同二叉树的先序遍历 
 ```cpp
 /* 先根遍历 */
-void preorder_traversal(treenode *root) {
+void preorder_traversal(treelink root) {
     if (root == NULL) return ;
     printf("%s ", root->data);
     preorder_traversal(root->child);
@@ -213,7 +213,7 @@ void preorder_traversal(treenode *root) {
 - 同二叉树的中序遍历 
 ```cpp
 /* 后根遍历 */
-void postorder_traversal(treenode *root) {
+void postorder_traversal(treelink root) {
     if (root == NULL) return ;
     preorder_traversal(root->child);
     printf("%s ", root->data);
@@ -223,8 +223,8 @@ void postorder_traversal(treenode *root) {
 ### 层次遍历
 ```cpp
 /*层次遍历 */
-void levelorder_traversal(treenode* root) {
-    queue<treenode *> que;
+void levelorder_traversal(treelink root) {
+    queue<treelink> que;
     que.push(root);
     if (root == NULL) return;
     while (!que.empty()) {
