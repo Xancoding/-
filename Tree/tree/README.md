@@ -65,7 +65,7 @@ void tree_create(treelink &root){
 ## 销毁树
 ```cpp
 /* 销毁二叉树 */
-void Destroy(treelink p) {
+void Destroy(treelink &p) {
     if(p) {
         Destroy(p->child);
         Destroy(p->sibling);
