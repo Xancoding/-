@@ -67,11 +67,13 @@ int main() {
                 getch(); break;
 
             case 9:
+            	leafcnt = 0;
                 leaf_count(root, leafcnt);
                 printf("叶子结点个数为：%d\n", leafcnt);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 10:
+            	nodecnt = 0;
                 node_count(root, nodecnt);
                 printf("结点个数为：%d\n", nodecnt);
                 printf("按任意键继续!\n");
