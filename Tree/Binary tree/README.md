@@ -71,7 +71,7 @@ void tree_create(treenode *&root){
         }// 非根结点的情况
         printf("请输入父结点、子结点、左右标志（用空格隔开，结束时输入end end 0）\n");
         scanf("%s%s%d",fa,ch,&flag);
-    } // for
+    } // while
 }
 ```
 ## 二叉树的销毁
