@@ -59,7 +59,7 @@ void tree_create(treelink &root){
             p = que.front();// 取队列头元素(指针值)
             while (strcmp(p->data,fa)) { // 查询双亲结点
             	que.pop();
-				p = que.front();
+            	p = que.front();
             }//while
 
             if (flag==0){
