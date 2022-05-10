@@ -12,16 +12,16 @@ typedef struct treenode {
     char data[MAX];
     struct treenode *left;
     struct treenode *right;
-}treenode;
+}treenode, *treelink;
 
 int menu();  /* 菜单 */
-void tree_create(treenode* &root);  /* 创建一棵二叉树  */
-int get_depth(treenode *root);  /* 求二叉树深度 */
-void disp_tree(treenode *root, int level, char c);  /* 凹入表显示 */
-treenode *node_find(treenode *root, char *name);  /* 查找 */
-void Destroy(treenode *p);   /* 销毁二叉树 */
-void node_delete(treenode* & Root, char *name);  /* 删除数据 */
-void node_insert(treenode *Root, char *pname, char *cname);  /* 插入数据 */
+void tree_create(treelink &root);  /* 创建一棵二叉树  */
+int get_depth(treelink root);  /* 求二叉树深度 */
+void disp_tree(treelink root, int level, char c);  /* 凹入表显示 */
+treelink node_find(treelink root, char *name);  /* 查找 */
+void Destroy(treelink &p);   /* 销毁二叉树 */
+void node_delete(treelink &Root, char *name);  /* 删除数据 */
+void node_insert(treelink Root, char *pname, char *cname);  /* 插入数据 */
 
 
 int main() {
@@ -30,7 +30,7 @@ int main() {
     char str[MAX];
     char str1[MAX];
     char str2[MAX];
-    treenode *root;
+    treelink root;
 
     while (1) {
         n = menu();
@@ -43,7 +43,7 @@ int main() {
             case 2:
                 printf("请输入查找结点名：");
                 scanf("%s", str);
-                treenode *p = node_find(root,str);
+                treelink p = node_find(root,str);
                 if(p != NULL)
                     printf("\nnode addr = %x\nnode val = %s\n",p,p->data);
                 else
@@ -97,7 +97,7 @@ int menu() {
 }
 
 /* 创建一棵二叉树  */
-void tree_create(treenode *&root){
+void tree_create(treelink &root){
     char data[MAX];
     scanf("%s", data);
     if (strcmp(data, "#") == 0) root = NULL;
@@ -111,7 +111,7 @@ void tree_create(treenode *&root){
 
 
 /* 求二叉树深度 */
-int get_depth(treenode *root) {
+int get_depth(treelink root) {
     if (root == NULL) return 0;
     else {
         int L = get_depth(root->left);
@@ -122,7 +122,7 @@ int get_depth(treenode *root) {
 }
 
 /* 凹入表显示 */
-void disp_tree(treenode *root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
+void disp_tree(treelink root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
     if (root == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
@@ -136,9 +136,9 @@ void disp_tree(treenode *root, int level, char c) { //level为root结点的高�
 }
 
 /* 查找数据 */
-treenode *node_find(treenode *root, char *name)
+treelink node_find(treelink root, char *name)
 {
-    treenode *p;
+    treelink p;
     if(root == NULL) return NULL;
     else{
         printf("%s ", root->data);
@@ -152,16 +152,17 @@ treenode *node_find(treenode *root, char *name)
 }
 
 /* 销毁二叉树 */
-void Destroy(treenode *p) {
+void Destroy(treelink &p) {
     if(p) {
         Destroy(p->left);
         Destroy(p->right);
         delete p;
+        p = NULL;
     }
 }
 
 /* 删除数据 */
-void node_delete(treenode* & Root, char *name) {
+void node_delete(treelink &Root, char *name) {
 
     if(Root){
         if(strcmp(Root->data,name)==0){
@@ -176,8 +177,8 @@ void node_delete(treenode* & Root, char *name) {
 }
 
 /* 插入数据 */
-void node_insert(treenode *Root, char *pname, char *cname) {
-    treenode *parent, *pnew;
+void node_insert(treelink Root, char *pname, char *cname) {
+    treelink parent, pnew;
     parent = node_find(Root, pname);
     if(parent==NULL){
         printf("父结点不存在\n");
