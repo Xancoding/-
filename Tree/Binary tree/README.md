@@ -165,38 +165,38 @@ void node_insert(treelink Root, char *pname, char *cname) {
 #### 递归法
 ```cpp
 /* 前序遍历 */
-void preorder_traversal(treenode *root) {
-  if (root == NULL) return ;
-  printf("%s ", root->data);
-  preorder_traversal(root->left);
-  preorder_traversal(root->right);
+void preorder_traversal(treelink root) {
+    if (root == NULL) return ;
+    printf("%s ", root->data);
+    preorder_traversal(root->left);
+    preorder_traversal(root->right);
 }
 
 /* 中序遍历 */
-void inorder_traversal(treenode *root) {
-  if (root == NULL) return ;
-  inorder_traversal(root->left);
-  printf("%s ", root->data);
-  inorder_traversal(root->right);
+void inorder_traversal(treelink root) {
+    if (root == NULL) return ;
+    inorder_traversal(root->left);
+    printf("%s ", root->data);
+    inorder_traversal(root->right);
 }
 
 /* 后序遍历 */
-void postorder_traversal(treenode *root) {
-  if (root == NULL) return ;
-  postorder_traversal(root->left);
-  postorder_traversal(root->right);
-  printf("%s ", root->data);
+void postorder_traversal(treelink root) {
+    if (root == NULL) return ;
+    postorder_traversal(root->left);
+    postorder_traversal(root->right);
+    printf("%s ", root->data);
 }
 ```
 #### 迭代法
 ```cpp
 /* 前序遍历 */
-void preorder_traversal(treenode *root) {
+void preorder_traversal(treelink root) {
   if (root == NULL) return ;
-  stack<treenode*>st;
+  stack<treelink>st;
   st.push(root);
   while(!st.empty()) {
-  treenode *cur = st.top();
+  treelink cur = st.top();
   st.pop();
   printf("%s ", cur->data);
   if (cur->right != NULL) st.push(cur->right);
@@ -205,10 +205,10 @@ void preorder_traversal(treenode *root) {
 }
 
 /* 中序遍历 */
-void inorder_traversal(treenode *root) {
+void inorder_traversal(treelink root) {
   if (root == NULL) return ;
-  stack<treenode*>st;
-  treenode *cur = root;
+  stack<treelink>st;
+  treelink cur = root;
   while(cur != NULL || !st.empty()) {
     while (cur != NULL) {   // 指针来访问节点，访问到最底层
       st.push(cur);
@@ -222,11 +222,11 @@ void inorder_traversal(treenode *root) {
 }
 
 /* 后序遍历 */
-void postorder_traversal(treenode *root) {
+void postorder_traversal(treelink root) {
   if (root == NULL) return ;
-  stack<treenode*>st;
-  treenode *prev = NULL;  //记录上一次输出的节点
-  treenode *cur = root;
+  stack<treelink>st;
+  treelink prev = NULL;  //记录上一次输出的节点
+  treelink cur = root;
   while (cur != NULL || !st.empty()) {
     while (cur != NULL) {
       st.push(cur);
@@ -249,14 +249,14 @@ void postorder_traversal(treenode *root) {
 ```
 ### 广度优先遍历
 ```cpp
-void levelorder_traversal(treenode* root) {
-  queue<treenode*>que;
+void levelorder_traversal(treelink root) {
+  queue<treelink>que;
   que.push(root);
   if (root == NULL) return ;
   while (!que.empty()) {
     int size = que.size();  
     for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
-      treenode *cur = que.front();
+      treelink cur = que.front();
       que.pop();
       printf("%s ", cur->data);
       if (cur->left != NULL) que.push(cur -> left);
@@ -269,7 +269,7 @@ void levelorder_traversal(treenode* root) {
 ### 凹入表
 ```cpp
 /* 凹入表显示 */
-void disp_tree(treenode *root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
+void disp_tree(treelink root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
     if (root == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
@@ -285,7 +285,7 @@ void disp_tree(treenode *root, int level, char c) { //level为root结点的高�
 ## 遍历算法的应用
 ### 求二叉树深度
 ```cpp
-int get_depth(treenode *root) {
+int get_depth(treelink root) {
 	if (root == NULL) return 0;
 	else {
 		int L = get_depth(root->left);
@@ -299,7 +299,7 @@ int get_depth(treenode *root) {
 ```
 ### 求叶子节点个数
 ```cpp
-void leaf_count(treenode *root, int &count) {
+void leaf_count(treelink root, int &count) {
     if (root == NULL) return ;
     else {
         leaf_count(root->left, count);
@@ -310,7 +310,7 @@ void leaf_count(treenode *root, int &count) {
 ```
 ### 求结点个数
 ```cpp
-void node_count(treenode *root, int &num) {
+void node_count(treelink root, int &num) {
     if (root == NULL) return ;
 
     node_count(root->left, num);
