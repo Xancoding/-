@@ -23,7 +23,7 @@ void print_stack(stack<char*>st);  /* 遍历输出栈中数据 */
 void preorder_traversal(treelink root);  /* 先根遍历 */
 void postorder_traversal(treelink root); /* 后根遍历 */
 void levelorder_traversal(treelink root);  /*层次遍历 */
-void Path(treelink pTree, stack<char*>&st, char  *szName);  /* 路径 */
+void Path(treelink pTree, stack<char*>st, char data[]);  /* 路径 */
 treelink node_find1(treelink root, char *name);  /* 查找 */
 void get_follow(treelink T, char *s);  /* 子结点输出 */
 
@@ -143,32 +143,6 @@ void disp_tree(treelink root, int level) { //level为root结点的高度
     disp_tree(root->sibling, level);
 }
 
-/* 求所有叶子结点路径 */
-void all_tree_path(treelink T, stack<char*>st) {
-    while (T) {
-        st.push(T->data);
-        if (!T->child) print_stack(st);  //T是叶子结点
-        else all_tree_path(T->child, st);  //找以T为根的子树上的叶子结点路径
-        st.pop();  //栈顶结点是叶子结点或以栈顶结点为根的子树上的叶子路径已完成
-        T = T->sibling;     //继续找T的其余子树
-    }
-}
-
-/* 遍历输出栈中数据 */
-void print_stack(stack<char*>st) {
-    stack<char*>stack;
-    while (!st.empty()) {
-        stack.push(st.top());
-        st.pop();
-    }
-    while(!stack.empty()) {
-        printf("/%s", stack.top());
-        stack.pop();
-    }
-    puts("");
-
-}
-
 /* 先根遍历 */
 void preorder_traversal(treelink root) {
     if (root == NULL) return ;
@@ -207,14 +181,40 @@ void levelorder_traversal(treelink root) {
 }
 
 /* 路径 */
-void Path(treelink pTree, stack<char*>st, char  *szName) {
-    if(pTree){
-        st.push(pTree->data);
-        if(strcmp(pTree->data,szName) == 0) print_stack(st);
-        else Path(pTree->child,st,szName);
-        st.pop();
-        Path(pTree->sibling,st,szName);
+void Path(treelink pTree, stack<char*>st, char data[]) {
+    if (pTree) {
+    	st.push(pTree->data);
+    	if (strcmp(pTree->data, data) == 0) print_stack(st);
+    	else Path(pTree->child, st, data);
+    	st.pop();
+    	Path(pTree->sibling, st, data);
     }
+}
+
+/* 求所有叶子结点路径 */
+void all_tree_path(treelink T, stack<char*>st) {
+    while (T) {
+        st.push(T->data);
+        if (!T->child) print_stack(st);  //T是叶子结点
+        else all_tree_path(T->child, st);  //找以T为根的子树上的叶子结点路径
+        st.pop();  //栈顶结点是叶子结点或以栈顶结点为根的子树上的叶子路径已完成
+        T = T->sibling;     //继续找T的其余子树
+    }
+}
+
+/* 遍历输出栈中数据 */
+void print_stack(stack<char*>st) {
+    stack<char*>stack;
+    while (!st.empty()) {
+        stack.push(st.top());
+        st.pop();
+    }
+    while(!stack.empty()) {
+        printf("/%s", stack.top());
+        stack.pop();
+    }
+    puts("");
+
 }
 
 /* 查找 */
