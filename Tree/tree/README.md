@@ -230,7 +230,7 @@ void levelorder_traversal(treelink root) {
     while (!que.empty()) {
         int size = que.size();
         for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
-            treenode *cur = que.front();
+            treelink cur = que.front();
             que.pop();
             printf("%s ", cur->data);
             cur = cur->child;
