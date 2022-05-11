@@ -3,7 +3,7 @@
 ```cpp
 typedef struct {
     char vexs[MAX][NUM];;  //顶点信息
-    int arcs[MAX][MAX];  //顶点关系(边或弧上的权值)
+    int arcs[MAX][MAX];  //边或弧上的权值
     int vex;  //顶点数
     int arc;  //弧数
 }graph, *graphlink;
