@@ -262,13 +262,13 @@ void get_follow(treelink T, char *s) { //输出指定结点的子结点
 ### 路径
 ```cpp
 /* 路径 */
-void Path(treelink pTree, stack<char*>st, char  *szName) {
-    if(pTree){
-        st.push(pTree->data);
-        if(strcmp(pTree->data,szName) == 0) print_stack(st);
-        else Path(pTree->child,st,szName);
-        st.pop();
-        Path(pTree->sibling,st,szName);
+void Path(treelink pTree, stack<char*>st, char  data[]) {
+    if (pTree) {
+    	st.push(pTree->data);
+    	if (strcmp(pTree->data, data) == 0) print_stack(st);
+    	else Path(pTree->child, st, data);
+    	st.pop();
+    	Path(pTree->sibling, st, data);
     }
 }
 ```
