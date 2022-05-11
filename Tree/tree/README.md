@@ -57,7 +57,7 @@ void tree_create(treelink &root){
                 r->sibling = s;  r = s;
             }// 链接其它孩子结点
         }// 非根结点的情况
-        printf("请输入父结点、子结点（用空格隔开，结束时输入end end 0）\n");
+        printf("请输入父结点、子结点（用空格隔开，结束时输入end end）\n");
         scanf("%s%s",fa,ch);
     } // for
 }
