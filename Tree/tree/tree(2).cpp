@@ -207,12 +207,11 @@ void levelorder_traversal(treelink root) {
 }
 
 /* 路径 */
-void Path(treelink pTree, stack<char*>&st, char  *szName) {
-    char sz[32];
+void Path(treelink pTree, stack<char*>st, char  *szName) {
     if(pTree){
         st.push(pTree->data);
-        if(strcmp(pTree->data,szName)==0) print_stack(st);
-        Path(pTree->child,st,szName);
+        if(strcmp(pTree->data,szName) == 0) print_stack(st);
+        else Path(pTree->child,st,szName);
         st.pop();
         Path(pTree->sibling,st,szName);
     }
