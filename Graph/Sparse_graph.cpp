@@ -134,7 +134,7 @@ void disp_graph(graphlink G) {
 }
 
 void dfs(graphlink G, int v, int visited[]) {
-    printf("%s", G->adjlist[v].vertex);
+    printf("%s ", G->adjlist[v].vertex);
     visited[v] = 1;
     arcnode *p = G->adjlist[v].head;
     while(p) {
