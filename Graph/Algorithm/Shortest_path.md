@@ -70,7 +70,7 @@ int menu() {
         printf("*****欢迎使用本系统*****\n");
         printf("\t1.创建图\n");
         printf("\t2.显示图\n");
-        printf("\t3.最小生成树\n");
+        printf("\t3.某个源点到其余各点的最短路\n");
         printf("************************\n");
         printf("请输入数字：");
         scanf("%d", &n);
@@ -240,7 +240,7 @@ int menu() {
         printf("*****欢迎使用本系统*****\n");
         printf("\t1.创建图\n");
         printf("\t2.显示图\n");
-        printf("\t3.最小生成树\n");
+        printf("\t3.每一对顶点之间的最短路\n");
         printf("************************\n");
         printf("请输入数字：");
         scanf("%d", &n);
