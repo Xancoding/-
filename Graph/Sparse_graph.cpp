@@ -87,12 +87,10 @@ int menu() {
         printf("\t2.显示图\n");
         printf("\t3.DFS\n");
         printf("\t4.BFS\n");
-        printf("\t5.\n");
-        printf("\t6.\n");
         printf("************************\n");
         printf("请输入数字：");
         scanf("%d", &n);
-        if (n > 6 || n < 0) {
+        if (n > 4 || n < 0) {
             printf("输入错误，请重新输入！\n");
         } else return n;
     }
