@@ -141,8 +141,9 @@ bool topsort(graphlink G, int q[]) {
         int u = q[hh++];
         arcnode *cur = G->adjlist[u].head;
         while (cur) {  //遍历顶点u的邻接点
-            G->adjlist[cur->adjvex].cnt--;  //更新邻接点入度
-            if (G->adjlist[cur->adjvex].cnt == 0) q[++tt] = cur->adjvex;  //入度为零，入队列
+            int k = cur->adjvex;
+            G->adjlist[k].cnt--;  //更新邻接点入度
+            if (G->adjlist[k].cnt == 0) q[++tt] = k;  //入度为零，入队列
             cur = cur->next;
         }
     }
