@@ -1,3 +1,164 @@
+# AOV网络拓扑序列
+- AOV网络：以图中**顶点**表示活动，**弧**表示活动之间的优先关系的**有向图**
+- 拓扑序列
+    - 拓扑序列一般不唯一
+    - **有向无环图**一定存在拓扑序列
+## 拓扑排序
+### 代码实现
+```cpp
+#include<stdio.h>
+#include<malloc.h>
+#include<string.h>
+#include<conio.h>
+#define MAX 20  //最大顶点数
+#define NUM 20  //最大字符串长度
+
+using namespace std;
+
+//边结点
+typedef struct arcnode {
+    int adjvex;  //弧所指向顶点下标
+    struct arcnode *next;  //指向下一条弧
+    int weight;  //边结点类型（权重）
+}arcnode;
+
+//表头结点
+typedef struct vexnode {
+    int cnt;  //顶点入度
+    char vertex[NUM];  //存放结点值
+    arcnode *head;  //存放边链表头指针
+}vexnode;
+
+//邻接表
+typedef struct graph{
+    vexnode adjlist[MAX];
+    int vex;  //顶点数
+    int arc;  //边数
+}graph, *graphlink;
+
+int menu();  //菜单
+void crt_graph(graphlink G);  //创建
+void disp_graph(graphlink G);  //显示
+bool topsort(graphlink G, int q[]);  //拓扑排序
+
+
+int main() {
+    int n;
+    int q[MAX];  //队列（存储结点下标）
+    graphlink G = new graph;
+
+    while (1) {
+        n = menu();
+        switch(n) {
+            case 1:
+                crt_graph(G);
+                printf("按任意键继续!\n");
+                getch(); break;
+            case 2:
+                disp_graph(G);
+                printf("按任意键继续!\n");
+                getch(); break;
+            case 3:
+                if (!topsort(G, q)) printf("不存在拓扑序列\n");
+                else
+                    for (int i = 0; i < G->vex; i++)
+                            printf("%s ", G->adjlist[q[i]].vertex);
+                    puts("");
+                printf("按任意键继续!\n");
+                getch(); break;
+        }
+    }
+}
+
+int menu() {
+    int n;
+    while (1) {
+        system("cls");
+        printf("*****欢迎使用本系统*****\n");
+        printf("\t1.创建图\n");
+        printf("\t2.显示图\n");
+        printf("\t3.拓扑序列\n");
+        printf("************************\n");
+        printf("请输入数字：");
+        scanf("%d", &n);
+        if (n > 3 || n < 0) {
+            printf("输入错误，请重新输入！\n");
+        } else return n;
+    }
+}
+
+void crt_graph(graphlink G) {
+    printf("输入顶点数和边数（空格隔开）\n");
+    scanf("%d%d", &G->vex, &G->arc);
+    printf("输入顶点信息\n");
+    for (int i = 1; i <= G->vex; i++) {
+        scanf("%s", G->adjlist[i].vertex);
+        G->adjlist[i].head = NULL;
+    }
+    printf("输入边\n");
+    for (int k = 0; k < G->arc; k++) {
+        int i, j;
+        scanf("%d%d", &i, &j);
+        arcnode *p = new arcnode;
+        p->adjvex = j;
+        p->next = G->adjlist[i].head;  //头插
+        G->adjlist[i].head = p;
+        G->adjlist[j].cnt++;  //结点入度
+    }
+}
+
+void disp_graph(graphlink G) {
+    printf("邻接表如下\n");
+    for (int i = 1; i <= G->vex; i++) {
+        printf("%s ", G->adjlist[i].vertex);  //显示表头结点
+        if(G->adjlist[i].head == NULL) printf("^ \n");  //边链表为空
+        else {
+            arcnode *p = G->adjlist[i].head;  //p指向第一个边结点
+            while (p) {printf("%d-->", p->adjvex);  p = p->next;}
+            printf("^ \n");
+        }
+    }
+}
+
+bool topsort(graphlink G, int q[]) {
+    int tt = -1, hh = 0;  //初始化队列
+    for (int i = 1; i <= G->vex; i++)
+        if (G->adjlist[i].cnt == 0) q[++tt] = i;
+
+    while(hh <= tt) {
+        int u = q[hh++];
+        arcnode *cur = G->adjlist[u].head;
+        while (cur) {  //遍历顶点u的邻接点
+            G->adjlist[cur->adjvex].cnt--;  //更新邻接点入度
+            if (G->adjlist[cur->adjvex].cnt == 0) q[++tt] = cur->adjvex;  //入度为零，入队列
+            cur = cur->next;
+        }
+    }
+    
+    if (tt == G->vex - 1) return true;
+    else return false;
+}
+```
+### 测试数据
+```cpp
+输入顶点数和边数 7 6
+输入顶点信息  1 2 3 4 5 6 7
+输入边  1 4 1 3 2 4 2 5 5 7 3 6
+```
+### 输出
+```cpp
+邻接表如下
+1 3-->4-->^
+2 5-->4-->^
+3 6-->^
+4 ^
+5 7-->^
+6 ^
+7 ^
+
+拓扑序列  1 2 3 5 4 6 7
+```
+
 # 最短路
 - 有向网
 ## dijkstra
