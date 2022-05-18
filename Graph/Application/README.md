@@ -434,17 +434,162 @@ a b c f i
 ```
 # 基于BFS
 ## 求无向图的顶点v到顶点w的最短路径
+- 边权为1
 ### 代码实现
 ```cpp
+#include<stdio.h>
+#include<malloc.h>
+#include<string.h>
+#include<conio.h>
+#include<stack>
+#include<queue>
+#define MAX 20  //最大顶点数
+#define NUM 20  //最大字符串长度
+#define INF 0x3f3f3f3f  //无穷大
+
+using namespace std;
+
+typedef struct {
+    char vexs[MAX][NUM];;  //顶点信息
+    int arcs[MAX][MAX];  //顶点关系(边或弧上的权值)
+    int vex;  //顶点数
+    int arc;  //弧数
+}graph, *graphlink;
+
+int menu();  //菜单
+void crt_graph(graphlink G);  //创建
+void disp_graph(graphlink G);  //显示
+void bfs(graphlink G, int v,int w, int path[]);  //BFS
+void print_path(graphlink G, int path[], int v, int w);  //最短路径
+
+int main() {
+    int n;
+    int v;  //出发点编号
+    int w;  //结束点编号
+    int path[MAX];  //path[i]的值表示路径中下标为i的顶点的上一个顶点的下标
+    graphlink G = new graph;
+
+    while (1) {
+        n = menu();
+        switch(n) {
+            case 1:
+                crt_graph(G);
+                printf("按任意键继续!\n");
+                getch(); break;
+            case 2:
+                disp_graph(G);
+                printf("按任意键继续!\n");
+                getch(); break;
+            case 3:
+                printf("输入出发点 结束点（空格隔开）:");
+                scanf("%d %d", &v, &w);
+                bfs(G, v, w, path);
+                printf("按任意键继续!\n");
+                getch(); break;
+        }
+    }
+}
+
+int menu() {
+    int n;
+    while (1) {
+        system("cls");
+        printf("*****欢迎使用本系统*****\n");
+        printf("\t1.创建图\n");
+        printf("\t2.显示图\n");
+        printf("\t3.求任意两顶点间的最短路径\n");
+        printf("************************\n");
+        printf("请输入数字：");
+        scanf("%d", &n);
+        if (n > 3 || n < 0) {
+            printf("输入错误，请重新输入！\n");
+        } else return n;
+    }
+}
+
+void crt_graph(graphlink G) {
+    printf("输入顶点数和边数（空格隔开）\n");
+    scanf("%d %d", &G->vex, &G->arc);  //顶点数和边数
+    printf("输入顶点信息\n");
+    for (int i = 1; i <= G->vex; i++) scanf("%s", G->vexs[i]);  //顶点信息
+    for (int i = 1; i <= G->vex; i++)
+        for (int j = 1; j <= G->vex; j++)
+            G->arcs[i][j] = 0;  //邻接矩阵初始化
+    printf("输入边\n");
+    for (int k = 1; k <= G->arc; k++) {  //读入边
+        int i, j;
+        scanf("%d%d", &i, &j);
+        G->arcs[i][j] = 1;
+        G->arcs[j][i] = 1;
+    }
+}
+
+void disp_graph(graphlink G) {
+    printf("顶点如下\n");
+    for (int i = 1; i <= G->vex; i++) printf("%s ", G->vexs[i]);
+    printf("\n邻接矩阵如下\n");
+    for (int i = 1; i <= G->vex; i++) {
+        for (int j = 1; j <= G->vex; j++)
+            printf("%-4d", G->arcs[i][j]);
+        puts("");
+    }
+}
+
+void bfs(graphlink G, int v,int w, int path[]) {
+    bool st[MAX];
+    int dist[MAX];  //距离顶点v的距离
+    for (int i = 1; i <= G->vex; i++) {
+        st[i] = false;  //初始化，设置为未访问
+        dist[i] = INF;  //初始化，设置为无穷大
+    }
+
+    queue<int>que;
+    que.push(v);  st[v] = true; dist[v] = 0;
+    while (!que.empty()) {
+        int u = que.front(); que.pop();
+        for (int i = 1; i <= G->vex; i++)
+            if (!st[i] && G->arcs[u][i] != 0) {  //遍历邻接点
+                path[i] = u;
+                dist[i] = dist[u] + 1;
+                if (i == w) {
+                    printf("最短距离为：%d\n", dist[w]);
+                    print_path(G, path, v, w);
+                    return ;
+                }
+                st[i] = true;
+                que.push(i);
+            }
+    }
+}
+
+void print_path(graphlink G, int path[], int v, int w) {
+    printf("最短路径为：");
+    for (int i = w; i != v; i = path[i])
+        printf("%s<--", G->vexs[i]);
+    
+    printf("%s\n", G->vexs[v]);
+}
 ```
 ### 测试数据
 ```cpp
-输入顶点数和边数 
-输入顶点信息  
-输入边  
-
+输入顶点数和边数 9 11
+输入顶点信息  1 2 3 4 5 6 7 8 9
+输入边  1 3 1 2 1 4 1 7 2 3 4 5 4 6 5 6 7 8 7 9 8 9
+出发点 结束点 3 5
 ```
 ### 输出
 ```cpp
+邻接矩阵如下
+0   1   1   1   0   0   1   0   0
+1   0   1   0   0   0   0   0   0
+1   1   0   0   0   0   0   0   0
+1   0   0   0   1   1   0   0   0
+0   0   0   1   0   1   0   0   0
+0   0   0   1   1   0   0   0   0
+1   0   0   0   0   0   0   1   1
+0   0   0   0   0   0   1   0   1
+0   0   0   0   0   0   1   1   0
 
+最短距离为：3
+最短路径为：5<--4<--1<--3
 ```
