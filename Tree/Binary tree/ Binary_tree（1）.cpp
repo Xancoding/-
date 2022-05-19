@@ -31,6 +31,7 @@ int main() {
     char str1[MAX];
     char str2[MAX];
     treelink root;
+    treelink p;
 
     while (1) {
         n = menu();
@@ -43,7 +44,7 @@ int main() {
             case 2:
                 printf("请输入查找结点名：");
                 scanf("%s", str);
-                treelink p = node_find(root,str);
+                p = node_find(root,str);
                 if(p != NULL)
                     printf("\nnode addr = %x\nnode val = %s\n",p,p->data);
                 else
