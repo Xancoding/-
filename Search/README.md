@@ -19,14 +19,16 @@
 ## 二叉排序树
 ### 初始化
 ```cpp
+/* 创建一棵二叉树  */
 void tree_create(treelink &T){
-    char data[MAX];
-    scanf("%s", data);
-    if (strcmp(data, "#") == 0) 
-        T = NULL;
-    else
-        node_insert(T, data);
-    
+   while(1) {
+       char data[MAX];
+       scanf("%s", data);
+       if (strcmp(data, "#") == 0)
+           break;
+       else
+           node_insert(T, data);
+   }
 }
 ```
 ### 查找
@@ -66,9 +68,53 @@ void node_insert(treelink &T, char *name) {
    }
 }
 ```
+### 删除
+```cpp
+/* 删除数据 */
+treelink node_delete(treelink T, char *name) {
+    if (T == NULL) return NULL;  //没有符合的结点
+
+    if (strcmp(T->data, name) == 0) {
+        if (!T->left && !T->right) {  //左右子树都没有
+            delete T;
+            return NULL;
+        } else if (!T->left && T->right) {  //只有右子树
+            treelink tmp = T->right;
+            delete T;
+            return tmp;
+        } else if (!T->right && T->left) {  //只有左子树
+            treelink tmp = T->left;
+            delete T;
+            return tmp;
+        } else {  //左右子树都有
+            treelink tmp = T->right;
+            while (tmp->left) {
+                tmp = tmp->left;
+            }
+            tmp->left = T->left;
+            tmp = T->right;
+            delete T;
+            return tmp;
+        }
+    }
+    else if (strcmp(T->data, name) > 0) //在左子树上
+        T->left = node_delete(T->left, name);
+    else  //在右子树上
+        T->right = node_delete(T->right, name);
+}
+```
 ### 测试数据
 ```cpp
 45 24 53 12 14 90 #
+```
+### 输出
+```cpp
+-----------------------+45(D)
+---------------------+24(L)
+-------------------+12(L)
+-----------------+14(R)
+---------------------+53(R)
+-------------------+90(R)
 ```
 
 ## 二叉平衡树
