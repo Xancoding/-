@@ -16,6 +16,57 @@
     - 次关键字(Secondary Key)：能标识多个数据元素的关键字
 - ASL：平均查找长度
 
+## 二叉排序树
+### 初始化
+```cpp
+void tree_create(treelink &T){
+    char data[MAX];
+    scanf("%s", data);
+    if (strcmp(data, "#") == 0) 
+        T = NULL;
+    else
+        node_insert(T, data);
+    
+}
+```
+### 查找
+- `指针p`指向当前访问结点的双亲，初始值为NULL
+- 若**查找成功**，则`指针s`指向该数据元素的结点，函数值返回`true`
+- 若**查找失败**，则`指针s`指向查找路径上访问的最后一个结点，函数值返回`false`
+```cpp
+/* 查找数据 */
+bool node_find(treelink T, char  *name,treelink &p, treelink &s) {  //p为父结点 s为子结点
+    if(T == NULL) {
+        s = p;
+        return false;
+    } else if (strcmp(T->data, name) == 0) {
+        s = T;
+        return true;
+    } else if (strcmp(T->data, name) > 0) {
+        p = T;
+        return node_find(T->left, name, p, s);
+    } else {
+        p = T;
+        return node_find(T->right, name, p, s);
+    }
+}
+```
+### 插入
+```cpp
+/* 插入数据 */
+void node_insert(treelink &T, char *name) {
+   if (T == NULL) {
+       T = new treenode;
+       strcpy(T->data, name);
+       T->left = T->right = NULL;
+   } else if (strcmp(T->data, name) > 0) {
+       node_insert(T->left, name);
+   } else {
+       node_insert(T->right, name);
+   }
+}
+```
+
 ## 二叉平衡树
 ### 构造
 - 在构造二叉排序树的过程中，每当插入一个结点时，首先检查是否因插入而破坏了树的平衡性，如果是因插入结点而破坏了树的平衡性，则找出其中**最小不平衡子树**，在保持排序树特性的前提下，调整**最小不平衡子树**中各结点之间的连接关系，以达到新的平衡 
@@ -52,6 +103,6 @@
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/1.png" /> </div>
 
 #### 例
-- 设一组记录的关键字按以下次序进行插入： 4 、 5 、 7 ， 2 、 1 、 3 、 6 ，其生成及调整成二叉平衡树的过程示于👇
+- 设一组记录的关键字按以下次序进行插入： 4 、 5 、 7 ， 2 、 1 、 3 、 6 ，其生成及调整成二叉平衡树的过程👇
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/2.png" /> </div>
 
