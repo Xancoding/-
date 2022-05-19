@@ -106,7 +106,7 @@ void Delete(treelink &p) {
         strcpy(p->data, s->data);  //用待删结点p的中序前趋结点s的值覆盖待删结点的值
         if (q != p)
             q->right = s->left;
-        else
+        else  //以结点s为根的子树为结点p的左子树
             q->left = s->left;
         delete s;
     }
