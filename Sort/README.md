@@ -3,9 +3,9 @@
 - **线性时间非比较类排序**：不通过比较来决定元素间的相对次序，它可以突破基于比较排序的时间下界，以线性时间运行 
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Sort/Classify.png " ")
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Sort/sort.png " ")
-## 插入排序
+## 插入排序  
 ```cpp
-void insert_sort()
+void insert_sort() 
 {
     for (int i = 1; i < n; i ++ )
     {
