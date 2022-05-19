@@ -66,6 +66,10 @@ void node_insert(treelink &T, char *name) {
    }
 }
 ```
+### 测试数据
+```cpp
+45 24 53 12 14 90 #
+```
 
 ## 二叉平衡树
 ### 构造
