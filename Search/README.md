@@ -98,7 +98,7 @@ void Delete(treelink &p) {
         p = p->right;
         delete tmp;
     } else {  //左右子树都存在
-        treelink q = p, s = q->left;  //s指向被删结点的中序前驱，q指向s的双亲
+        treelink q = p, s = q->left;  //s指向被删结点p的中序前驱，q指向s的双亲
         while(s->right) {
             q = s;
             s = s->right;
