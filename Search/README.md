@@ -71,7 +71,7 @@ void node_insert(treelink &T, char *name) {
 ### 删除
 - 若`p结点`既有**左子树**又有**右子树**
     1. 将`待删除结点p`的**右子树**链接到它的`中序前趋结点s`(即左子树下最右下结点)的右孩子指针域上
-    2. 将`待删除结点p`的**左子树**链接到其`双亲结点`的左(或右)孩子域上
+    2. 将`结点s`的**左子树**链接到其`双亲结点`的左(或右)孩子域上
 ```cpp
 /* 删除数据 */
 bool node_delete(treelink &T, char *name) {
@@ -103,7 +103,7 @@ void Delete(treelink &p) {
             q = s;
             s = s->right;
         }
-        strcpy(p->data, s->data);
+        strcpy(p->data, s->data);  //用待删结点p的中序前趋结点s的值覆盖待删结点的值
         if (q != p)
             q->right = s->left;
         else
