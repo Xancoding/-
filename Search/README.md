@@ -71,36 +71,42 @@ void node_insert(treelink &T, char *name) {
 ### 删除
 ```cpp
 /* 删除数据 */
-treelink node_delete(treelink T, char *name) {
-    if (T == NULL) return NULL;  //没有符合的结点
-
-    if (strcmp(T->data, name) == 0) {
-        if (!T->left && !T->right) {  //左右子树都没有
-            delete T;
-            return NULL;
-        } else if (!T->left && T->right) {  //只有右子树
-            treelink tmp = T->right;
-            delete T;
-            return tmp;
-        } else if (!T->right && T->left) {  //只有左子树
-            treelink tmp = T->left;
-            delete T;
-            return tmp;
-        } else {  //左右子树都有
-            treelink tmp = T->right;
-            while (tmp->left) {
-                tmp = tmp->left;
-            }
-            tmp->left = T->left;
-            tmp = T->right;
-            delete T;
-            return tmp;
+bool node_delete(treelink &T, char *name) {
+    if (T == NULL) return false;
+    else {
+        if (strcmp(T->data, name) == 0) {
+            Delete(T);
+            return true;
         }
+        else if (strcmp(T->data, name) > 0)
+            return node_delete(T->left, name);
+        else
+            return node_delete(T->right, name);
     }
-    else if (strcmp(T->data, name) > 0) //在左子树上
-        T->left = node_delete(T->left, name);
-    else  //在右子树上
-        T->right = node_delete(T->right, name);
+}
+
+void Delete(treelink &p) {
+    if (!p->right) {  //没有右子树
+        treelink tmp = p;
+        p = p->left;
+        delete tmp;
+    } else if (!p->left) {  //没有左子树
+        treelink tmp = p;
+        p = p->right;
+        delete tmp;
+    } else {  //左右子树都存在
+        treelink q = p, s = q->left;  //s指向被删结点的中序前驱，q指向s的双亲
+        while(s->right) {
+            q = s;
+            s = s->right;
+        }
+        strcpy(p->data, s->data);
+        if (q != p)
+            q->right = s->left;
+        else
+            q->left = s->left;
+        delete s;
+    }
 }
 ```
 ### 测试数据
@@ -116,7 +122,6 @@ treelink node_delete(treelink T, char *name) {
 ---------------------+53(R)
 -------------------+90(R)
 ```
-
 ## 二叉平衡树
 ### 构造
 - 在构造二叉排序树的过程中，每当插入一个结点时，首先检查是否因插入而破坏了树的平衡性，如果是因插入结点而破坏了树的平衡性，则找出其中**最小不平衡子树**，在保持排序树特性的前提下，调整**最小不平衡子树**中各结点之间的连接关系，以达到新的平衡 
