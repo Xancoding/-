@@ -1,4 +1,4 @@
-# 基本概念
+## 基本概念
 - 静态查找表：只需进行数据元素的查询操作
     - 顺序查找 `无序`
     - 二分查找 `有序`
@@ -20,29 +20,38 @@
 - 结点的**平衡因子**：左子树的深度 - 右子树的深度
 
 ## 二叉平衡树
-### 构造
-- 在构造二叉排序树的过程中，每当插入一个结点时，首先检查是否因插入而破坏了树的平衡性，如果是因插入结点而破坏了树的平衡性，则找出其中**最小不平衡子树**，在保持排序树特性的前提下，调整**最小不平衡子树**中各结点之间的连接关系，以达到新的平衡 
-- 具体步骤：
-
-        1. 每当插入一个新结点，从该结点开始向上计算各结点的平衡因子，即计算该结点的祖先结点的平衡因子，若该结点的祖先结点的平衡因子的绝对值均不超过1，则平衡二叉树没有失去平衡，继续插入结点
-
-        2. 若插入结点的某祖先结点的平衡因子的绝对值大于1，则找出其中最小不平衡子树的根结点
-
-        3. 判断新插入的结点与最小不平衡子树的根结点的关系，确定是哪种类型的调整
-
-        4. 如果是LL型或RR型，只需应用扁担原理旋转一次，在旋转过程中，如果出现冲突，应用旋转优先原则调整冲突；如果是LR型或LR型，则需应用扁担原理旋转两次，第一次最小不平衡子树的根结点先不动，调整插入结点所在子树，第二次再调整最小不平衡子树，在旋转过程中，如果出现冲突，应用旋转优先原则调整冲突
-
-        5. 计算调整后的平衡二叉树中各结点的平衡因子，检验是否因为旋转而破坏其他结点的平衡因子，以及调整后的平衡二叉树中是否存在平衡因子大于1的结点
-
-#### 例
-
 ### 插入
-- 不妨假设二叉排序树的最小不平衡子树的根结点为 A ，则调整该子树的规律可归纳为下列四种情况：
+- **最小不平衡子树**的根结点为 A ，则调整该子树的规律可归纳为下列**四种情况**：
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/1.png" /> </div>
+<hr />
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/2.png" /> </div>
+<hr />
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/3.png" /> </div>
+<hr />
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/4.png" /> </div>
+<hr />
+
 #### 例
+<center>
+<figure>
+<img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/5.png" />
+<img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/6.png" />
+</figure>
+</center>
+
+### 删除
+- 查找待删除结点
+- 删除结点(同**二叉搜索树**)
+- 平衡化处理
+    - 删除的结点在结点A的左子树上，最小不平衡子树是RR或RL
+    - 删除的结点在结点A的右子树上，最小不平衡子树是LL或LR
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/7.png" /> </div>
+
+#### 例
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/8.png" /> </div>
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/9.png" /> </div>
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/10.png" /> </div>
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/11.png" /> </div>
 
 
 ## 二叉搜索树
