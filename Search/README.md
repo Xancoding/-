@@ -23,6 +23,7 @@
 ## 哈希表
 [模拟散列表](https://www.acwing.com/problem/content/description/842/ "模拟散列表")
 ### 开放寻址法
+#### 代码实现
 ```cpp
 #include<iostream>
 #include<cstring>
@@ -64,7 +65,14 @@ int main() {
     return 0;
 }
 ```
+#### 线性探测法
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/12.png" /> </div>
+
+#### 平方探测法
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/13.png" /> </div>
+
 ### 拉链法
+#### 代码实现
 ```cpp
 #include<iostream>
 #include<cstring>
