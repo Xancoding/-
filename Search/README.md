@@ -20,6 +20,26 @@
 - **最小不平衡子树**：在根到插入结点的查找路径中，以距离插入结点最近的、且平衡因子的绝对值大于1的结点为根，沿此查找路径再找两个结点构成这棵最小不平衡子树
 - 结点的**平衡因子**：左子树的深度 - 右子树的深度
 
+## ASL
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/14.png" /> </div>
+<hr />
+
+### 顺序查找
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/15.png" /> </div>
+<hr />
+
+### 折半查找
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/16.png" /> </div>
+<hr />
+
+### 分块查找
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/17.png" /> </div>
+<hr />
+
+### 哈希表
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/18.png" /> </div>
+<hr />
+
 ## 哈希表
 [模拟散列表](https://www.acwing.com/problem/content/description/842/ "模拟散列表")
 ### 开放寻址法
