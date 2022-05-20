@@ -16,6 +16,34 @@
     - 主关键字(Primary Key)：唯一标识某个数据元素的关键字
     - 次关键字(Secondary Key)：能标识多个数据元素的关键字
 - ASL：平均查找长度
+- **最小不平衡子树**：在根到插入结点的查找路径中，以距离插入结点最近的、且平衡因子的绝对值大于1的结点为根，沿此查找路径再找两个结点构成这棵最小不平衡子树
+- 结点的**平衡因子**：左子树的深度 - 右子树的深度
+
+## 二叉平衡树
+### 构造
+- 在构造二叉排序树的过程中，每当插入一个结点时，首先检查是否因插入而破坏了树的平衡性，如果是因插入结点而破坏了树的平衡性，则找出其中**最小不平衡子树**，在保持排序树特性的前提下，调整**最小不平衡子树**中各结点之间的连接关系，以达到新的平衡 
+- 具体步骤：
+
+        1. 每当插入一个新结点，从该结点开始向上计算各结点的平衡因子，即计算该结点的祖先结点的平衡因子，若该结点的祖先结点的平衡因子的绝对值均不超过1，则平衡二叉树没有失去平衡，继续插入结点
+
+        2. 若插入结点的某祖先结点的平衡因子的绝对值大于1，则找出其中最小不平衡子树的根结点
+
+        3. 判断新插入的结点与最小不平衡子树的根结点的关系，确定是哪种类型的调整
+
+        4. 如果是LL型或RR型，只需应用扁担原理旋转一次，在旋转过程中，如果出现冲突，应用旋转优先原则调整冲突；如果是LR型或LR型，则需应用扁担原理旋转两次，第一次最小不平衡子树的根结点先不动，调整插入结点所在子树，第二次再调整最小不平衡子树，在旋转过程中，如果出现冲突，应用旋转优先原则调整冲突
+
+        5. 计算调整后的平衡二叉树中各结点的平衡因子，检验是否因为旋转而破坏其他结点的平衡因子，以及调整后的平衡二叉树中是否存在平衡因子大于1的结点
+
+#### 例
+
+### 插入
+- 不妨假设二叉排序树的最小不平衡子树的根结点为 A ，则调整该子树的规律可归纳为下列四种情况：
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/1.png" /> </div>
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/2.png" /> </div>
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/3.png" /> </div>
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/4.png" /> </div>
+#### 例
+
 
 ## 二叉搜索树
 ### 初始化
@@ -126,42 +154,3 @@ void Delete(treelink &p) {
 ---------------------+53(R)
 -------------------+90(R)
 ```
-## 二叉平衡树
-### 构造
-- 在构造二叉排序树的过程中，每当插入一个结点时，首先检查是否因插入而破坏了树的平衡性，如果是因插入结点而破坏了树的平衡性，则找出其中**最小不平衡子树**，在保持排序树特性的前提下，调整**最小不平衡子树**中各结点之间的连接关系，以达到新的平衡 
-- 具体步骤：
-
-        1. 每当插入一个新结点，从该结点开始向上计算各结点的平衡因子，即计算该结点的祖先结点的平衡因子，若该结点的祖先结点的平衡因子的绝对值均不超过1，则平衡二叉树没有失去平衡，继续插入结点
-
-        2. 若插入结点的某祖先结点的平衡因子的绝对值大于1，则找出其中最小不平衡子树的根结点
-
-        3. 判断新插入的结点与最小不平衡子树的根结点的关系，确定是哪种类型的调整
-
-        4. 如果是LL型或RR型，只需应用扁担原理旋转一次，在旋转过程中，如果出现冲突，应用旋转优先原则调整冲突；如果是LR型或LR型，则需应用扁担原理旋转两次，第一次最小不平衡子树的根结点先不动，调整插入结点所在子树，第二次再调整最小不平衡子树，在旋转过程中，如果出现冲突，应用旋转优先原则调整冲突
-
-        5. 计算调整后的平衡二叉树中各结点的平衡因子，检验是否因为旋转而破坏其他结点的平衡因子，以及调整后的平衡二叉树中是否存在平衡因子大于1的结点
-
-#### 例
-- 设有关键码序列{20, 35, 40, 15, 30, 25, 38}，图7-3给出了平衡二叉树的构造过程，结点旁边标出的是该结点的平衡因子
-<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/3.bmp" /> </div>
-<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/4.jpg" /> </div>
-<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/5.bmp" /> </div>
-<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/6.bmp" /> </div>
-
-### 插入
-- 不妨假设二叉排序树的最小不平衡子树的根结点为 A ，则调整该子树的规律可归纳为下列四种情况：
-
-        1. LL 型：新结点 X 插在 A 的左孩子的左子树里。调整方法见图 (a) 。图中以 B 为轴心，将 A 结点从 B 的右上方转到 B 的右下侧，使 A 成为 B 的右孩子
-
-        2. RR 型：新结点 X 插在 A 的右孩子的右子树里。调整方法见图 (b) 。图中以 B 为轴心，将 A 结点从 B 的左上方转到 B 的左下侧，使 A 成为 B 的左孩子
-
-        3. LR 型：新结点 X 插在 A 的左孩子的右子树里。调整方法见图 (c) 。分为两步进行：第一步以 X 为轴心，将 B 从 X 的左上方转到 X 的左下侧，使 B 成为 X 的左孩子， X 成为 A 的左孩子。第二步跟 LL 型一样处理 ( 应以 X 为轴心 )
-        
-        4. RL 型：新结点 X 插在 A 的右孩子的左子树里。调整方法见图 (d) 。分为两步进行：第一步以 X 为轴心，将 B 从 X 的右上方转到 X 的右下侧，使 B 成为 X 的右孩子， X 成为 A 的右孩子。第二步跟 RR 型一样处理 ( 应以 X 为轴心 )
-
-<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/1.png" /> </div>
-
-#### 例
-- 设一组记录的关键字按以下次序进行插入： 4 、 5 、 7 ， 2 、 1 、 3 、 6 ，其生成及调整成二叉平衡树的过程👇
-<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/2.png" /> </div>
-
