@@ -21,6 +21,7 @@
 - 结点的**平衡因子**：左子树的深度 - 右子树的深度
 
 ## 哈希表
+[模拟散列表](https://www.acwing.com/problem/content/description/842/ "模拟散列表")
 ### 开放寻址法
 ```cpp
 #include<iostream>
