@@ -13,26 +13,26 @@ typedef struct treenode {
 ### 递归创建（先序）
 ```cpp
 /* 创建一棵树  */
-void tree_create(treelink &root){
+void tree_create(treelink &T) {
     char data[MAX];
     scanf("%s", data);
-    if (strcmp(data, "#") == 0) root = NULL;
+    if (strcmp(data, "#") == 0) T = NULL;
     else {
-        root = new treenode;
-        strcpy(root->data, data);
-        tree_create(root->child);
-        tree_create(root->sibling);
+        T = new treenode;
+        strcpy(T->data, data);
+        tree_create(T->child);
+        tree_create(T->sibling);
     }
 }
 ```
 ### 输入边创建
 ```cpp
-/* 创建一棵二叉树  */
-void tree_create(treelink &root){
+/* 创建一棵树  */
+void tree_create(treelink &T){
     char fa[30], ch[30];  //fa为父结点 ch为子结点
     treelink p, s, r;  //p为父结点 s为子结点
     queue<treelink>que;
-    root = NULL;
+    T = NULL;
     printf("请输入父结点、子结点（用空格隔开，根结点的双亲为#）\n");
     scanf("%s%s",fa, ch);
     while (strcmp(ch,"end")) {
@@ -41,7 +41,7 @@ void tree_create(treelink &root){
         s->child = s->sibling = NULL;
 
         que.push(s);// 指针入队列
-        if (strcmp(fa,"#") == 0)  root = s;  // 所建为根结点
+        if (strcmp(fa,"#") == 0)  T = s;  // 所建为根结点
         else {// 非根结点的情况
             p = que.front();// 取队列头元素(指针值)
             while (strcmp(p->data,fa)) { // 查询双亲结点
@@ -64,7 +64,7 @@ void tree_create(treelink &root){
 ```
 ## 销毁树
 ```cpp
-/* 销毁二叉树 */
+/* 销毁树 */
 void Destroy(treelink &p) {
     if(p) {
         Destroy(p->child);
@@ -77,11 +77,11 @@ void Destroy(treelink &p) {
 ## 求树深度
 ```cpp
 /* 求树深度 */
-int get_depth(treelink root) {
-    if (root == NULL) return 0;
+int get_depth(treelink T) {
+    if (T == NULL) return 0;
     else {
-        int d1 = get_depth(root->child);
-        int d2 = get_depth(root->sibling);
+        int d1 = get_depth(T->child);
+        int d2 = get_depth(T->sibling);
         return d1 + 1 > d2 ? d1 + 1 : d2;
     }
 }
@@ -89,47 +89,49 @@ int get_depth(treelink root) {
 ## 凹入表显示
 ```cpp
 /* 凹入表显示 */
-void disp_tree(treelink root, int level) { //level为root结点的高度
-    if (root == NULL) return ;
+void disp_tree(treelink T, int level) { //level为T结点的高度
+    if (T == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
         putchar('-');
 
     putchar('+');
-    printf("%s\n",root->data);
-    disp_tree(root->child,level - 2);
-    disp_tree(root->sibling, level);
+    printf("%s\n",T->data);
+    disp_tree(T->child,level - 2);
+    disp_tree(T->sibling, level);
 }
 ```
 ## 查找
 - 仅查找当前结点
 ```cpp
-treelink node_find1(treelink root, char *name) {
-    treenode *p;
-    if(root == NULL) return NULL;
+/* 查找 */
+treelink node_find1(treelink T, char *data) {
+
+    treelink p;
+    if(T == NULL) return NULL;
     else{
-        if(strcmp(root->data, name)==0)
-            return root;
-        else if(p = node_find1(root->child, name))
+        if(strcmp(T->data, data)==0)
+            return T;
+        else if(p = node_find1(T->child, data))
             return p;
         else
-            return node_find1(root->sibling, name);
+            return node_find1(T->sibling, data);
     }
 }
 ```
 - 查找当前结点及其父结点
 ```cpp
-void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, treelink &p2) {
+void node_find2(treelink pTree, char *data, treelink &pLast, treelink &p1, treelink &p2) {
     if(pTree == NULL) return;
-    if(strcmp(pTree->data, szName) == 0){  //找到则返回父节点指针和当前节点指针
+    if(strcmp(pTree->data, data) == 0){  //找到则返回父节点指针和当前节点指针
         p2 = pTree;  //当前节点
         p1 = pLast;  //父节点
     }
     else{
         //pLast = pTree;//暂存上一级节点指针
-        node_find2(pTree->child, szName, pTree, p1, p2);
+        node_find2(pTree->child, data, pTree, p1, p2);
         //pLast = pTree;
-        node_find2(pTree->sibling, szName, pTree, p1, p2);
+        node_find2(pTree->sibling, data, pTree, p1, p2);
     }
 }
 ```
@@ -140,9 +142,10 @@ void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, tr
 /* 插入 */
 void node_insert(treelink pTree, char  *szParent, char  *szNew)
 {
-    treelink pFind = NULL;
+    treelink pFind= NULL;
     treelink pChild = NULL;
-    pFind = node_find(pTree, szParent);
+    treelink parent;  //待查找结点的父结点
+    pFind = node_find1(pTree, szParent);
 
     if(pFind){
         pChild = pFind->child;
@@ -156,7 +159,7 @@ void node_insert(treelink pTree, char  *szParent, char  *szNew)
 
         treelink pNew = new treenode;
         strcpy(pNew->data, szNew);
-        if(pFind->child){  //头插
+        if(pFind->child){
             pNew->sibling = pFind->child;
             pNew->child = NULL;
         }else{
@@ -175,10 +178,10 @@ void node_insert(treelink pTree, char  *szParent, char  *szNew)
 - 如果该结点不是第一个孩子，需将它的右孩子链接成它前一个兄弟的右兄弟
 ```cpp
 /* 删除 */
-void node_delete(treelink &pTree, char *szName){
+void node_delete(treelink &pTree, char  *data){
     treelink pFind = NULL, pParent = NULL, p = NULL;
 
-    node_find2(pTree, szName, p, pParent, pFind);
+    node_find2(pTree, data, p, pParent, pFind);
 
     if(pFind){
         if(pParent == NULL){//删除根节点
@@ -202,31 +205,31 @@ void node_delete(treelink &pTree, char *szName){
 - 同二叉树的先序遍历 
 ```cpp
 /* 先根遍历 */
-void preorder_traversal(treelink root) {
-    if (root == NULL) return ;
-    printf("%s ", root->data);
-    preorder_traversal(root->child);
-    preorder_traversal(root->sibling);
+void preorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    printf("%s ", T->data);
+    preorder_traversal(T->child);
+    preorder_traversal(T->sibling);
 }
 ```
 ### 后根遍历
 - 同二叉树的中序遍历 
 ```cpp
 /* 后根遍历 */
-void postorder_traversal(treelink root) {
-    if (root == NULL) return ;
-    preorder_traversal(root->child);
-    printf("%s ", root->data);
-    preorder_traversal(root->sibling);
+void postorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    preorder_traversal(T->child);
+    preorder_traversal(T->sibling);
+    printf("%s ", T->data);
 }
 ```
 ### 层次遍历
 ```cpp
 /*层次遍历 */
-void levelorder_traversal(treelink root) {
+void levelorder_traversal(treelink T) {
     queue<treelink> que;
-    que.push(root);
-    if (root == NULL) return;
+    que.push(T);
+    if (T == NULL) return;
     while (!que.empty()) {
         int size = que.size();
         for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
@@ -262,7 +265,7 @@ void get_follow(treelink T, char *s) { //输出指定结点的子结点
 ### 路径
 ```cpp
 /* 路径 */
-void Path(treelink pTree, stack<char*>st, char  data[]) {
+void Path(treelink pTree, stack<char*>st, char data[]) {
     if (pTree) {
     	st.push(pTree->data);
     	if (strcmp(pTree->data, data) == 0) print_stack(st);
