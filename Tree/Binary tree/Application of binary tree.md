@@ -12,43 +12,43 @@ typedef struct treenode {
     char data;
     struct treenode *left;
     struct treenode *right;
-} treenode;
+} treenode, *treelink;
 
 /* 凹入表显示 */
-void disp_tree(treenode *root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
-    if (root == NULL) return ;
+void disp_tree(treelink T, int level, char c) { //level为T结点的高度，c为树根的标志，如"D"
+    if (T == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
         putchar('-');
 
     putchar('+');
-    printf("%c(%c)\n",root->data,c);
+    printf("%c(%c)\n",T->data,c);
     level = level - 2;
-    disp_tree(root->left,level,'L');
-    disp_tree(root->right,level,'R');
+    disp_tree(T->left,level,'L');
+    disp_tree(T->right,level,'R');
 }
 
-treenode *buildTree(int pl, int pr, int ml, int mr) {
+treelink buildTree(int pl, int pr, int ml, int mr) {
     if (pl > pr) return NULL;
 
-    treenode *root = (treenode*)malloc(sizeof(treenode));
-    root->data = pre[pl];
+    treelink T = (treelink)malloc(sizeof(treenode));
+    T->data = pre[pl];
 
     int pos = 0;
     for (pos = ml; pos <= mr; pos++)
         if (mid[pos] == pre[pl]) break;
 
-    root->left = buildTree(pl + 1, pl + pos - ml, ml, pos - 1);
-    root->right = buildTree(pl + pos - ml + 1, pr, pos + 1, mr);
+    T->left = buildTree(pl + 1, pl + pos - ml, ml, pos - 1);
+    T->right = buildTree(pl + pos - ml + 1, pr, pos + 1, mr);
 
-    return root;
+    return T;
 }
 
-int get_depth(treenode *root) {
-    if (root == NULL) return 0;
+int get_depth(treelink T) {
+    if (T == NULL) return 0;
     else {
-        int L = get_depth(root->left);
-        int R = get_depth(root->right);
+        int L = get_depth(T->left);
+        int R = get_depth(T->right);
         if (L > R) return (L + 1);
         else return (R + 1);
     }
@@ -62,9 +62,9 @@ int main() {
     scanf("%s", mid);
 
     int n = strlen(pre), m = strlen(mid);
-    treenode *root = buildTree(0, n - 1, 0, m - 1);
-    printf("该二叉树的凹入表为：");
-    disp_tree(root, get_depth(root), 'D');
+    treelink T = buildTree(0, n - 1, 0, m - 1);
+    printf("该二叉树的凹入表为：\n");
+    disp_tree(T, get_depth(T), 'D');
     puts("");
 }
 ```
@@ -82,43 +82,43 @@ typedef struct treenode {
     char data;
     struct treenode *left;
     struct treenode *right;
-} treenode;
+} treenode, *treelink;
 
 /* 凹入表显示 */
-void disp_tree(treenode *root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
-    if (root == NULL) return ;
+void disp_tree(treelink T, int level, char c) { //level为T结点的高度，c为树根的标志，如"D"
+    if (T == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
         putchar('-');
 
     putchar('+');
-    printf("%c(%c)\n",root->data,c);
+    printf("%c(%c)\n",T->data,c);
     level = level - 2;
-    disp_tree(root->left,level,'L');
-    disp_tree(root->right,level,'R');
+    disp_tree(T->left,level,'L');
+    disp_tree(T->right,level,'R');
 }
 
-treenode *buildTree(int pl, int pr, int ml, int mr) {
+treelink buildTree(int pl, int pr, int ml, int mr) {
     if (pl > pr) return NULL;
 
-    treenode *root = (treenode*)malloc(sizeof (treenode));
-    root->data = post[pr];
+    treelink T = (treelink)malloc(sizeof (treenode));
+    T->data = post[pr];
 
     int pos = 0;
     for (pos = ml; pos <= mr; pos++)
         if (mid[pos] == post[pr]) break;
 
-    root->left = buildTree(pl, pl + pos - ml - 1, ml, pos - 1);
-    root->right = buildTree(pl + pos - ml, pr - 1, pos + 1, mr);
+    T->left = buildTree(pl, pl + pos - ml - 1, ml, pos - 1);
+    T->right = buildTree(pl + pos - ml, pr - 1, pos + 1, mr);
 
-    return root;
+    return T;
 }
 
-int get_depth(treenode *root) {
-    if (root == NULL) return 0;
+int get_depth(treelink T) {
+    if (T == NULL) return 0;
     else {
-        int L = get_depth(root->left);
-        int R = get_depth(root->right);
+        int L = get_depth(T->left);
+        int R = get_depth(T->right);
         if (L > R) return (L + 1);
         else return (R + 1);
     }
@@ -132,9 +132,9 @@ int main() {
     scanf("%s", mid);
 
     int n = strlen(post), m = strlen(mid);
-    treenode *root = buildTree(0, n - 1, 0, m - 1);
-    printf("该二叉树的凹入表为：");
-    disp_tree(root, get_depth(root), 'D');
+    treelink T = buildTree(0, n - 1, 0, m - 1);
+    printf("该二叉树的凹入表为：\n");
+    disp_tree(T, get_depth(T), 'D');
     puts("");
 }
 ```
