@@ -22,7 +22,6 @@ void Destroy(treelink &p);   /* 销毁二叉树 */
 void node_delete(treelink &T, char *data);  /* 删除数据 */
 void node_insert(treelink T, char *pdata, char *cdata);  /* 插入数据 */
 
-
 int main() {
     int n;
     int dep = 0;  //二叉树深度
@@ -108,7 +107,6 @@ void tree_create(treelink &T){
         tree_create(T->right);
     }
 }
-
 
 /* 求二叉树深度 */
 int get_depth(treelink T) {
