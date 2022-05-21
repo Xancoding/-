@@ -3,7 +3,6 @@
 #include<string.h>
 #include<conio.h>
 #include<stack>
-#include<queue>
 #define MAX 10
 
 using namespace std;
@@ -15,14 +14,14 @@ typedef struct treenode {
 }treenode, *treelink;
 
 int menu();  /* 菜单 */
-void tree_create(treelink &root);  /* 创建一棵二叉树  */
-int get_depth(treelink root);  /* 求树深度 */
-void disp_tree(treelink root, int level);  /* 凹入表显示 */
-treelink node_find1(treelink root, char *name);  /* 查找 */
-void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, treelink &p2);  /* 查找 */
+void tree_create(treelink &T);  /* 创建一棵二叉树  */
+int get_depth(treelink T);  /* 求树深度 */
+void disp_tree(treelink T, int level);  /* 凹入表显示 */
+treelink node_find1(treelink T, char *data);  /* 查找 */
+void node_find2(treelink pTree, char  *data, treelink &pLast, treelink &p1, treelink &p2);  /* 查找 */
 void Destroy(treelink &p);   /* 销毁树 */
-void node_delete(treelink &Root, char *name);  /* 删除数据 */
-void node_insert(treelink Root, char *pname, char *cname);  /* 插入数据 */
+void node_delete(treelink &T, char *data);  /* 删除数据 */
+void node_insert(treelink T, char *pdata, char *cdata);  /* 插入数据 */
 
 
 
@@ -32,21 +31,21 @@ int main() {
     char str[MAX];
     char str1[MAX];
     char str2[MAX];
-    treelink root;
+    treelink T;
     treelink p;
-    
+
     while (1) {
         n = menu();
         switch(n) {
             case 1:
                 printf("请输入树的节点：");
-                tree_create(root);
+                tree_create(T);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 2:
                 printf("请输入查找结点名：");
                 scanf("%s", str);
-                p = node_find1(root,str);
+                p = node_find1(T,str);
                 if(p != NULL)
                     printf("\nnode addr = %x\nnode val = %s\n",p,p->data);
                 else
@@ -57,21 +56,21 @@ int main() {
             case 3:
                 printf("请输入结点名：");
                 scanf("%s", str);
-                node_delete(root, str);
+                node_delete(T, str);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 4:
                 printf("请输入父结点名、新结点名字(中间用空格隔开)：");
                 scanf("%s %s", str1, str2);
-                node_insert(root, str1, str2);
+                node_insert(T, str1, str2);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 5:
-                Destroy(root);
+                Destroy(T);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 6:
-                disp_tree(root, get_depth(root));
+                disp_tree(T, get_depth(T));
                 printf("按任意键继续!\n");
                 getch(); break;
         }
@@ -100,15 +99,15 @@ int menu() {
 }
 
 /* 创建一棵树  */
-void tree_create(treelink &root) {
+void tree_create(treelink &T) {
     char data[MAX];
     scanf("%s", data);
-    if (strcmp(data, "#") == 0) root = NULL;
+    if (strcmp(data, "#") == 0) T = NULL;
     else {
-        root = new treenode;
-        strcpy(root->data, data);
-        tree_create(root->child);
-        tree_create(root->sibling);
+        T = new treenode;
+        strcpy(T->data, data);
+        tree_create(T->child);
+        tree_create(T->sibling);
     }
 }
 
@@ -123,53 +122,53 @@ void Destroy(treelink &p) {
 }
 
 /* 求二叉树深度 */
-int get_depth(treelink root) {
-    if (root == NULL) return 0;
+int get_depth(treelink T) {
+    if (T == NULL) return 0;
     else {
-        int d1 = get_depth(root->child);
-        int d2 = get_depth(root->sibling);
+        int d1 = get_depth(T->child);
+        int d2 = get_depth(T->sibling);
         return d1 + 1 > d2 ? d1 + 1 : d2;
     }
 }
 
 /* 凹入表显示 */
-void disp_tree(treelink root, int level) { //level为root结点的高度
-    if (root == NULL) return ;
+void disp_tree(treelink T, int level) { //level为T结点的高度
+    if (T == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
         putchar('-');
 
     putchar('+');
-    printf("%s\n",root->data);
-    disp_tree(root->child,level - 2);
-    disp_tree(root->sibling, level);
+    printf("%s\n",T->data);
+    disp_tree(T->child,level - 2);
+    disp_tree(T->sibling, level);
 }
 
 /* 查找 */
-treelink node_find1(treelink root, char *name) {
+treelink node_find1(treelink T, char *data) {
 
-    treenode *p;
-    if(root == NULL) return NULL;
+    treelink p;
+    if(T == NULL) return NULL;
     else{
-        if(strcmp(root->data, name)==0)
-            return root;
-        else if(p = node_find1(root->child, name))
+        if(strcmp(T->data, data)==0)
+            return T;
+        else if(p = node_find1(T->child, data))
             return p;
         else
-            return node_find1(root->sibling, name);
+            return node_find1(T->sibling, data);
     }
 }
-void node_find2(treelink pTree, char  *szName, treelink &pLast, treelink &p1, treelink &p2) {
+void node_find2(treelink pTree, char  *data, treelink &pLast, treelink &p1, treelink &p2) {
     if(pTree == NULL) return;
-    if(strcmp(pTree->data, szName) == 0){  //找到则返回父节点指针和当前节点指针
+    if(strcmp(pTree->data, data) == 0){  //找到则返回父节点指针和当前节点指针
         p2 = pTree;  //当前节点
         p1 = pLast;  //父节点
     }
     else{
         //pLast = pTree;//暂存上一级节点指针
-        node_find2(pTree->child, szName, pTree, p1, p2);
+        node_find2(pTree->child, data, pTree, p1, p2);
         //pLast = pTree;
-        node_find2(pTree->sibling, szName, pTree, p1, p2);
+        node_find2(pTree->sibling, data, pTree, p1, p2);
     }
 }
 
@@ -207,10 +206,10 @@ void node_insert(treelink pTree, char  *szParent, char  *szNew)
 }
 
 /* 删除 */
-void node_delete(treelink &pTree, char  *szName){
+void node_delete(treelink &pTree, char  *data){
     treelink pFind = NULL, pParent = NULL, p = NULL;
 
-    node_find2(pTree, szName, p, pParent, pFind);
+    node_find2(pTree, data, p, pParent, pFind);
 
     if(pFind){
         if(pParent == NULL){//删除根节点
