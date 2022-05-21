@@ -15,16 +15,16 @@ typedef struct treenode {
 }treenode, *treelink;
 
 int menu();  /* 菜单 */
-void tree_create(treelink &root);  /* 创建一棵二叉树  */
-int get_depth(treelink root);  /* 求树深度 */
-void disp_tree(treelink root, int level);  /* 凹入表显示 */
+void tree_create(treelink &T);  /* 创建一棵树  */
+int get_depth(treelink T);  /* 求树深度 */
+void disp_tree(treelink T, int level);  /* 凹入表显示 */
 void all_tree_path(treelink T, stack<char*>st); /* 求所有叶子结点路径 */
 void print_stack(stack<char*>st);  /* 遍历输出栈中数据 */
-void preorder_traversal(treelink root);  /* 先根遍历 */
-void postorder_traversal(treelink root); /* 后根遍历 */
-void levelorder_traversal(treelink root);  /*层次遍历 */
+void preorder_traversal(treelink T);  /* 先根遍历 */
+void postorder_traversal(treelink T); /* 后根遍历 */
+void levelorder_traversal(treelink T);  /*层次遍历 */
 void Path(treelink pTree, stack<char*>st, char data[]);  /* 路径 */
-treelink node_find1(treelink root, char *name);  /* 查找 */
+treelink node_find1(treelink T, char *name);  /* 查找 */
 void get_follow(treelink T, char *s);  /* 子结点输出 */
 
 int main() {
@@ -33,7 +33,7 @@ int main() {
     char str[MAX];
     char str1[MAX];
     char str2[MAX];
-    treelink root;
+    treelink T;
     stack<char*>st;
 
     while (1) {
@@ -41,42 +41,42 @@ int main() {
         switch(n) {
             case 1:
                 printf("请输入树的节点：");
-                tree_create(root);
+                tree_create(T);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 2:
-                levelorder_traversal(root);
+                levelorder_traversal(T);
                 puts("");
                 printf("按任意键继续!\n");
                 getch(); break;
             case 3:
-                preorder_traversal(root);
+                preorder_traversal(T);
                 puts("");
                 printf("按任意键继续!\n");
                 getch(); break;
             case 4:
-                postorder_traversal(root);
+                postorder_traversal(T);
                 puts("");
                 printf("按任意键继续!\n");
                 getch(); break;
             case 5:
-                disp_tree(root, get_depth(root));
+                disp_tree(T, get_depth(T));
                 printf("按任意键继续!\n");
                 getch(); break;
             case 6:
-                all_tree_path(root, st);
+                all_tree_path(T, st);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 7:
                 printf("请输入节点名: ");
                 scanf("%s", str);
-                Path(root, st, str);
+                Path(T, st, str);
                 printf("按任意键继续!\n");
                 getch(); break;
             case 8:
                 printf("请输入节点名: ");
                 scanf("%s", str);
-                get_follow(root, str);
+                get_follow(T, str);
                 puts("");
                 printf("按任意键继续!\n");
                 getch(); break;
@@ -108,62 +108,62 @@ int menu() {
 }
 
 /* 创建一棵树  */
-void tree_create(treelink &root) {
+void tree_create(treelink &T) {
     char data[MAX];
     scanf("%s", data);
-    if (strcmp(data, "#") == 0) root = NULL;
+    if (strcmp(data, "#") == 0) T = NULL;
     else {
-        root = new treenode;
-        strcpy(root->data, data);
-        tree_create(root->child);
-        tree_create(root->sibling);
+        T = new treenode;
+        strcpy(T->data, data);
+        tree_create(T->child);
+        tree_create(T->sibling);
     }
 }
 
-/* 求二叉树深度 */
-int get_depth(treelink root) {
-    if (root == NULL) return 0;
+/* 求树深度 */
+int get_depth(treelink T) {
+    if (T == NULL) return 0;
     else {
-        int d1 = get_depth(root->child);
-        int d2 = get_depth(root->sibling);
+        int d1 = get_depth(T->child);
+        int d2 = get_depth(T->sibling);
         return d1 + 1 > d2 ? d1 + 1 : d2;
     }
 }
 
 /* 凹入表显示 */
-void disp_tree(treelink root, int level) { //level为root结点的高度
-    if (root == NULL) return ;
+void disp_tree(treelink T, int level) { //level为T结点的高度
+    if (T == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
         putchar('-');
 
     putchar('+');
-    printf("%s\n",root->data);
-    disp_tree(root->child,level - 2);
-    disp_tree(root->sibling, level);
+    printf("%s\n",T->data);
+    disp_tree(T->child,level - 2);
+    disp_tree(T->sibling, level);
 }
 
 /* 先根遍历 */
-void preorder_traversal(treelink root) {
-    if (root == NULL) return ;
-    printf("%s ", root->data);
-    preorder_traversal(root->child);
-    preorder_traversal(root->sibling);
+void preorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    printf("%s ", T->data);
+    preorder_traversal(T->child);
+    preorder_traversal(T->sibling);
 }
 
 /* 后根遍历 */
-void postorder_traversal(treelink root) {
-    if (root == NULL) return ;
-    preorder_traversal(root->child);
-    preorder_traversal(root->sibling);
-    printf("%s ", root->data);
+void postorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    preorder_traversal(T->child);
+    preorder_traversal(T->sibling);
+    printf("%s ", T->data);
 }
 
 /*层次遍历 */
-void levelorder_traversal(treelink root) {
+void levelorder_traversal(treelink T) {
     queue<treelink> que;
-    que.push(root);
-    if (root == NULL) return;
+    que.push(T);
+    if (T == NULL) return;
     while (!que.empty()) {
         int size = que.size();
         for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
@@ -183,11 +183,11 @@ void levelorder_traversal(treelink root) {
 /* 路径 */
 void Path(treelink pTree, stack<char*>st, char data[]) {
     if (pTree) {
-    	st.push(pTree->data);
-    	if (strcmp(pTree->data, data) == 0) print_stack(st);
-    	else Path(pTree->child, st, data);
-    	st.pop();
-    	Path(pTree->sibling, st, data);
+        st.push(pTree->data);
+        if (strcmp(pTree->data, data) == 0) print_stack(st);
+        else Path(pTree->child, st, data);
+        st.pop();
+        Path(pTree->sibling, st, data);
     }
 }
 
@@ -218,17 +218,17 @@ void print_stack(stack<char*>st) {
 }
 
 /* 查找 */
-treelink node_find1(treelink root, char *name) {
+treelink node_find1(treelink T, char *name) {
 
     treelink p;
-    if(root == NULL) return NULL;
+    if(T == NULL) return NULL;
     else{
-        if(strcmp(root->data, name)==0)
-            return root;
-        else if(p = node_find1(root->child, name))
+        if(strcmp(T->data, name)==0)
+            return T;
+        else if(p = node_find1(T->child, name))
             return p;
         else
-            return node_find1(root->sibling, name);
+            return node_find1(T->sibling, name);
     }
 }
 
