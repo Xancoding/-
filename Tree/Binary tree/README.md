@@ -24,15 +24,15 @@
 ### 递归创建
 ```cpp
 /* 创建一棵二叉树  */
-void tree_create(treelink &root){
+void tree_create(treelink &T){
     char data[MAX];
     scanf("%s", data);
-    if (strcmp(data, "#") == 0) root = NULL;
+    if (strcmp(data, "#") == 0) T = NULL;
     else {
-        root = new treenode;
-        strcpy(root->data, data);
-        tree_create(root->left);
-        tree_create(root->right);
+        T = new treenode;
+        strcpy(T->data, data);
+        tree_create(T->left);
+        tree_create(T->right);
     }
 }
 ```
@@ -40,12 +40,12 @@ void tree_create(treelink &root){
 ### 用边创建
 ```cpp
 /* 创建一棵二叉树  */
-void tree_create(treelink &root){
+void tree_create(treelink &T){
     char fa[30], ch[30];  //fa为父结点 ch为子结点 
     treelink p, s;  //p为父结点 s为子结点 
     int flag;
     queue<treelink>que;
-    root = NULL;
+    T = NULL;
     printf("请输入父结点、子结点、左(0)右(1)标志（用空格隔开，根结点的双亲为#）\n");
     scanf("%s%s%d",fa, ch,&flag);
     while (strcmp(ch,"end")) {
@@ -54,12 +54,12 @@ void tree_create(treelink &root){
         s->left = s->right = NULL;
 
         que.push(s);// 指针入队列
-        if (strcmp(fa,"#") == 0)  root = s;  // 所建为根结点
+        if (strcmp(fa,"#") == 0)  T = s;  // 所建为根结点
         else {// 非根结点的情况
             p = que.front();// 取队列头元素(指针值)
             while (strcmp(p->data,fa)) { // 查询双亲结点
-            	que.pop();
-            	p = que.front();
+                que.pop();
+                p = que.front();
             }//while
 
             if (flag==0){
@@ -89,44 +89,45 @@ void Destroy(treelink &p) {
 ## 结点的查找
 ```cpp
 /* 查找数据 */
-treelink node_find(treelink root, char *name)
+treelink node_find(treelink T, char *data)
 {
     treelink p;
-    if(root == NULL) return NULL;
+    if(T == NULL) return NULL;
     else{
-        printf("%s ", root->data);
-        if(strcmp(root->data, name)==0)
-            return root;
-        else if(p = node_find(root->left, name))
+        printf("%s ", T->data);
+        if(strcmp(T->data, data)==0)
+            return T;
+        else if(p = node_find(T->left, data))
             return p;
         else
-            return node_find(root->right, name);
+            return node_find(T->right, data);
     }
 }
 ```
 ## 结点的删除
 ```cpp
 /* 删除数据 */
-void node_delete(treelink &Root, char *name) {
+void node_delete(treelink &T, char *data) {
 
-    if(Root){
-        if(strcmp(Root->data,name)==0){
-            Destroy(Root);
-            Root = NULL;
+    if(T){
+        if(strcmp(T->data,data)==0){
+            Destroy(T);
+            T = NULL;
         }
         else{
-            node_delete(Root->left, name);
-            node_delete(Root->right, name);
+            node_delete(T->left, data);
+            node_delete(T->right, data);
         }
     }
 }
+
 ```
 ## 结点的插入
 ```cpp
 /* 插入数据 */
-void node_insert(treelink Root, char *pname, char *cname) {
+void node_insert(treelink T, char *pdata, char *cdata) {
     treelink parent, pnew;
-    parent = node_find(Root, pname);
+    parent = node_find(T, pdata);
     if(parent==NULL){
         printf("父结点不存在\n");
         return;
@@ -137,20 +138,20 @@ void node_insert(treelink Root, char *pname, char *cname) {
         }
 
         if(parent->left){
-            if(strcmp(parent->left->data,cname)==0){
+            if(strcmp(parent->left->data,cdata)==0){
                 printf("同名子结点已存在\n");
                 return;
             }
         }
         if(parent->right){
-            if(strcmp(parent->right->data, cname)==0){
+            if(strcmp(parent->right->data, cdata)==0){
                 printf("同名子结点已存在\n");
                 return;
             }
         }
 
         pnew = new treenode;  pnew->left = pnew->right =NULL;
-        strcpy(pnew->data, cname);
+        strcpy(pnew->data, cdata);
         /* 优先插入左结点 */
         if(parent->left == NULL)
             parent->left = pnew;
