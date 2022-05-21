@@ -166,157 +166,159 @@ void node_insert(treelink T, char *pdata, char *cdata) {
 #### 递归法
 ```cpp
 /* 前序遍历 */
-void preorder_traversal(treelink root) {
-    if (root == NULL) return ;
-    printf("%s ", root->data);
-    preorder_traversal(root->left);
-    preorder_traversal(root->right);
+void preorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    printf("%s ", T->data);
+    preorder_traversal(T->left);
+    preorder_traversal(T->right);
 }
 
 /* 中序遍历 */
-void inorder_traversal(treelink root) {
-    if (root == NULL) return ;
-    inorder_traversal(root->left);
-    printf("%s ", root->data);
-    inorder_traversal(root->right);
+void inorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    inorder_traversal(T->left);
+    printf("%s ", T->data);
+    inorder_traversal(T->right);
 }
 
 /* 后序遍历 */
-void postorder_traversal(treelink root) {
-    if (root == NULL) return ;
-    postorder_traversal(root->left);
-    postorder_traversal(root->right);
-    printf("%s ", root->data);
+void postorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    postorder_traversal(T->left);
+    postorder_traversal(T->right);
+    printf("%s ", T->data);
 }
 ```
 #### 迭代法
 ```cpp
 /* 前序遍历 */
-void preorder_traversal(treelink root) {
-  if (root == NULL) return ;
-  stack<treelink>st;
-  st.push(root);
-  while(!st.empty()) {
-  treelink cur = st.top();
-  st.pop();
-  printf("%s ", cur->data);
-  if (cur->right != NULL) st.push(cur->right);
-  if (cur->left != NULL) st.push(cur->left);
-  }
+void preorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    stack<treelink>st;
+    st.push(T);
+    while(!st.empty()) {
+        treelink cur = st.top();
+        st.pop();
+        printf("%s ", cur->data);
+        if (cur->right != NULL) st.push(cur->right);
+        if (cur->left != NULL) st.push(cur->left);
+    }
 }
 
 /* 中序遍历 */
-void inorder_traversal(treelink root) {
-  if (root == NULL) return ;
-  stack<treelink>st;
-  treelink cur = root;
-  while(cur != NULL || !st.empty()) {
-    while (cur != NULL) {   // 指针来访问节点，访问到最底层
-      st.push(cur);
-      cur = cur->left;
+void inorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    stack<treelink>st;
+    treelink cur = T;
+    while(cur != NULL || !st.empty()) {
+        while (cur != NULL) {   // 指针来访问节点，访问到最底层
+            st.push(cur);
+            cur = cur->left;
+        }
+        cur = st.top();
+        st.pop();
+        printf("%s ", cur->data);
+        cur = cur->right;
     }
-    cur = st.top();
-    st.pop();
-    printf("%s ", cur->data);
-    cur = cur->right;
-  } 
 }
 
 /* 后序遍历 */
-void postorder_traversal(treelink root) {
-  if (root == NULL) return ;
-  stack<treelink>st;
-  treelink prev = NULL;  //记录上一次输出的节点
-  treelink cur = root;
-  while (cur != NULL || !st.empty()) {
-    while (cur != NULL) {
-      st.push(cur);
-      cur = cur->left;
+void postorder_traversal(treelink T) {
+    if (T == NULL) return ;
+    stack<treelink>st;
+    treelink prev = NULL;  //记录上一次输出的节点
+    treelink cur = T;
+    while (cur != NULL || !st.empty()) {
+        while (cur != NULL) {
+            st.push(cur);
+            cur = cur->left;
+        }
+        cur = st.top();
+        st.pop();
+        //该节点没有右子树或者它的右子树已经被访问过
+        if (cur->right == NULL || cur->right == prev) {
+            printf("%s ", cur->data);
+            prev = cur;
+            cur = NULL;
+        } else {  //若节点的右子树不为空，则该节点再次入栈
+            st.push(cur);
+            cur = cur->right;
+        }
     }
-    cur = st.top();
-    st.pop();
-    //该节点没有右子树或者它的右子树已经被访问过
-    if (cur->right == NULL || cur->right == prev) {
-      printf("%s ", cur->data);
-      prev = cur;
-      cur = NULL;
-    } else {  //若节点的右子树不为空，则该节点再次入栈
-      st.push(cur);
-      cur = cur->right;
-      }
-  }
 }
-
 ```
 ### 广度优先遍历
 ```cpp
-void levelorder_traversal(treelink root) {
-  queue<treelink>que;
-  que.push(root);
-  if (root == NULL) return ;
-  while (!que.empty()) {
-    int size = que.size();  
-    for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
-      treelink cur = que.front();
-      que.pop();
-      printf("%s ", cur->data);
-      if (cur->left != NULL) que.push(cur -> left);
-      if (cur->right != NULL) que.push(cur -> right);
+/* 层序遍历 */
+void levelorder_traversal(treelink T) {
+    queue<treelink>que;
+    que.push(T);
+    if (T == NULL) return ;
+    while (!que.empty()) {
+        int size = que.size();
+        for (int i = 0; i < size; i++) {    //size不能换成que.size(),因为que长度会变
+            treenode *cur = que.front();
+            que.pop();
+            printf("%s ", cur->data);
+            if (cur->left != NULL) que.push(cur -> left);
+            if (cur->right != NULL) que.push(cur -> right);
+        }
+        puts("");
     }
-    puts("");
-  }
+}
 ```
 ## 树的表示
 ### 凹入表
 ```cpp
 /* 凹入表显示 */
-void disp_tree(treelink root, int level, char c) { //level为root结点的高度，c为树根的标志，如"D"
-    if (root == NULL) return ;
+void disp_tree(treelink T, int level, char c) { //level为T结点的高度，c为树根的标志，如"D"
+    if (T == NULL) return ;
 
     for(int i = 1; i < level + 20; i++)
         putchar('-');
 
     putchar('+');
-    printf("%s(%c)\n",root->data,c);
+    printf("%s(%c)\n",T->data,c);
     level = level - 2;
-    disp_tree(root->left,level,'L');
-    disp_tree(root->right,level,'R');
+    disp_tree(T->left,level,'L');
+    disp_tree(T->right,level,'R');
 }
 ```
 ## 遍历算法的应用
 ### 求二叉树深度
 ```cpp
-int get_depth(treelink root) {
-	if (root == NULL) return 0;
-	else {
-		int L = get_depth(root->left);
-		int R = get_depth(root->right);
-		if (L > R) return (L + 1);
-		else return (R + 1);
-		
-	}	
+/* 求二叉树深度 */
+int get_depth(treelink T) {
+    if (T == NULL) return 0;
+    else {
+        int L = get_depth(T->left);
+        int R = get_depth(T->right);
+        if (L > R) return (L + 1);
+        else return (R + 1);
+    }
 }
-
 ```
 ### 求叶子节点个数
 ```cpp
-void leaf_count(treelink root, int &count) {
-    if (root == NULL) return ;
+/* 求叶节点个数 */
+void leaf_count(treelink T, int &count) {
+    if (T == NULL) return ;
     else {
-        leaf_count(root->left, count);
-        if (root->left == NULL && root->right == NULL) count++;
-        leaf_count(root->right, count);
+        leaf_count(T->left, count);
+        if (T->left == NULL && T->right == NULL) count++;
+        leaf_count(T->right, count);
     }
 }
 ```
 ### 求结点个数
 ```cpp
-void node_count(treelink root, int &num) {
-    if (root == NULL) return ;
+/*求结点个数 */
+void node_count(treelink T, int &num) {
+    if (T == NULL) return ;
 
-    node_count(root->left, num);
+    node_count(T->left, num);
     num++;
-    node_count(root->right, num);
+    node_count(T->right, num);
 }
 ```
 
