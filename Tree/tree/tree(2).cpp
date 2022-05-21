@@ -24,7 +24,7 @@ void preorder_traversal(treelink T);  /* 先根遍历 */
 void postorder_traversal(treelink T); /* 后根遍历 */
 void levelorder_traversal(treelink T);  /*层次遍历 */
 void Path(treelink pTree, stack<char*>st, char data[]);  /* 路径 */
-treelink node_find1(treelink T, char *name);  /* 查找 */
+treelink node_find1(treelink T, char *data);  /* 查找 */
 void get_follow(treelink T, char *s);  /* 子结点输出 */
 
 int main() {
@@ -218,17 +218,17 @@ void print_stack(stack<char*>st) {
 }
 
 /* 查找 */
-treelink node_find1(treelink T, char *name) {
+treelink node_find1(treelink T, char *data) {
 
     treelink p;
     if(T == NULL) return NULL;
     else{
-        if(strcmp(T->data, name)==0)
+        if(strcmp(T->data, data)==0)
             return T;
-        else if(p = node_find1(T->child, name))
+        else if(p = node_find1(T->child, data))
             return p;
         else
-            return node_find1(T->sibling, name);
+            return node_find1(T->sibling, data);
     }
 }
 
