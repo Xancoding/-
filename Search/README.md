@@ -178,35 +178,35 @@ void tree_create(treelink &T){
 - 若**查找失败**，则`指针s`指向查找路径上访问的最后一个结点，函数值返回`false`
 ```cpp
 /* 查找数据 */
-bool node_find(treelink T, char  *name,treelink &p, treelink &s) {  //p为父结点 s为子结点
+bool node_find(treelink T, char  *data,treelink &p, treelink &s) {  //p为父结点 s为子结点
     if(T == NULL) {
         s = p;
         return false;
-    } else if (strcmp(T->data, name) == 0) {
+    } else if (strcmp(T->data, data) == 0) {
         s = T;
         return true;
-    } else if (strcmp(T->data, name) > 0) {
+    } else if (strcmp(T->data, data) > 0) {
         p = T;
-        return node_find(T->left, name, p, s);
+        return node_find(T->left, data, p, s);
     } else {
         p = T;
-        return node_find(T->right, name, p, s);
+        return node_find(T->right, data, p, s);
     }
 }
 ```
 ### 插入
 ```cpp
 /* 插入数据 */
-void node_insert(treelink &T, char *name) {
-   if (T == NULL) {
-       T = new treenode;
-       strcpy(T->data, name);
-       T->left = T->right = NULL;
-   } else if (strcmp(T->data, name) > 0) {
-       node_insert(T->left, name);
-   } else {
-       node_insert(T->right, name);
-   }
+void node_insert(treelink &T, char *data) {
+    if (T == NULL) {
+        T = new treenode;
+        strcpy(T->data, data);
+        T->left = T->right = NULL;
+    } else if (strcmp(T->data, data) > 0) {
+        node_insert(T->left, data);
+    } else {
+        node_insert(T->right, data);
+    }
 }
 ```
 ### 删除
@@ -215,17 +215,17 @@ void node_insert(treelink &T, char *name) {
     2. 将`结点s`的**左子树**链接到其`双亲结点`的左(或右)孩子域上
 ```cpp
 /* 删除数据 */
-bool node_delete(treelink &T, char *name) {
+bool node_delete(treelink &T, char *data) {
     if (T == NULL) return false;
     else {
-        if (strcmp(T->data, name) == 0) {
+        if (strcmp(T->data, data) == 0) {
             Delete(T);
             return true;
         }
-        else if (strcmp(T->data, name) > 0)
-            return node_delete(T->left, name);
+        else if (strcmp(T->data, data) > 0)
+            return node_delete(T->left, data);
         else
-            return node_delete(T->right, name);
+            return node_delete(T->right, data);
     }
 }
 
@@ -239,15 +239,15 @@ void Delete(treelink &p) {
         p = p->right;
         delete tmp;
     } else {  //左右子树都存在
-        treelink q = p, s = q->left;  //s指向被删结点p的中序前驱，q指向s的双亲
+        treelink q = p, s = q->left;  //s指向被删结点的中序前驱，q指向s的双亲
         while(s->right) {
             q = s;
             s = s->right;
         }
-        strcpy(p->data, s->data);  //用待删结点p的中序前趋结点s的值覆盖待删结点的值
+        strcpy(p->data, s->data);
         if (q != p)
             q->right = s->left;
-        else  //结点s的双亲结点为结点p
+        else
             q->left = s->left;
         delete s;
     }
