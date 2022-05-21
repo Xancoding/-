@@ -14,7 +14,7 @@ typedef struct treenode {
 }treenode, *treelink;
 
 int menu();  /* 菜单 */
-void tree_create(treelink &T);  /* 创建一棵二叉树  */
+void tree_create(treelink &T);  /* 创建一棵树  */
 int get_depth(treelink T);  /* 求树深度 */
 void disp_tree(treelink T, int level);  /* 凹入表显示 */
 treelink node_find1(treelink T, char *data);  /* 查找 */
@@ -111,7 +111,7 @@ void tree_create(treelink &T) {
     }
 }
 
-/* 销毁二叉树 */
+/* 销毁树 */
 void Destroy(treelink &p) {
     if(p) {
         Destroy(p->child);
@@ -121,7 +121,7 @@ void Destroy(treelink &p) {
     }
 }
 
-/* 求二叉树深度 */
+/* 求树深度 */
 int get_depth(treelink T) {
     if (T == NULL) return 0;
     else {
