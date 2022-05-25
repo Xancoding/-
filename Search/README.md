@@ -66,9 +66,11 @@ int main() {
 }
 ```
 #### 线性探测法
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/19.jpg" /> </div>
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/12.png" /> </div>
 
 #### 平方探测法
+<div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/20.jpg" /> </div>
 <div align="center"> <img src="https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Search/images/13.png" /> </div>
 
 ### 拉链法
