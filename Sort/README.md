@@ -7,7 +7,7 @@
 ```cpp
 void insert_sort() 
 {
-    for (int i = 1; i < n; i ++ )
+    for (int i = 0; i < n; i ++ )
     {
         int x = a[i];
         int j = i - 1;
