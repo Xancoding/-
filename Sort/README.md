@@ -5,10 +5,11 @@
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Sort/images/1.png " ")
 # 插入类排序
 ## 插入排序  
+- 适用：基本有序
 ```cpp
 void insert_sort() 
 {
-    for (int i = 0; i < n; i ++ )
+    for (int i = 1; i < n; i ++ )
     {
         int x = a[i];
         int j = i - 1;
@@ -23,11 +24,13 @@ void insert_sort()
 }
 ```
 ## 希尔排序
-- 对**直接插入排序**的一种改进。
+- 适用：数据量大
+- **直接插入排序算法**的改进
 ### 算法思想
 - 将整个待排序记录序列按给定增量分成若干子序列
 - 分别对各个子序列进行直接插入排序
 - 当整个序列**基本有序**时，再对全体记录进行一次直接插入排序
+- 选择排序
 ```cpp
 void shell_sort()
 {
@@ -38,10 +41,28 @@ void shell_sort()
             int x = a[i];
             int j;
             for (j = i; j >= gap && a[j - gap] > x; j -= gap)
-                a[j] = a[j-gap];
+                a[j] = a[j - gap];
             a[j] = x;
         }
     }
+}
+```
+- 冒泡排序
+```cpp
+void shell_sort()
+{
+    int gap = n / 2;
+    while (gap > 0)
+    {
+        for (int j = gap; j < n; j++)
+        {
+            int i = j;
+            while (i >= gap && a[i] < a[i - gap])
+            swap(a[i], a[i - gap]);
+            i -= gap;
+        }
+    }
+    gap /= 2;
 }
 ```
 # 交换类排序
@@ -63,6 +84,7 @@ void bubble_sort()
 }
 ```
 ## 快速排序
+- 适用：广泛（最快）
 - **分治策略**
 ```cpp
 void quick_sort(int l, int r)
@@ -81,6 +103,7 @@ void quick_sort(int l, int r)
 ```
 # 选择类排序
 ## 选择排序
+-  适用：数据量少
 ```cpp
 void select_sort()
 {
@@ -130,6 +153,7 @@ int main()
 ```
 # 归并类排序
 ## 归并排序
+- 适用：不受数据影响，所需空间与n成正比
 - **分治策略**
 ### 算法思想
 - 将一个具有`n`个待排序记录的序列看成是`n`个**长度为1**的有序序列
@@ -155,6 +179,9 @@ void merge_sort(int l, int r)
 }
 ```
 # 桶排序
+- 适用：均匀分布的数据
+## 算法思路
+- 先粗略分类分桶，再各桶排序
 ```cpp
 vector<int> bucketSort(vector<int>& nums) {
     int n = nums.size();
@@ -178,6 +205,7 @@ vector<int> bucketSort(vector<int>& nums) {
 }
 ```
 ## 基数排序
+- 适用：max和min的差值不大
 - 基数排序是桶排序的特例，优势是可以处理浮点数和负数，劣势是还要配合别的排序函数
 ```cpp
 int maxbit()
@@ -217,7 +245,10 @@ void radixsort()
     
 }
 ```
-## 计数排序
+# 计数排序
+- 适用：max和min的差值不大
+### 算法思路
+- 借助足够大的辅助数组，把数字排在一个相对位置不会错的地方，最后并拢
 ```cpp
 void counting_sort()
 {
