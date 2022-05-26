@@ -3,6 +3,7 @@
 - **线性时间非比较类排序**：不通过比较来决定元素间的相对次序，它可以突破基于比较排序的时间下界，以线性时间运行 
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Sort/images/2.png " ")
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Sort/images/1.png " ")
+# 插入类排序
 ## 插入排序  
 ```cpp
 void insert_sort() 
@@ -18,40 +19,6 @@ void insert_sort()
             j -- ;
         }
         a[j + 1] = x;
-    }
-}
-```
-## 选择排序
-```cpp
-void select_sort()
-{
-    for (int i = 0; i < n; i ++ )
-    {
-        int k = i;
-        for (int j = i + 1; j < n; j ++ )
-        {
-            if (a[j] < a[k])
-                k = j;
-        }
-        swap(a[i], a[k]);
-    }
-        
-}
-```
-## 冒泡排序
-```cpp
-void bubble_sort()
-{
-    for (int i = n - 1; i >= 1; i -- )
-    {
-        bool flag = true;
-        for (int j = 1; j <= i; j ++ )
-            if (a[j - 1] > a[j])
-            {
-                swap(a[j - 1], a[j]);
-                flag = false;
-            }
-        if (flag) return;
     }
 }
 ```
@@ -77,7 +44,26 @@ void shell_sort()
     }
 }
 ```
+# 交换类排序
+## 冒泡排序
+```cpp
+void bubble_sort()
+{
+    for (int i = n - 1; i >= 1; i -- )
+    {
+        bool flag = true;
+        for (int j = 1; j <= i; j ++ )
+            if (a[j - 1] > a[j])
+            {
+                swap(a[j - 1], a[j]);
+                flag = false;
+            }
+        if (flag) return;
+    }
+}
+```
 ## 快速排序
+- **分治策略**
 ```cpp
 void quick_sort(int l, int r)
 {
@@ -93,29 +79,22 @@ void quick_sort(int l, int r)
     sort(l, j), sort(j + 1, r);
 }
 ```
-## 归并排序
-- **分治策略**
-### 算法思想
-- 将一个具有n个待排序记录的序列看成是`n`个**长度为1**的有序序列
-- 进行两两归并，得到`n / 2`个**长度为2**的有序序列
-- 重复上述步骤，直至得到一个**长度为n**的有序序列为止
+# 选择类排序
+## 选择排序
 ```cpp
-void merge_sort(int l, int r)
+void select_sort()
 {
-    if (l >= r) return;
-    int temp[N];
-    int mid = l + r >> 1;
-    merge_sort(l, mid), merge_sort(mid + 1, r);
-    int k = 0, i = l, j = mid + 1;
-    while (i <= mid && j <= r)
+    for (int i = 0; i < n; i ++ )
     {
-        if (a[i] < a[j]) temp[k ++ ] = a[i ++ ];
-        else temp[k ++ ] = a[j ++ ];
-        
+        int k = i;
+        for (int j = i + 1; j < n; j ++ )
+        {
+            if (a[j] < a[k])
+                k = j;
+        }
+        swap(a[i], a[k]);
     }
-    while (i <= mid) temp[k ++ ] = a[i ++ ];
-    while (j <= r) temp[k ++ ] = a[j ++ ];
-    for (int i = l, j = 0; i <= r; i ++ , j ++ ) a[i] = temp[j];
+        
 }
 ```
 ## 堆排序
@@ -149,7 +128,33 @@ int main()
     return 0;
 }
 ```
-## 桶排序
+# 归并类排序
+## 归并排序
+- **分治策略**
+### 算法思想
+- 将一个具有`n`个待排序记录的序列看成是`n`个**长度为1**的有序序列
+- 进行两两归并，得到`n / 2`个**长度为2**的有序序列
+- 重复上述步骤，直至得到一个**长度为n**的有序序列为止
+```cpp
+void merge_sort(int l, int r)
+{
+    if (l >= r) return;
+    int temp[N];
+    int mid = l + r >> 1;
+    merge_sort(l, mid), merge_sort(mid + 1, r);
+    int k = 0, i = l, j = mid + 1;
+    while (i <= mid && j <= r)
+    {
+        if (a[i] < a[j]) temp[k ++ ] = a[i ++ ];
+        else temp[k ++ ] = a[j ++ ];
+        
+    }
+    while (i <= mid) temp[k ++ ] = a[i ++ ];
+    while (j <= r) temp[k ++ ] = a[j ++ ];
+    for (int i = l, j = 0; i <= r; i ++ , j ++ ) a[i] = temp[j];
+}
+```
+# 桶排序
 ```cpp
 vector<int> bucketSort(vector<int>& nums) {
     int n = nums.size();
