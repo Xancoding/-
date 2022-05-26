@@ -84,7 +84,7 @@ void quick_sort(int l, int r)
 ```cpp
 void select_sort()
 {
-    for (int i = 0; i < n; i ++ )
+    for (int i = 0; i < n - 1; i ++ )  //进行n - 1趟扫描
     {
         int k = i;
         for (int j = i + 1; j < n; j ++ )
