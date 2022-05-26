@@ -34,32 +34,15 @@ void insert_sort()
 ```cpp
 void shell_sort()
 {
-    for (int gap = n >> 1; gap; gap >>= 1)
-    {
-        for (int i = gap; i < n; i ++ )
-        {
-            int x = a[i];
-            int j;
-            for (j = i; j >= gap && a[j - gap] > x; j -= gap)
-                a[j] = a[j - gap];
-            a[j] = x;
-        }
-    }
-}
-```
-- 冒泡排序
-```cpp
-void shell_sort()
-{
     int gap = n / 2;
     while (gap > 0)
     {
-        for (int j = gap; j < n; j++)
+        for (int i = gap; i < n; i++)
         {
-            int i = j;
-            while (i >= gap && a[i] < a[i - gap])
-            swap(a[i], a[i - gap]);
-            i -= gap;
+            int j = i;
+            while (j >= gap && a[j] < a[j - gap])
+            swap(a[j], a[j - gap]);
+            j -= gap;
         }
     }
     gap /= 2;
