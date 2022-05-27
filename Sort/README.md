@@ -34,18 +34,21 @@ void insert_sort()
 ```cpp
 void shell_sort()
 {
+    //初始增量；n / 2，每一趟之后除以二
     int gap = n / 2;
     while (gap > 0)
     {
+        //每一趟采用插入排序
         for (int i = gap; i < n; i++)
         {
-            int j = i;
-            while (j >= gap && a[j] < a[j - gap])
-            swap(a[j], a[j - gap]);
-            j -= gap;
+            int j;
+            int x = a[i];
+            for (j = i; j >= gap && x < a[j - gap]; j -= gap)
+                a[j] = a[j - gap];
+            a[j] = x;
         }
+        gap /= 2;
     }
-    gap /= 2;
 }
 ```
 # 交换类排序
