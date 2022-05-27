@@ -231,23 +231,40 @@ void radixsort()
 # 计数排序
 - 适用：max和min的差值不大
 ### 算法思路
+![计数排序](https://www.bilibili.com/video/BV1KU4y1M7VY?spm_id_from=333.337.search-card.all.click "计数排序")
 - 借助足够大的辅助数组，把数字排在一个相对位置不会错的地方，最后并拢
 ```cpp
 void counting_sort()
 {
-    int sorted[N];
-    int maxv = a[0];
-    for (int i = 1; i < n; i ++ )
-        if (maxv < a[i])
-            maxv = a[i];
-    int count[maxv + 1];
-    for (int i = 0; i < n; i ++ ) count[a[i]] ++ ;
-    for (int i = 1; i <= maxv; i ++ ) count[i] += count[i - 1];
-    for (int i = n-1; i >= 0; i -- )
+    //寻找最大元素
+    int max = a[0];
+    for (int i = 1; i < n; i++)
+        if (a[i] > max) max = a[i];
+
+    //分配一个长度为max+1的数组存储计数，并初始化为0
+    int count[max + 1];
+    memset(count, 0, sizeof(int) * (max + 1)); 
+
+    //计数
+    for (int i = 0; i < n; i++)
+        count[a[i]]++;
+
+    //统计计数的累计值
+    for (int i = 1; i < max + 1; i++)
+        count[i] += count[i - 1];
+
+    //创建一个临时数组保存结果
+    int ouput[n];
+
+    //将元素放到正确的位置上
+    for (int i = 0; i < n; i++)
     {
-        sorted[count[a[i]] - 1] = a[i];
-        count[a[i]] -- ;
+        output[count[a[i]]  - 1] = a[i];
+        count[a[i] - 1]--;
     }
-    for (int i = 0; i < n; i ++ ) a[i] = sorted[i];
+    
+    //将结果复制回原数组
+    for (int i = 0; i < n; i++)
+        a[i] = output[i];
 }
 ```
