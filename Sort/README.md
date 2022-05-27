@@ -81,11 +81,11 @@ void quick_sort(int l, int r)
     int x = a[l + r >> 1], i = l - 1, j = r + 1;
     while (i < j)
     {
-        while (a[++ i] < x);
-        while (a[-- j] > x);
+        do i++; while (a[i] < x);
+        do j--; while (a[j] > x);
         if (i < j) swap(a[i], a[j]);
     }
-    sort(l, j), sort(j + 1, r);
+    quick_sort(l, j), quick_sort(j + 1, r);
 }
 ```
 # 选择类排序
