@@ -108,33 +108,46 @@ void select_sort()
 }
 ```
 ## 堆排序
-- [堆排序](https://www.cnblogs.com/wanglei5205/p/8733524.html "")
+- [堆排序](https://www.cnblogs.com/wanglei5205/p/8733524.html "堆排序")
 - 此排序使用了模拟堆，为了使最后一个非叶子节点的编号为n / 2，数组编号从1开始
 ```cpp
-void down(int u)
-{
+#include<iostream>
+
+using namespace std;
+
+const int N = 100010;
+
+int h[N], cnt;
+
+void down(int u) {
     int t = u;
-    if (u << 1 <= n && h[u << 1] < h[t]) t = u << 1;
-    if ((u << 1 | 1) <= n && h[u << 1| 1] < h[t]) t = u << 1 | 1;
-    if (u != t)
-    {
+    if (2 * u <= cnt && h[2 * u] < h[t]) t = 2 * u;
+    if (2 * u + 1 <= cnt && h[2 * u + 1] < h[t]) t = 2 * u + 1;
+    
+    if (t != u) {
         swap(h[u], h[t]);
         down(t);
     }
 }
 
-int main()
-{
-    for (int i = 1; i <= n; i ++ ) cin >> h[i];
-    for (int i = n / 2; i; i -- ) down(i);
-    while (true)
-    {
-        if (!n) break;
-        cout << h[1] << ' ';
-        h[1] = h[n];
-        n -- ;
+int main() {
+    int n, m;
+    cin >> n >> m;
+    
+    for (int i = 1; i <= n; i++) scanf("%d", &h[i]);
+    cnt = n;
+    
+    for (int i = n / 2; i >= 1; i--) down(i);
+    
+    while (m--) {
+        printf("%d ", h[1]);
+        
+        h[1] = h[cnt--];
         down(1);
     }
+    puts("");
+
+    
     return 0;
 }
 ```
@@ -194,42 +207,67 @@ vector<int> bucketSort(vector<int>& nums) {
 ## 基数排序
 - 适用：max和min的差值不大
 - 基数排序是桶排序的特例，优势是可以处理浮点数和负数，劣势是还要配合别的排序函数
+### 算法思路
+- 通过**分配**和**收集**过程来实现排序
 ```cpp
-int maxbit()
+//最大位数
+int getMaxDigit()
 {
-    int maxv = a[0];
+    int max = a[0];
     for (int i = 1; i < n; i ++ )
-        if (maxv < a[i])
-            maxv = a[i];
-    int cnt = 1;
-    while (maxv >= 10) maxv /= 10, cnt ++ ;
-    
+        if (max < a[i]) max = a[i];
+
+    int cnt = 0;
+    while (max > 0)
+    {
+        cnt++;
+        max /= 10;
+    }
+
     return cnt;
 }
-void radixsort()
+
+//基数排序
+void radix_sort()
 {
-    int t = maxbit();
-    int radix = 1;
-    
-    for (int i = 1; i <= t; i ++ )
+    int d = getMaxDigit();  //最大位数
+    int tmp[n];  //临时数组
+    int count[10]; //计数器
+    int radix = 1;  //位数
+
+    //进行d次排序
+    for(int i = 1; i <= d; i++)
     {
-        for (int j = 0; j < 10; j ++ ) count[j] = 0;
-        for (int j = 0; j < n; j ++ )
+        //每次分配前清空计数器
+        for(int j = 0; j < 10; j++)
+            count[j] = 0;
+
+        //统计每个桶中的记录数
+        for(int j = 0; j < n; j++)
+        {
+            int  k = (a[j] / radix) % 10;
+            count[k]++;
+        }
+
+        //将tmp中的位置依次分配给每个桶
+        for(int j = 1; j < 10; j++)
+            count[j] += count[j - 1];
+
+        //将所有桶中记录依次收集到tmp中
+        for(int j = n - 1; j >= 0; j--)
         {
             int k = (a[j] / radix) % 10;
-            count[k] ++ ;
+            tmp[count[k] - 1] = a[j];
+            count[k]--;
         }
-        for (int j = 1; j < 10; j ++ ) count[j] += count[j - 1];
-        for (int j = n-1; j >= 0; j -- )
-        {
-            int k = (a[j] / radix) % 10;
-            temp[count[k] - 1] = a[j];
-            count[k] -- ;
-        }
-        for (int j = 0; j < n; j ++ ) a[j] = temp[j];
-        radix *= 10;
+
+        //将临时数组的内容复制到a中
+        for(int j = 0; j < n; j++)
+            a[j] = tmp[j];
+
+        radix = radix * 10;
     }
-    
+
 }
 ```
 # 计数排序
