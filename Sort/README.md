@@ -243,7 +243,7 @@ void counting_sort()
 
     //分配一个长度为max+1的数组存储计数，并初始化为0
     int count[max + 1];
-    memset(count, 0, sizeof(int) * (max + 1)); 
+    memset(count, 0, sizeof(int) * (max + 1));
 
     //计数
     for (int i = 0; i < n; i++)
@@ -254,15 +254,15 @@ void counting_sort()
         count[i] += count[i - 1];
 
     //创建一个临时数组保存结果
-    int ouput[n];
+    int output[n];
 
     //将元素放到正确的位置上
     for (int i = 0; i < n; i++)
     {
         output[count[a[i]]  - 1] = a[i];
-        count[a[i] - 1]--;
+        count[a[i]]--;
     }
-    
+
     //将结果复制回原数组
     for (int i = 0; i < n; i++)
         a[i] = output[i];
