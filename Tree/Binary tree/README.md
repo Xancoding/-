@@ -38,6 +38,7 @@ void tree_create(treelink &T){
 ```
 - 用``#``表示空节点，按照先序遍历的次序，生成二叉树
 ### 用边创建
+#### STL版
 ```cpp
 /* 创建一棵二叉树  */
 void tree_create(treelink &T){
@@ -60,6 +61,44 @@ void tree_create(treelink &T){
             while (strcmp(p->data,fa)) { // 查询双亲结点
                 que.pop();
                 p = que.front();
+            }//while
+
+            if (flag==0){
+                p->left = s;
+            }// 链接左孩子
+            else {
+                p->right = s;
+            }// 链接右孩子
+        }// 非根结点的情况
+        printf("请输入父结点、子结点、左右标志（用空格隔开，结束时输入end end 0）\n");
+        scanf("%s%s%d",fa,ch,&flag);
+    } // while
+}
+```
+#### C语言版
+```cpp
+/* 创建一棵二叉树  */
+void tree_create(treelink &T){
+    char fa[30], ch[30];  //fa为父结点 ch为子结点
+    treelink p, s;  //p为父结点 s为子结点
+    int flag;
+    XhQueue Q;
+    InitQueue(Q);
+    T = NULL;
+    printf("请输入父结点、子结点、左(0)右(1)标志（用空格隔开，根结点的双亲为#）\n");
+    scanf("%s%s%d",fa, ch,&flag);
+    while (strcmp(ch,"end")) {
+        s = new treenode;    // 创建结点
+        strcpy(s->data,ch);
+        s->left = s->right = NULL;
+
+        EnQueue(Q, s);// 指针入队列
+        if (strcmp(fa,"#") == 0)  T = s;  // 所建为根结点
+        else {// 非根结点的情况
+            GetHead(Q, p);// 取队列头元素(指针值)
+            while (strcmp(p->data,fa)) { // 查询双亲结点
+                DeQueue(Q, p);
+                GetHead(Q, p);
             }//while
 
             if (flag==0){
