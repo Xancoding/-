@@ -1,3 +1,45 @@
+# 顺序栈的基本操作
+```cpp
+typedef struct stack {
+    char **data;  //data是一个指针变量，存放一片连续空间的首地址 
+    int top;  //指示栈顶的位置 
+    int stackSize;  //栈的容量 
+}SqStack;
+
+void InitSqStack(SqStack &S) {
+    S.data = new char*[MAX];
+    S.top = -1;  //约定栈空时S.top=-1
+    S.stackSize = MAX;
+}
+
+void  PushSqStack(SqStack &S,char *data) {
+    if(S.stackSize != S.top + 1)
+        S.data[++S.top] = data;
+}
+
+void PopSqStack(SqStack &S) {
+    if(S.top != -1)
+        S.top--;
+}
+
+void TraversSqStack(SqStack S) {
+    if(S.top != -1)
+        for(int i = S.top; i >= 0; i--)
+            printf("%s ",S.data[i]);
+    printf("\n");
+
+}
+
+void GetHead(SqStack &S, char* &p){
+    if(S.top != -1)
+        p = S.data[S.top];
+}
+
+int EmSqStack(SqStack S){
+    if (S.top != -1) return 0;
+    else return 1;
+}
+```
 # 循环队列的基本操作
 ```cpp
 typedef struct {
