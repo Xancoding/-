@@ -1,24 +1,24 @@
 ## 数据类型定义
 ```cpp
 typedef struct {
-    treenode *elem;
+    treelink *elem;
     int front,rear;
     int queuesize;
 }XhQueue;
 ```
 ## 初始化
 ```cpp
-void InitQueue(XhQueue &Q,int maxsize){
-    Q.elem = new treenode[maxsize];
+void InitQueue(XhQueue &Q){
+    Q.elem = new treelink[MAX];
     if(Q.elem != NULL) {
         Q.front = Q.rear = 0;
-        Q.queuesize = maxsize;
+        Q.queuesize = MAX;
     }
 }
 ```
 ## 入队
 ```cpp
-void EnQueue(XhQueue &Q,treenode p){
+void EnQueue(XhQueue &Q,treelink p){
     if((Q.rear + 1) % Q.queuesize != Q.front){
         Q.elem[Q.rear] = p;
         Q.rear = (Q.rear + 1) % Q.queuesize;
@@ -27,7 +27,7 @@ void EnQueue(XhQueue &Q,treenode p){
 ```
 ## 出队
 ```cpp
-void DeQueue(XhQueue &Q,treenode &p){
+void DeQueue(XhQueue &Q,treelink &p){
     if(Q.front != Q.rear){
         p = Q.elem[Q.front];
         Q.front = (Q.front +1) % Q.queuesize;
@@ -36,7 +36,7 @@ void DeQueue(XhQueue &Q,treenode &p){
 ```
 ## 取队头
 ```cpp
-void GetHead(XhQueue &Q,treenode &p){
+void GetHead(XhQueue &Q,treelink &p){
     if(Q.front != Q.rear){
         p = Q.elem[Q.front];
     }
