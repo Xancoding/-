@@ -2,7 +2,6 @@
 #include<malloc.h>
 #include<string.h>
 #include<conio.h>
-#include<stack>
 #define MAX 10
 
 using namespace std;
