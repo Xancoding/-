@@ -430,7 +430,7 @@ void node_count(treelink T, int &num) {
 }
 ```
 
-## 测试数据
+# 测试数据
 ```cpp
 生成二叉树(先序)  ncepu ee # # cs # #
 
@@ -451,7 +451,7 @@ ncepu
 ee cs
 ```
 
-## 输出
+# 输出
 ```cpp
 深度为：2
 叶子结点个数为：2
