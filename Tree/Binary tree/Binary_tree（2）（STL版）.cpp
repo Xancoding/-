@@ -2,7 +2,6 @@
 #include<malloc.h>
 #include<string.h>
 #include<conio.h>
-#include<stack>
 #include<queue>
 #define MAX 10
 
