@@ -187,7 +187,7 @@ void merge_sort(int l, int r)
 - 设置固定数量的空桶
 - 把数据放到对应的桶中
 - 对每个不为空的桶中数据进行排序
-- 拼接从不为空的桶中数据，得到结果
+- 拼接不为空的桶中数据，得到结果
 ```cpp
 void bucket_sort(vector<int>& nums)
 {
