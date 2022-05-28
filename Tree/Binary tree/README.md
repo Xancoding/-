@@ -1,4 +1,49 @@
-## 二叉树的性质
+# 循环队列的基本操作
+```cpp
+typedef struct {
+    treelink *elem;
+    int front,rear;
+    int queuesize;
+}XhQueue;
+
+void InitQueue(XhQueue &Q){
+    Q.elem = new treelink[MAX];
+    if(Q.elem != NULL) {
+        Q.front = Q.rear = 0;
+        Q.queuesize = MAX;
+    }
+}
+
+void EnQueue(XhQueue &Q,treelink p){
+    if((Q.rear + 1) % Q.queuesize != Q.front){
+        Q.elem[Q.rear] = p;
+        Q.rear = (Q.rear + 1) % Q.queuesize;
+    }
+}
+
+void DeQueue(XhQueue &Q,treelink &p){
+    if(Q.front != Q.rear){
+        p = Q.elem[Q.front];
+        Q.front = (Q.front +1) % Q.queuesize;
+    }
+}
+
+void GetHead(XhQueue &Q,treelink &p){
+    if(Q.front != Q.rear){
+        p = Q.elem[Q.front];
+    }
+}
+
+int EmQueue(XhQueue Q){
+    if(Q.front != Q.rear)return 0;
+    else return 1;
+}
+
+int LengthQueue(XhQueue Q){
+    return (Q.rear - Q.front + Q.queuesize) % Q.queuesize;
+}
+```
+# 二叉树的性质
 
 - 二叉树的第 i 层至多有 **2^(i-1)** 个结点
 
@@ -12,6 +57,8 @@
   - 当 i > 1 时，父亲结点为结点 **⌊i / 2⌋**（i = 1 时，表示的是根结点，无父亲结点）
   - 如果 2 * i > n（总结点的个数） ，则结点 i 肯定没有左孩子（为叶子结点），否则其左孩子是结点 **2 * i** 
   - 如果 2 * i + 1 > n ，则结点 i 肯定没有右孩子，否则右孩子是结点 **2 * i + 1**     
+
+# 二叉树的基本操作
 ## 二叉树的节点
 ```cpp
  typedef struct treenode {
