@@ -308,6 +308,7 @@ void postorder_traversal(treelink T) {
 }
 ```
 ### 层次遍历
+#### STL版
 ```cpp
 /*层次遍历 */
 void levelorder_traversal(treelink T) {
@@ -323,6 +324,30 @@ void levelorder_traversal(treelink T) {
             cur = cur->child;
             while (cur != NULL) {
                 que.push(cur);
+                cur = cur->sibling;
+            }
+        }
+        puts("");
+    }
+}
+```
+#### C语言版
+```cpp
+/*层次遍历 */
+void levelorder_traversal(treelink T) {
+    XhQueue Q;
+    InitQueue(Q);
+    EnQueue(Q, T);
+    if (T == NULL) return;
+    while (!EmQueue(Q)) {
+        int size = LengthQueue(Q);
+        for (int i = 0; i < size; i++) {
+            treelink cur;
+            DeQueue(Q, cur);
+            printf("%s ", cur->data);
+            cur = cur->child;
+            while (cur != NULL) {
+                EnQueue(Q, cur);
                 cur = cur->sibling;
             }
         }
