@@ -189,14 +189,14 @@ void merge_sort(int l, int r)
 - 对每个不为空的桶中数据进行排序
 - 拼接不为空的桶中数据，得到结果
 ```cpp
-void bucket_sort(vector<int>& nums)
+void bucket_sort(vector<float>& nums)
 {
     int n = nums.size();
     int max = *max_element(nums.begin(), nums.end());
     int min = *min_element(nums.begin(), nums.end());
     int bs = 100;  //桶的个数
-    int range = (max - min) / bs + 1;  //每个桶所包含数的范围
-    vector<vector<int>> bucket(bs);  //生成bs个桶
+    float range = (max - min) / bs + 1;  //每个桶所包含数的范围
+    vector<vector<float>> bucket(bs);  //生成bs个桶
 
     //将数组元素分散到这些桶中
     for (int i = 0; i < n; ++i)
@@ -208,8 +208,11 @@ void bucket_sort(vector<int>& nums)
     int idx = 0;
     for (int i = 0; i < bs; ++i)
     {
-        int sz = bucket[i].size();
+        //桶内排序
         sort(bucket[i].begin(), bucket[i].end());
+
+        //将桶中数据复制回原数组
+        int sz = bucket[i].size();
         for (int j = 0; j < sz; ++j)
         {
             nums[idx++] = bucket[i][j];
