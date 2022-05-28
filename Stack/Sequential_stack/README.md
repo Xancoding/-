@@ -11,8 +11,8 @@ typedef struct stack {
 ```cpp
 void InitSqStack(SqStack &S) {
 	S.data = new char*[MAX];
-	S->top = -1;  //约定栈空时S.top=-1 
-	S->stackSize = MAX;
+	S.top = -1;  //约定栈空时S.top=-1 
+	S.stackSize = MAX;
 	return 1;
 } 
 ```
@@ -26,8 +26,8 @@ void  PushSqStack(SqStack &S,char *data) {
 ## 出栈
 ```cpp
 void PopSqStack(SqStack &S) {
-	if(S->top != -1)  
-	    S->top--;
+	if(S.top != -1)  
+	    S.top--;
 }
 ```
 ## 遍历栈
@@ -35,7 +35,7 @@ void PopSqStack(SqStack &S) {
 void TraversSqStack(SqStack S) {
 	if(S.top != -1) 
         for(int i = S.top; i >= 0; i--)
-	    printf("%s ",S.data[k]);
+	    printf("%s ",S.data[i]);
 	printf("\n");
 	
 }
@@ -43,8 +43,8 @@ void TraversSqStack(SqStack S) {
 ## 取栈顶
 ```cpp
 void GetHead(SqStack &S, char* &p){
-    if(S.top != -1) 
-        p = S.data[top];
+    if(S.top != -1)
+        p = S.data[S.top];
 }
 ```
 ## 判空
