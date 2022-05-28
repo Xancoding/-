@@ -49,4 +49,11 @@ int EmQueue(XhQueue Q){
     else return 1;
 }
 ```
+## 求队列的长度
+```cpp
+int LengthQueue(XhQueue Q)
+{
+	return (Q.rear - Q.front + Q.queuesize) % Q.queuesize;
+}
+```
 
