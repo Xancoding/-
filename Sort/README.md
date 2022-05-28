@@ -181,27 +181,41 @@ void merge_sort(int l, int r)
 # 桶排序
 - 适用：均匀分布的数据
 ## 算法思路
-- 先粗略分类分桶，再各桶排序
+![桶排序(数组实现)](https://www.geeksforgeeks.org/bucket-sort-2/?ref=lbp "桶排序")
+![桶排序(链表实现)](https://blog.csdn.net/liaoshengshi/article/details/47320023 "桶排序")
+- 将待排序的序列分到若干个桶中，每个桶内的元素再进行个别排序
+- 设置固定数量的空桶
+- 把数据放到对应的桶中
+- 对每个不为空的桶中数据进行排序
+- 拼接从不为空的桶中数据，得到结果
 ```cpp
-vector<int> bucketSort(vector<int>& nums) {
+void bucket_sort(vector<int>& nums)
+{
     int n = nums.size();
-    int maxv = *max_element(nums.begin(), nums.end());
-    int minv = *min_element(nums.begin(), nums.end());
-    int bs = 1000;
-    int m = (maxv - minv) / bs + 1;
-    vector<vector<int> > bucket(m);
-    for (int i = 0; i < n; ++i) {
-        bucket[(nums[i] - minv) / bs].push_back(nums[i]);
+    int max = *max_element(nums.begin(), nums.end());
+    int min = *min_element(nums.begin(), nums.end());
+    int bs = 100;  //桶的个数
+    int range = (max - min) / bs + 1;  //每个桶所包含数的范围
+    vector<vector<int>> bucket(bs);  //生成bs个桶
+
+    //将数组元素分散到这些桶中
+    for (int i = 0; i < n; ++i)
+    {
+        bucket[(nums[i] - min) / range].push_back(nums[i]);
     }
+
+    //将桶中数据复制回原数组
     int idx = 0;
-    for (int i = 0; i < m; ++i) {
+    for (int i = 0; i < bs; ++i)
+    {
         int sz = bucket[i].size();
-        bucket[i] = quickSort(bucket[i]);
-        for (int j = 0; j < sz; ++j) {
+        sort(bucket[i].begin(), bucket[i].end());
+        for (int j = 0; j < sz; ++j)
+        {
             nums[idx++] = bucket[i][j];
         }
     }
-    return nums;
+
 }
 ```
 ## 基数排序
