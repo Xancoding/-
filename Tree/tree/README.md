@@ -12,7 +12,7 @@ void InitSqStack(SqStack &S) {
     S.stackSize = MAX;
 }
 
-void  PushSqStack(SqStack &S,char *data) {
+void PushSqStack(SqStack &S,char *data) {
     if(S.stackSize != S.top + 1)
         S.data[++S.top] = data;
 }
