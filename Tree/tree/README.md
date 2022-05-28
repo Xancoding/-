@@ -374,7 +374,51 @@ ncepu
 /ncepu/学院/能源
 /ncepu/管理部门
 ```
+# 循环队列的基本操作
+```cpp
+typedef struct {
+    treelink *elem;
+    int front,rear;
+    int queuesize;
+}XhQueue;
 
+void InitQueue(XhQueue &Q){
+    Q.elem = new treelink[MAX];
+    if(Q.elem != NULL) {
+        Q.front = Q.rear = 0;
+        Q.queuesize = MAX;
+    }
+}
+
+void EnQueue(XhQueue &Q,treelink p){
+    if((Q.rear + 1) % Q.queuesize != Q.front){
+        Q.elem[Q.rear] = p;
+        Q.rear = (Q.rear + 1) % Q.queuesize;
+    }
+}
+
+void DeQueue(XhQueue &Q,treelink &p){
+    if(Q.front != Q.rear){
+        p = Q.elem[Q.front];
+        Q.front = (Q.front +1) % Q.queuesize;
+    }
+}
+
+void GetHead(XhQueue &Q,treelink &p){
+    if(Q.front != Q.rear){
+        p = Q.elem[Q.front];
+    }
+}
+
+int EmQueue(XhQueue Q){
+    if(Q.front != Q.rear)return 0;
+    else return 1;
+}
+
+int LengthQueue(XhQueue Q){
+    return (Q.rear - Q.front + Q.queuesize) % Q.queuesize;
+}
+```
 # 树的存储结构
 - 不仅要存储各节点的数据信息，还要存储结点之间的关系（父子关系）
 - 树的存储结构一般采用**链式存储**,又可分为**数组表示法**和**链表表示法**
