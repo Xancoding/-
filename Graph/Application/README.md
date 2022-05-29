@@ -6,8 +6,6 @@
 #include<malloc.h>
 #include<string.h>
 #include<conio.h>
-#include<stack>
-#include<queue>
 #define MAX 20  //最大顶点数
 #define NUM 20  //最大字符串长度
 
@@ -32,7 +30,6 @@ int main() {
     int v;  //出发点编号
     int visited[MAX];
     int path[MAX];
-    queue<int>que;
     graphlink G = new graph;
 
     while (1) {
