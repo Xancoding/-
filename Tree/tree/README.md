@@ -1,20 +1,19 @@
 # 顺序栈的基本操作
 ```cpp
 typedef struct stack {
-    char **data;  //data是一个指针变量，存放一片连续空间的首地址 
+    char data[MAX][NUM];  //data是一个指针变量，存放一片连续空间的首地址
     int top;  //指示栈顶的位置 
     int stackSize;  //栈的容量 
 }SqStack;
 
 void InitSqStack(SqStack &S) {
-    S.data = new char*[MAX];
     S.top = -1;  //约定栈空时S.top=-1
     S.stackSize = MAX;
 }
 
 void PushSqStack(SqStack &S,char *data) {
     if(S.stackSize != S.top + 1)
-        S.data[++S.top] = data;
+       strcpy(S.data[++S.top], data);
 }
 
 void PopSqStack(SqStack &S) {
@@ -24,15 +23,15 @@ void PopSqStack(SqStack &S) {
 
 void TraversSqStack(SqStack S) {
     if(S.top != -1)
-        for(int i = S.top; i >= 0; i--)
-            printf("%s ",S.data[i]);
+        for(int i = 0; i <= S.top; i++)
+            printf("/%s",S.data[i]);
     printf("\n");
 
 }
 
-void GetHead(SqStack &S, char* &p){
+void GetStackHead(SqStack &S, char* &p){
     if(S.top != -1)
-        p = S.data[S.top];
+        strcpy(p, S.data[S.top]);
 }
 
 int EmSqStack(SqStack S){
@@ -70,7 +69,7 @@ void DeQueue(XhQueue &Q,treelink &p){
     }
 }
 
-void GetHead(XhQueue &Q,treelink &p){
+void GetQueueHead(XhQueue &Q,treelink &p){
     if(Q.front != Q.rear){
         p = Q.elem[Q.front];
     }
@@ -429,6 +428,16 @@ void Path(treelink pTree, stack<char*>st, char data[]) {
 ```
 #### C语言版
 ```cpp
+/* 路径 */
+void Path(treelink pTree, SqStack S, char data[]) {
+    if (pTree) {
+        PushSqStack(S, pTree->data);
+        if (strcmp(pTree->data, data) == 0) TraversSqStack(S);
+        else Path(pTree->child, S, data);
+        PopSqStack(S);
+        Path(pTree->sibling, S, data);
+    }
+}
 ```
 ### 叶子结点路径
 - 对只有左子树的二叉树作先序遍历，用栈保存首次遇到的结点
@@ -450,6 +459,16 @@ void all_tree_path(treelink T, stack<char*>st) {
 ```
 #### C语言版
 ```cpp
+/* 求所有叶子结点路径 */
+void all_tree_path(treelink T, SqStack S) {
+    while (T) {
+        PushSqStack(S, T->data);
+        if (!T->child) TraversSqStack(S);  //T是叶子结点
+        else all_tree_path(T->child, S);  //找以T为根的子树上的叶子结点路径
+        PopSqStack(S);  //栈顶结点是叶子结点或以栈顶结点为根的子树上的叶子路径已完成
+        T = T->sibling;     //继续找T的其余子树
+    }
+}
 ```
 # 测试数据
 ```cpp
