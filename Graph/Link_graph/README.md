@@ -241,6 +241,22 @@ void bfs(graphlink G, int v, int visited[], queue<int>que) {
 ```
 #### C语言版
 ```cpp
+void bfs(graphlink G, int v, int visited[], XhQueue Q) {
+    printf("%s ", G->adjlist[v].vertex);
+    visited[v] = 1;
+    EnQueue(Q, v);
+
+    while (!EmQueue(Q)) {
+        int u;
+        DeQueue(Q, u);
+        arcnode *p = G->adjlist[u].head;
+        while (p) {
+            int w = p->adjvex;
+            if (visited[w] == 0) {printf("%s ", G->adjlist[w].vertex);  visited[w] = 1;  EnQueue(Q, w);}
+            p = p->next;
+        }
+    }
+}
 ```
 ## 测试数据
 ```cpp
