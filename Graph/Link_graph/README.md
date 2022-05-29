@@ -1,3 +1,48 @@
+# 循环队列的基本操作
+```cpp
+typedef struct {
+    int elem[MAX];
+    int front,rear;
+    int queuesize;
+}XhQueue;
+
+void InitQueue(XhQueue &Q){
+    if(Q.elem != NULL) {
+        Q.front = Q.rear = 0;
+        Q.queuesize = MAX;
+    }
+}
+
+void EnQueue(XhQueue &Q,int p){
+    if((Q.rear + 1) % Q.queuesize != Q.front){
+        Q.elem[Q.rear] = p;
+        Q.rear = (Q.rear + 1) % Q.queuesize;
+    }
+}
+
+void DeQueue(XhQueue &Q,int &p){
+    if(Q.front != Q.rear){
+        p = Q.elem[Q.front];
+        Q.front = (Q.front +1) % Q.queuesize;
+    }
+}
+
+void GetQueueHead(XhQueue &Q,int &p){
+    if(Q.front != Q.rear){
+        p = Q.elem[Q.front];
+    }
+}
+
+int EmQueue(XhQueue Q){
+    if(Q.front != Q.rear)return 0;
+    else return 1;
+}
+
+int LengthQueue(XhQueue Q){
+    return (Q.rear - Q.front + Q.queuesize) % Q.queuesize;
+}
+```
+# 图的基本操作
 ## 存储
 - 邻接矩阵
 ```cpp
@@ -138,6 +183,7 @@ void dfs(graphlink G, int v, int visited[]) {
 ```
 ### BFS
 - 邻接矩阵
+#### STL版
 ```cpp
 void bfs(graphlink G, int v, int visited[], queue<int>que) {  //que存储已访问过的顶点编号
     printf("%s ", G->vexs[v]);
@@ -155,7 +201,27 @@ void bfs(graphlink G, int v, int visited[], queue<int>que) {  //que存储已访�
     }
 }
 ```
+#### C语言版
+```cpp
+void bfs(graphlink G, int v, int visited[], XhQueue Q) {  //que存储已访问过的顶点编号
+    printf("%s ", G->vexs[v]);
+    visited[v] = 1;
+    EnQueue(Q, v);
+
+    while (!EmQueue(Q)) {
+        int u;
+        DeQueue(Q, u);
+        for (int w = 1; w <= G->vex; w++)   //找出u所有邻接点
+            if (G->arcs[u][w] != 0 && visited[w] == 0) {
+                printf("%s ", G->vexs[w]);
+                visited[w] = 1;
+                EnQueue(Q, w);
+            }
+    }
+}
+```
 - 邻接表
+#### STL版
 ```cpp
 void bfs(graphlink G, int v, int visited[], queue<int>que) {
     printf("%s ", G->adjlist[v].vertex);
@@ -172,6 +238,9 @@ void bfs(graphlink G, int v, int visited[], queue<int>que) {
         }
     }
 }
+```
+#### C语言版
+```cpp
 ```
 ## 测试数据
 ```cpp
