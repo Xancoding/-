@@ -9,10 +9,7 @@ O(n^2 + e), n 表示点数，e 表示边数
 ```cpp
 #include<stdio.h>
 #include<malloc.h>
-#include<string.h>
 #include<conio.h>
-#include<stack>
-#include<queue>
 #define MAX 20  //最大顶点数
 #define NUM 20  //最大字符串长度
 #define INF 0x3f3f3f3f //无穷大
