@@ -1,33 +1,31 @@
 ## 数据类型定义
 ```cpp
 typedef struct stack {
-	char **data;  //data是一个指针变量，存放一片连续空间的首地址 
-	int top;  //指示栈顶的位置 
-	int stackSize;  //栈的容量 
-}SqStack;  
+    char data[MAX][NUM];  //data是一个指针变量，存放一片连续空间的首地址
+    int top;  //指示栈顶的位置 
+    int stackSize;  //栈的容量 
+}SqStack;
 ```
 
 ## 初始化
 ```cpp
 void InitSqStack(SqStack &S) {
-	S.data = new char*[MAX];
-	S.top = -1;  //约定栈空时S.top=-1 
-	S.stackSize = MAX;
-	return 1;
-} 
+    S.top = -1;  //约定栈空时S.top=-1
+    S.stackSize = MAX;
+}
 ```
 ## 入栈
 ```cpp
 void PushSqStack(SqStack &S,char *data) {
-	if(S.stackSize != S.top + 1)   
-    	S.data[++S.top] = data;         
+    if(S.stackSize != S.top + 1)
+        strcpy(S.data[++S.top], data);
 }
 ```
 ## 出栈
 ```cpp
 void PopSqStack(SqStack &S) {
-	if(S.top != -1)  
-	    S.top--;
+    if(S.top != -1)
+        S.top--;
 }
 ```
 ## 遍历栈
@@ -42,9 +40,9 @@ void TraversSqStack(SqStack S) {
 ```
 ## 取栈顶
 ```cpp
-void GetHead(SqStack &S, char* &p){
+void GetStackHead(SqStack &S, char* &p){
     if(S.top != -1)
-        p = S.data[S.top];
+        strcpy(p, S.data[S.top]);
 }
 ```
 ## 判空
