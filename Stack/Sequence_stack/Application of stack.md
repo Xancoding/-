@@ -2,7 +2,7 @@
 ```cpp
 #include<stdio.h>
 #include<string.h>
-#include <ctype.h>
+#include<ctype.h>
 #define N 10000
 
 int num[N];  //存放运算对象
@@ -78,7 +78,7 @@ int getVal(char *str) {
 ```cpp
 #include<stdio.h>
 #include<string.h>
-#include <ctype.h>
+#include<ctype.h>
 #include<math.h>
 #define N 10000
 
