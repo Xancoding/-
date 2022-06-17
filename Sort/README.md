@@ -4,7 +4,7 @@
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Sort/images/2.png " ")
 ![](https://git.acwing.com/ZagY/learn-data-structures/-/raw/main/Sort/images/1.png " ")
 # 插入类排序
-## 插入排序  
+## 直接插入排序  
 - 适用：基本有序
 ```cpp
 void insert_sort() 
