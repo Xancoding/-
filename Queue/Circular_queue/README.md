@@ -30,7 +30,7 @@ void EnQueue(XhQueue &Q,treelink p){
 void DeQueue(XhQueue &Q,treelink &p){
     if(Q.front != Q.rear){
         p = Q.elem[Q.front];
-        Q.front = (Q.front +1) % Q.queuesize;
+        Q.front = (Q.front + 1) % Q.queuesize;
     }
 }
 ```
