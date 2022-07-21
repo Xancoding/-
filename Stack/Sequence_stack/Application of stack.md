@@ -1,3 +1,4 @@
+**[表达式求值](https://www.2cto.com/kf/201502/374763.html)**
 ## 表达式求值（整型数据）
 ```cpp
 #include<stdio.h>
